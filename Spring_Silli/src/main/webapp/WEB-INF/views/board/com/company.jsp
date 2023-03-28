@@ -267,7 +267,7 @@ $(document).ready(function(){
       </c:if> 
 		</ul>
       </div> 
-      <!-- END -->
+      <!-- END -->ranklist
 	</div>
      	 <form id="pageFrm" action="${root}company_list?page" method="post">
          <!-- 게시물 번호(idx)추가 -->         

@@ -67,6 +67,24 @@
 		</choose>
 	</select>
 	
+	<insert id="boardrank" parameterType="kr.spring.silli.board.vo.CompanyVO">
+		<![CDATA[
+			insert into 
+				boardrank(keyword)
+			 values(#{keyword})
+		]]>
+	</insert>
+	
+	<select id="ranklist" resultType="kr.spring.silli.board.vo.CompanyVO">
+		<![CDATA[
+		
+			select keyword,Count(keyword) keyCount
+			from boardrank
+			group by keyword 
+			order by count(keyword) desc
+		]]>
+	</select>
+	
 	<select id="get_list" resultType="kr.spring.silli.board.vo.CompanyVO" parameterType="kr.spring.silli.board.vo.CompanyVO">
 	<![CDATA[
 		select 

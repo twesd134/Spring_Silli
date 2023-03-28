@@ -17,5 +17,6 @@ public interface BoardMapper {
 	public int delete_select_com(ArrayList<String> board_idx);
 	public int delete_select_pro(ArrayList<String> board_idx);
 	public int idx(CompanyVO companyvo);
-
+	public void boardrank(CompanyVO companyvo);
+	public List<CompanyVO> ranklist(CompanyVO companyvo);
 }

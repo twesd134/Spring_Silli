@@ -279,6 +279,36 @@ $(document).ready(function(){
 			<div class="text-right">
 				<button type="button" onclick="move();" class="btn btn-primary">글쓰기</button>
 			</div>
+	 <h1>실시간 검색차트</h1>
+	<div id="chartdraw" style="width: 1000px; height: 1000px;"></div>
+		<h1>실시간 검색순위</h1>
+		 <table class="type02" >
+		  <thead>
+		 	<tr>
+			 	<th>검색순위</th>
+			 	<th>제목검색횟수</th>
+			 	<th>검색어</th>
+			 	<th>검색순위삭제</th>
+		 	</tr>
+		  </thead>
+			  <tbody>
+				<c:forEach var="obj" items="${pro_list.ranklist}" varStatus="status">
+				<tr>
+				  <td>
+				  ${status.index+1}
+				  </td>
+				  <td>
+				  ${obj.keyCount }
+				  </td>
+				  <td>
+				  	${obj.keyword}
+				  </td>
+				  <td><input type="checkbox" id="keyword" name="keyword" value="${obj.keyword }"></td>
+				<tr>
+		   		 </c:forEach>
+			  </tbody>
+	       </table>
+		<input type="button" style="float: right;" value="검색순위삭제" onclick="searchDelete()"  />
 		</div>
 	</div>
 </body>

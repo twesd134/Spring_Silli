@@ -229,6 +229,14 @@ public class boardserviceImpl implements boardservice{
 		int totalCount = boardmapper.totalCount(companyvo);
 		List<CompanyVO> com_list = boardmapper.board_list(companyvo);
 		List<CompanyVO> pro_list = boardmapper.board_list(companyvo);
+		List<CompanyVO> ranklist=boardmapper.ranklist(companyvo);
+		if(companyvo.getKeyword()=="" || companyvo.getKeyword()==null )
+		{
+			System.out.println("공백입니다");
+		}
+		else{
+			boardmapper.boardrank(companyvo);
+		}
 		
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCri(companyvo);
@@ -244,6 +252,7 @@ public class boardserviceImpl implements boardservice{
 			pageMaker.setTotBlock(totalCount);
 		}
 		
+		map.put("ranklist", ranklist);
 		map.put("pageMaker",pageMaker);	
 		map.put("totalCount",totalCount);
 		map.put("com_list",com_list);
@@ -253,9 +262,7 @@ public class boardserviceImpl implements boardservice{
 		
 	}
 	
-
-
-
+	
 	
 	
 }
