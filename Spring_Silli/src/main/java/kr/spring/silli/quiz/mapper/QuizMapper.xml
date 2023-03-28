@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.spring.silli.quiz.mapper.QuizMapper">
+
+<insert id="faile_insert" parameterType="kr.spring.silli.quiz.vo.faileVO">
+		
+		<choose>
+			<when test="user_id != null">
+			<![CDATA[
+			INSERT INTO 
+				fail_list
+					(question
+					,answer
+					,user_id) 
+				values (#{question}
+						,#{answer}
+						,#{user_id})
+				ON DUPLICATE KEY
+				UPDATE 
+					question = #{question}
+					,answer = #{answer}
+					,user_id=#{user_id}
+			]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+			INSERT INTO 
+				fail_list
+					(question
+					,answer
+					,user_id
+					) 
+				values (#{question}
+						,#{answer}
+						,''
+						)
+				ON DUPLICATE KEY
+				UPDATE 
+					question = #{question}
+					,answer = #{answer}
+					,user_id = ''
+			]]>
+			</otherwise>
+		</choose>
+	</insert>
+	
+	<delete id="faile_del" parameterType="kr.spring.silli.quiz.vo.faileVO">
+	<![CDATA[
+		delete 
+			from fail_list
+	]]>
+	<choose>
+		<when test="user_id != null">
+		<![CDATA[
+		where 
+			question=#{question}
+			AND
+			user_id=#{user_id}
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		where 
+			question=#{question} 
+			AND
+			user_id is null or user_id=''
+		]]>		
+		</otherwise>
+	</choose>
+	</delete>
+	
+	<select id="faile_chk" parameterType="kr.spring.silli.quiz.vo.faileVO" resultType="kr.spring.silli.quiz.vo.faileVO">
+		<![CDATA[
+			select
+				question,
+				answer
+			from
+				fail_list
+		]]>
+		<choose>
+		<when test="user_id !=null">
+		<![CDATA[
+		where 
+			user_id=#{user_id} 
+				order by rand()
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		where 
+			user_id='' 
+				order by rand()
+		]]>		
+		</otherwise>
+	</choose>
+	</select>
+	
+	<select id="chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
+	<![CDATA[
+		select question,answer
+			from quiz
+	]]>
+		<choose>
+		<when test="user_id != null">
+		<![CDATA[
+			where user_id=#{user_id} 
+				order by rand()
+		]]>	
+		</when>
+			<otherwise>
+			<![CDATA[
+			where user_id is null 
+				order by rand()
+			]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="requiz" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
+	<choose>
+		<when test="user_id !=null">
+		<![CDATA[
+		insert into 
+			quiz(
+				question
+				,answer
+				,user_id) 
+			values
+			 ('질문1','답1',#{user_id})
+			,('질문2','답2',#{user_id})
+			,('질문3','답3',#{user_id})
+			,('질문4','답4',#{user_id})
+			,('질문5','답5',#{user_id})
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		insert into 
+			quiz(
+				question
+				,answer) 
+			values
+			 ('질문1','답1')
+			,('질문2','답2')
+			,('질문3','답3')
+			,('질문4','답4')
+			,('질문5','답5')
+		]]>
+		</otherwise>
+	</choose>
+	</insert>
+	
+	<delete id="quiz_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
+	<![CDATA[
+		delete 
+			from quiz
+	]]>
+	<choose>
+		<when test="user_id != null">
+		<![CDATA[
+		where 
+			question=#{question} 
+			AND 
+			user_id=#{user_id}
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		where 
+			question=#{question}
+			user_id is null or user_id=''
+		]]>		
+		</otherwise>
+	</choose>
+	</delete>
+</mapper>
