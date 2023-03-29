@@ -140,7 +140,7 @@ function hideTr(_index) {
 					<li>${user_id }님 문제 입니다 </li>
 				</c:otherwise>		
 			</c:choose>
-		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
+		<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
 		<tr id="dis${status.index+1}" >
 			<td>${status.index+1}</td>
 			<td><input type="text" name="question" id="question" value="${obj.question}" readonly="readonly"/></td>

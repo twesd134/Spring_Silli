@@ -32,19 +32,43 @@
 					) 
 				values (#{question}
 						,#{answer}
-						,''
+						,"visitant"
 						)
 				ON DUPLICATE KEY
 				UPDATE 
 					question = #{question}
 					,answer = #{answer}
-					,user_id = ''
+					,user_id = "visitant"
 			]]>
 			</otherwise>
 		</choose>
 	</insert>
 	
-
+	
+	<delete id="faile_del" parameterType="kr.spring.silli.quiz.vo.faileVO">
+	<![CDATA[
+		delete 
+			from fail_list
+	]]>
+	<choose>
+		<when test="user_id != null">
+		<![CDATA[
+		where 
+			question=#{question}
+			AND
+			user_id=#{user_id}
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		where 
+			question=#{question} 
+			AND
+			user_id="visitant"
+		]]>		
+		</otherwise>
+	</choose>
+	</delete>
 	
 	<select id="faile_chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 		<![CDATA[
@@ -65,7 +89,7 @@
 		<otherwise>
 		<![CDATA[
 		where 
-			user_id='' 
+			user_id="visitant"
 				order by rand()
 		]]>		
 		</otherwise>
@@ -74,46 +98,63 @@
 	
 	<select id="chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 	<![CDATA[
-		select question,answer
-			from quiz
-	]]>
-		<choose>
-		<when test="user_id != null">
-		<![CDATA[
-			where user_id=#{user_id} 
-				order by rand()
+		select question
+			   ,answer
+			   ,user_id 
+		from quiz 
+		where(
+			question
+			,answer
+			,user_id
+			) 
+			not in(
+				select question
+						,answer
+						,user_id 
+				from ans ) AND user_id="visitant" order by rand()
 		]]>	
-		</when>
-			<otherwise>
-			<![CDATA[
-			where user_id is null 
-				order by rand()
-			]]>
-			</otherwise>
-		</choose>
+		
 	</select>
 	
 	<select id="requiz" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 	<choose>
-		<when test="user_id !=null">
+		<when test="user_id != null">
 		<![CDATA[
-		select 
-			question,answer 
+		select question
+			   ,answer
+			   ,user_id 
 		from quiz 
-		where
-			user_id=#{user_id}
+		where(
+			question
+			,answer
+			,user_id
+			) 
+			not in(
+				select question
+						,answer
+						,user_id 
+				from ans ) AND user_id=#{user_id} order by rand()
 		]]>
 		</when>
 		<otherwise>
-		<![CDATA[
-		select 
-			question,answer 
-		from quiz
-		where
-			user_id is null AND user_id='' 
+			<![CDATA[
+		select question
+			   ,answer
+			   ,user_id 
+		from quiz 
+		where(
+			question
+			,answer
+			,user_id
+			) 
+			not in(
+				select question
+						,answer
+						,user_id 
+				from ans ) AND user_id="visitant" order by rand()
 		]]>
 		</otherwise>
-	</choose>
+		</choose>
 	</select>
 	
 	<delete id="quiz_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
@@ -134,7 +175,7 @@
 		<![CDATA[
 		where 
 			question=#{question}
-			user_id is null or user_id=''
+			user_id="visitant"
 		]]>		
 		</otherwise>
 	</choose>
@@ -148,17 +189,16 @@
 			from
 				ans
 			where 
-				question=#{question}
-				AND
-				answer=#{answer}
-				AND
 				user_id=#{user_id}	
 		]]>
-		
 		</when>
 		<otherwise>
 		<![CDATA[
-		
+		delete 
+			from
+				ans
+			where 
+				user_id="visitant"
 		]]>
 		</otherwise>
 		</choose>
@@ -177,6 +217,7 @@
 					#{question}
 					,#{answer}
 					,#{user_id}
+					)
 		]]>
 		</when>
 		<otherwise>
@@ -184,10 +225,13 @@
 			insert into 
 				ans(
 					question
-					,answer)
+					,answer
+					,user_id)
 				values(
 					#{question}
 					,#{answer}
+					,"visitant"
+					)
 		]]>				
 		
 		</otherwise>

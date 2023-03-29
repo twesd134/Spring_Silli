@@ -91,7 +91,7 @@ function hideTr(_index) {
 			$('table#tbl1 tr').eq((_index)).hide();
 			$('table#tbl1 tr').eq((_index + 1)).show();
 			$('table#tbl1 tr').eq((_index + 1)).find('#answer').focus();
-			const all={user_id:user_id,question:question,answer:ans};
+			const all={question:question,answer:ans};
 			$.ajax({
 	    		url : "ans_insert.do",
 	    		type : "post",
@@ -129,16 +129,32 @@ function hideTr(_index) {
 		<div class="card-body" id="view">
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
-			<c:choose>
-				<c:when test="${empty user_id}">
-					<li>${fn:length(chk.chk)} 문제 남았습니다</li>
-					<li> 방문자님 문제</li> 
-				</c:when>
-				<c:otherwise>
-					<li>${fn:length(chk.chk)} 문제 남았습니다</li>
-					<li>${user_id }님 문제 입니다 </li>
-				</c:otherwise>		
-			</c:choose>
+		<c:choose>
+		<c:when test="${empty user_id}">
+		<li>${fn:length(chk.chk)} 문제 남았습니다</li>
+		<li> 방문자님 문제</li> 
+		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
+		<tr id="dis${status.index+1}" >
+			<td>${status.index+1}</td>
+			<td><input type="text" name="question" id="question" value="${obj.question}" readonly="readonly"/></td>
+			<td><input type="text" name="answer" id="answer" /></td>
+				<td>
+				<input type="button" class='btn btn-primary' value="답제출"  id="chk"  onclick="chk(${status.index})" />
+				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
+				</td>
+		</tr>
+		</c:forEach>
+		</table>
+		<br>
+		</div>
+		<form action="${root}quiz_faile.do">
+			<input type="hidden" name="user_id" id="user_id" value="visitant"/>
+			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
+		</form>
+		</c:when>
+		<c:otherwise>
+		<li>${fn:length(chk.re_chk)} 문제 남았습니다</li>
+		<li>${user_id }님 문제 입니다 </li>
 		<c:forEach var="obj" items="${chk.re_chk}" varStatus="status" >
 		<tr id="dis${status.index+1}" >
 			<td>${status.index+1}</td>
@@ -154,9 +170,11 @@ function hideTr(_index) {
 		<br>
 		</div>
 		<form action="${root}quiz_faile.do">
-			<input type="hidden" name="user_id" id="user_id" value="${mvo.user_id }"/>
+			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
 		</form>
+		</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 </body>

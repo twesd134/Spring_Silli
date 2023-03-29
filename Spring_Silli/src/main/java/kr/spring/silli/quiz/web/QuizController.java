@@ -69,5 +69,10 @@ public class QuizController {
 		return QuizService.faile_chk(questionvo,seesion);
 	}
 	
-
+	
+	@PostMapping("/ans_insert.do")
+	@ResponseBody
+	public void ans_insert(QuestionVO questionvo,HttpSession seesion) {
+		QuizService.ans_ins(questionvo,seesion);
+	}
 }

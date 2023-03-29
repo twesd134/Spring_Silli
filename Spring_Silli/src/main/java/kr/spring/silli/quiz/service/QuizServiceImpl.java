@@ -25,19 +25,21 @@ public class QuizServiceImpl implements QuizService {
 		Map<String,Object> map = new HashMap<String, Object>();
 		List<QuestionVO> re_chk= QuizMapper.requiz(questionvo);
 		//문제갯수
-		
+		List<QuestionVO> chk=QuizMapper.chk(questionvo);
 		
 		if(re_chk.size()==0)
 		{	
-			QuizMapper.chk_del(questionvo);
-			re_chk=QuizMapper.chk(questionvo);
+			QuizMapper.ans_del(questionvo);
+			re_chk=QuizMapper.requiz(questionvo);
 			
 		}
 		else{
 			
-			re_chk=QuizMapper.chk(questionvo);
-		
+			re_chk=QuizMapper.requiz(questionvo);
+			
 		}
+		
+		map.put("chk",chk);
 		map.put("re_chk", re_chk);
 		session.setAttribute("re_chk",re_chk);
 		return map;
@@ -49,8 +51,6 @@ public class QuizServiceImpl implements QuizService {
 		String user_id = (String)session.getAttribute("user_id");
 		questionvo.setUser_id(user_id);
 		QuizMapper.ans_ins(questionvo);
-		
-		
 	}
 	
 	@Override
