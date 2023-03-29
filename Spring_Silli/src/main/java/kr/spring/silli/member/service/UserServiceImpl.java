@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 	public int checkuserIdExist(String user_id) {
 		int chk=usermapper.checkuserIdExist(user_id);
 		return chk;
-		
 	}	
 	
 	@Override

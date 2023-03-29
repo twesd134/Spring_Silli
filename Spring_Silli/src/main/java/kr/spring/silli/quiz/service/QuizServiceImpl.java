@@ -23,56 +23,62 @@ public class QuizServiceImpl implements QuizService {
 		String user_id = (String)session.getAttribute("user_id");
 		questionvo.setUser_id(user_id);
 		Map<String,Object> map = new HashMap<String, Object>();
-		List<QuestionVO> chk=QuizMapper.chk(questionvo);
-		System.out.println("chk.length=="+chk.size());
+		List<QuestionVO> re_chk= QuizMapper.requiz(questionvo);
 		//문제갯수
 		
-		int cnt=chk.size();
 		
-		
-		if(chk.size()==0)
-		{
-			int ninsert = QuizMapper.requiz(questionvo);
-			chk=QuizMapper.chk(questionvo);
+		if(re_chk.size()==0)
+		{	
+			QuizMapper.chk_del(questionvo);
+			re_chk=QuizMapper.chk(questionvo);
 			
 		}
 		else{
 			
-			chk=QuizMapper.chk(questionvo);
+			re_chk=QuizMapper.chk(questionvo);
 		
 		}
-		map.put("chk", chk);
-		session.setAttribute("cnt",cnt);
+		map.put("re_chk", re_chk);
+		session.setAttribute("re_chk",re_chk);
 		return map;
 	}
 
-
+	
 	@Override
-	public Map<String, Object> faile_chk(faileVO failevo,HttpSession session) {
+	public void ans_ins(QuestionVO questionvo, HttpSession session) {
 		String user_id = (String)session.getAttribute("user_id");
-		failevo.setUser_id(user_id);
+		questionvo.setUser_id(user_id);
+		QuizMapper.ans_ins(questionvo);
+		
+		
+	}
+	
+	@Override
+	public Map<String, Object> faile_chk(QuestionVO questionvo,HttpSession session) {
+		String user_id = (String)session.getAttribute("user_id");
+		questionvo.setUser_id(user_id);
 		Map<String,Object> map = new HashMap<String, Object>();
-		List<faileVO> chk=QuizMapper.faile_chk(failevo);
-		map.put("chk", chk);
+		List<QuestionVO> fail_chk=QuizMapper.faile_chk(questionvo);
+		map.put("fail_chk", fail_chk);
 		return map;
 		
 	}
 
 	@Override
-	public void faile_del(faileVO faile,HttpSession session) {
+	public void faile_del(QuestionVO questionvo,HttpSession session) {
 		String user_id = (String)session.getAttribute("user_id");
-		faile.setUser_id(user_id);
-		System.out.println("faile==="+faile);
-		QuizMapper.faile_del(faile);
+		questionvo.setUser_id(user_id);
+		System.out.println("faile==="+questionvo);
+		QuizMapper.faile_del(questionvo);
 	}
 	
 	
 	@Override
-	public void faile_insert(faileVO faile,HttpSession session) {
+	public void faile_insert(QuestionVO questionvo,HttpSession session) {
 		String user_id = (String)session.getAttribute("user_id");
-		faile.setUser_id(user_id);
+		questionvo.setUser_id(user_id);
 		
-		QuizMapper.faile_insert(faile);
+		QuizMapper.faile_insert(questionvo);
 		
 	}
 	

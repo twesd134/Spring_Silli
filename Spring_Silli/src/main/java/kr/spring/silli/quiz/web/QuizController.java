@@ -23,8 +23,8 @@ public class QuizController {
 	
 	@PostMapping("/faile_insert.do")
 	@ResponseBody
-	public void faile_insert(faileVO faile,HttpSession seesion) {
-		QuizService.faile_insert(faile,seesion);
+	public void faile_insert(QuestionVO questionvo,HttpSession seesion) {
+		QuizService.faile_insert(questionvo,seesion);
 	}
 	
 	@GetMapping("/quiz_delete.do")
@@ -36,8 +36,8 @@ public class QuizController {
 	
 	@GetMapping("/faile_delete.do")
 	@ResponseBody
-	public void faile_delete(faileVO faile,HttpSession session) {
-		QuizService.faile_del(faile,session);
+	public void faile_delete(QuestionVO questionvo,HttpSession session) {
+		QuizService.faile_del(questionvo,session);
 	}
 	
 	@GetMapping("/quiz_main.do")
@@ -56,17 +56,17 @@ public class QuizController {
 	}
 	
 	@GetMapping("/quiz_faile.do")
-	public String quiz_failed(Model model,faileVO faile,HttpSession seesion){
+	public String quiz_failed(Model model,QuestionVO questionvo,HttpSession seesion){
 		String returnJSP="quiz/faile_quiz";
-		model.addAttribute("chk",QuizService.faile_chk(faile,seesion));
+		model.addAttribute("chk",QuizService.faile_chk(questionvo,seesion));
 		return returnJSP;
 	}
 	
 	@PostMapping("/quiz_faile.do")
 	@ResponseBody
-	public Map<String, Object> quiz_faile(faileVO faile,HttpSession seesion){
+	public Map<String, Object> quiz_faile(QuestionVO questionvo,HttpSession seesion){
 		
-		return QuizService.faile_chk(faile,seesion);
+		return QuizService.faile_chk(questionvo,seesion);
 	}
 	
 

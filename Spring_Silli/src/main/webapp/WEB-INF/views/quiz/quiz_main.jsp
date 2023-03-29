@@ -91,10 +91,10 @@ function hideTr(_index) {
 			$('table#tbl1 tr').eq((_index)).hide();
 			$('table#tbl1 tr').eq((_index + 1)).show();
 			$('table#tbl1 tr').eq((_index + 1)).find('#answer').focus();
-			const all={question:question};
+			const all={user_id:user_id,question:question,answer:ans};
 			$.ajax({
-	    		url : "quiz_delete.do",
-	    		type : "get",
+	    		url : "ans_insert.do",
+	    		type : "post",
 	    		data:all,
 	    		dataType : "text",
 	    	success : function(data){
@@ -139,7 +139,7 @@ function hideTr(_index) {
 					<li>${user_id }님 문제 입니다 </li>
 				</c:otherwise>		
 			</c:choose>
-		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
+		<c:forEach var="obj" items="${chk.re_chk}" varStatus="status" >
 		<tr id="dis${status.index+1}" >
 			<td>${status.index+1}</td>
 			<td><input type="text" name="question" id="question" value="${obj.question}" readonly="readonly"/></td>

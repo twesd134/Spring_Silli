@@ -12,10 +12,12 @@ import kr.spring.silli.quiz.vo.faileVO;
 public interface QuizMapper {
 	
 	public List<QuestionVO> chk(QuestionVO questionvo);
-	public int faile_insert(faileVO faile);
-	public List<faileVO> faile_chk(faileVO faile);
-	public void faile_del(faileVO faile);
-	public int requiz(QuestionVO questionvo);
+	public int faile_insert(QuestionVO questionvo);
+	public List<QuestionVO> faile_chk(QuestionVO questionvo);
+	public void faile_del(QuestionVO questionvo);
+	public List<QuestionVO> requiz(QuestionVO questionvo);
 	public void quiz_del(QuestionVO questionvo);
-
+	public void ans_del(QuestionVO questionvo);
+	public void ans_ins(QuestionVO questionvo);
+	
 }

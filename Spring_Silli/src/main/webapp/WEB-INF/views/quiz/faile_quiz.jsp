@@ -157,7 +157,7 @@ function hideTr(_index) {
 		</div>
 
 		<c:choose>
-			<c:when test = "${fn:length(chk.chk) eq 0}">
+			<c:when test = "${fn:length(chk.fail_chk) eq 0}">
 			<li>문제를 다 푸셨습니다</li> 
 				<form action="${root}quiz_main.do">
 				<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
