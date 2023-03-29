@@ -99,11 +99,17 @@ var logout=function (para) {
 			location.href="${root}"
 		},
 	 });
-	}	
+	}
 }
 
-var quiz_main=function () {
-	location.href="${root}quiz_main.do";
+var quiz_main=function (user_id) {
+	if(user_id!="")
+	{
+	location.href="${root}quiz_main.do";		
+	}else {
+		alert("회원 가입후 진행할수 있습니다");
+		location.href="${root}loginForm.do";
+	}
 }
 
 </script>
@@ -115,7 +121,7 @@ var quiz_main=function () {
 		    	<li><a href="${root}" class="item">홈으로</a></li>
 		        <li><a href="${root}company_list.do" class="item">회사 소개관리</a></li>
 		        <li><a href="${root}procedure_list.do" class="item">생산방안 관리</a></li>
-		        <li><a href="javascript:quiz_main();" class="item">퀴즈게임</a></li>
+		        <li><a href="javascript:quiz_main('${user_id}');" class="item">퀴즈게임</a></li>
 		    </ul>
    	</div>
    	<div id="tm3">
