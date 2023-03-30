@@ -134,7 +134,7 @@ $(document).ready(function(){
 		}
 		else {
 		countHTML+="<td>Total "+data.totalCount+"</td>";
-		$.each(data.pro_list, function(index,obj){
+		$.each(data.board_list, function(index,obj){
 		listHTML+="<tr>";
 		listHTML+="<td class='text-center d-none d-md-table-cell'>";
 		listHTML+="<input type='checkbox' value="+obj.board_idx+" name='board_idx'></td>";
@@ -216,11 +216,11 @@ $(document).ready(function(){
 					<table class="table table-hover" id='board_list'>
 				<thead>
 					<tr id="tcount">
-						<td>Total ${pro_list.totalCount}</td>
+						<td>Total ${board_list.totalCount}</td>
 					</tr>
 					<tr>
 						<th class="text-center d-none d-md-table-cell">글 전체선택 &nbsp;&nbsp;
-						<input type='checkbox' name="board_idx" value="${pro_list.obj.board_idx }" onclick="selectAll(this)" class="text-center d-none d-md-table-cell"/></th>
+						<input type='checkbox' name="board_idx" value="${board_list.obj.board_idx }" onclick="selectAll(this)" class="text-center d-none d-md-table-cell"/></th>
 						<th class="text-center d-none d-md-table-cell">글번호</th>
 						<th class="text-center d-none d-md-table-cell">제목</th>
 						<th class="text-center d-none d-md-table-cell">작성자</th>
@@ -228,10 +228,10 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test = "${fn:length(pro_list.com_list) eq 0}">
+					<c:if test = "${fn:length(board_list.board_list) eq 0}">
 					<td colspan="6">게시글이 없습니다.</td> 
 					</c:if>
- 					<c:forEach var='obj' items="${pro_list.com_list}"> 
+ 					<c:forEach var='obj' items="${board_list.board_list}"> 
 				   <tr>
 						<td class="text-center d-none d-md-table-cell">
 						<input type="checkbox" id="board_idx" name="board_idx" value="${obj.board_idx }"/></td>
@@ -247,21 +247,21 @@ $(document).ready(function(){
 			<ul class="pagination justify-content-center pagination">
 				<!-- 페이징 START -->
      	 <!-- 이전처리 -->
-    	<c:if test="${pro_list.pageMaker.prev}">
+    	<c:if test="${board_list.pageMaker.prev}">
         <li class="paginate_button previous">
           <a href="${root}procedure_list.do?page=1">◀◀</a>
-          <a href="${root}procedure_list.do?page=${pro_list.pageMaker.startPage-1}">◀</a>
+          <a href="${root}procedure_list.do?page=${board_list.pageMaker.startPage-1}">◀</a>
         </li>
       </c:if>      
       <!-- 페이지번호 처리 -->
-          <c:forEach var="pageNum" begin="${pro_list.pageMaker.startPage}" end="${pro_list.pageMaker.endPage}">
-	         <li class="paginate_button ${pro_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}procedure_list.do?page=${pageNum}">${pageNum}　</a></li>
+          <c:forEach var="pageNum" begin="${board_list.pageMaker.startPage}" end="${board_list.pageMaker.endPage}">
+	         <li class="paginate_button ${board_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}procedure_list.do?page=${pageNum}">${pageNum}　</a></li>
 	      </c:forEach>
 	 <!-- 다음처리 -->
-      <c:if test="${pro_list.pageMaker.next}">
+      <c:if test="${board_list.pageMaker.next}">
         <li class="paginate_button next">
-          <a href="${root}procedure_list.do?page=${pro_list.pageMaker.endPage+1}">▶</a>
-          <a href="${root}procedure_list.do?page=${pro_list.pageMaker.lastPage}">▶▶</a>
+          <a href="${root}procedure_list.do?page=${board_list.pageMaker.endPage+1}">▶</a>
+          <a href="${root}procedure_list.do?page=${board_list.pageMaker.lastPage}">▶▶</a>
         </li>
       </c:if> 
 		</ul>
@@ -270,8 +270,8 @@ $(document).ready(function(){
 	</div>
      	 <form id="pageFrm" action="${root}procedure_list?page" method="post">
          <!-- 게시물 번호(idx)추가 -->         
-         <input type="hidden" id="page" name="page" value="${pro_list.pageMaker.cri.page}"/>
-         <input type="hidden" id="perPageNum" name="perPageNum" value="${pro_list.pageMaker.cri.perPageNum}"/>
+         <input type="hidden" id="page" name="page" value="${board_list.pageMaker.cri.page}"/>
+         <input type="hidden" id="perPageNum" name="perPageNum" value="${board_list.pageMaker.cri.perPageNum}"/>
       	</form>   
       		<div class="text-left">
 				<a href="javascript:delete_select_pro()" class="btn btn-primary">선택된글 삭제</a>
@@ -292,7 +292,7 @@ $(document).ready(function(){
 		 	</tr>
 		  </thead>
 			  <tbody>
-				<c:forEach var="obj" items="${pro_list.ranklist}" varStatus="status">
+				<c:forEach var="obj" items="${board_list.ranklist}" varStatus="status">
 				<tr>
 				  <td>
 				  ${status.index+1}

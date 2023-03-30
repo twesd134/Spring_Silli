@@ -98,7 +98,7 @@ public class ComController {
 		String gubun = "company";
 		companyvo.setGubun(gubun);
 		String returnJSP = "board/com/company";
-		model.addAttribute("com_list", boardservice.board_list(companyvo));
+		model.addAttribute("board_list", boardservice.board_list(companyvo));
 		return returnJSP;
 	}
 
@@ -126,7 +126,7 @@ public class ComController {
 		String gubun = "procedure";
 		companyvo.setGubun(gubun);
 		String returnJSP = "board/pro/procedure";
-		model.addAttribute("pro_list", boardservice.board_list(companyvo));
+		model.addAttribute("board_list", boardservice.board_list(companyvo));
 		return returnJSP;
 	}
 

@@ -134,7 +134,7 @@ $(document).ready(function(){
 		}
 		else {
 		countHTML+="<td>Total "+data.totalCount+"</td>";
-		$.each(data.com_list, function(index,obj){
+		$.each(data.board_list, function(index,obj){
 			listHTML+="<tr>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>";
 			listHTML+="<input type='checkbox' value="+obj.board_idx+" name='board_idx'></td>";
@@ -217,7 +217,7 @@ $(document).ready(function(){
 					<table class="table table-hover" id='board_list'>
 				<thead>
 					<tr id="tcount">
-						<td>Total ${com_list.totalCount}</td>
+						<td>Total ${board_list.totalCount}</td>
 					</tr>
 					<tr>
 						<th class="text-center d-none d-md-table-cell">글 전체선택 &nbsp;&nbsp;
@@ -229,10 +229,10 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test = "${fn:length(com_list.com_list) eq 0}">
+					<c:if test = "${fn:length(board_list.board_list) eq 0}">
 					<td colspan="6">게시글이 없습니다.</td> 
 					</c:if>
- 					<c:forEach var='obj' items="${com_list.com_list}"> 
+ 					<c:forEach var='obj' items="${board_list.board_list}"> 
 				   <tr>
 						<td class="text-center d-none d-md-table-cell">
 						<input type="checkbox" id="board_idx" name="board_idx" value="${obj.board_idx }"/></td>
@@ -248,21 +248,21 @@ $(document).ready(function(){
 			<ul class="pagination justify-content-center pagination">
 				<!-- 페이징 START -->
      	 <!-- 이전처리 -->
-    	<c:if test="${com_list.pageMaker.prev}">
+    	<c:if test="${board_list.pageMaker.prev}">
         <li class="paginate_button previous">
           <a href="${root}company_list.do?page=1">◀◀</a>
-          <a href="${root}company_list.do?page=${com_list.pageMaker.startPage-1}">◀</a>
+          <a href="${root}company_list.do?page=${board_list.pageMaker.startPage-1}">◀</a>
         </li>
       </c:if>      
       <!-- 페이지번호 처리 -->
-          <c:forEach var="pageNum" begin="${com_list.pageMaker.startPage}" end="${com_list.pageMaker.endPage}">
-	         <li class="paginate_button ${com_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}company_list.do?page=${pageNum}">${pageNum}　</a></li>
+          <c:forEach var="pageNum" begin="${board_list.pageMaker.startPage}" end="${board_list.pageMaker.endPage}">
+	         <li class="paginate_button ${board_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}company_list.do?page=${pageNum}">${pageNum}　</a></li>
 	      </c:forEach>
 	 <!-- 다음처리 -->
-      <c:if test="${com_list.pageMaker.next}">
+      <c:if test="${board_list.pageMaker.next}">
         <li class="paginate_button next">
-          <a href="${root}company_list.do?page=${com_list.pageMaker.endPage+1}">▶</a>
-          <a href="${root}company_list.do?page=${com_list.pageMaker.lastPage}">▶▶</a>
+          <a href="${root}company_list.do?page=${board_list.pageMaker.endPage+1}">▶</a>
+          <a href="${root}company_list.do?page=${board_list.pageMaker.lastPage}">▶▶</a>
         </li>
       </c:if> 
 		</ul>

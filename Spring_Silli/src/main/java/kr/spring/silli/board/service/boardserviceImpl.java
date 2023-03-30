@@ -37,7 +37,7 @@ public class boardserviceImpl implements boardservice{
 		
 		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
 		{
-				String xss_title=companyvo.getTitle().replace("[<script>]","").replace("<","lt");
+				String xss_title=companyvo.getTitle().replace("[<script>]","dt").replace("<","lt");
 				String xss_content =companyvo.getTitle().replace("</sciprt>","dt").replace("<","lt");
 		
 				
@@ -235,13 +235,10 @@ public class boardserviceImpl implements boardservice{
 	
 	public Map<String,Object> board_list(CompanyVO companyvo) throws Exception {
 		
-		String dd=companyvo.getTitle();
-		
 		Map<String,Object> map = new HashMap<String, Object>();
 		
 		int totalCount = boardmapper.totalCount(companyvo);
-		List<CompanyVO> com_list = boardmapper.board_list(companyvo);
-		List<CompanyVO> pro_list = boardmapper.board_list(companyvo);
+		List<CompanyVO> board_list = boardmapper.board_list(companyvo);
 		List<CompanyVO> ranklist=boardmapper.ranklist(companyvo);
 		
 		if(companyvo.getKeyword()=="" || companyvo.getKeyword()==null )
@@ -252,8 +249,9 @@ public class boardserviceImpl implements boardservice{
 			boardmapper.boardrank(companyvo);
 		}
 		
-		for(CompanyVO vo : com_list) {
+		for(CompanyVO vo : board_list) {
 			vo.setTitle(vo.getTitle().replace("<", "&lt;").replace(">", "&gt;"));
+			
 		}
 		
 		
@@ -274,8 +272,7 @@ public class boardserviceImpl implements boardservice{
 		map.put("ranklist", ranklist);
 		map.put("pageMaker",pageMaker);	
 		map.put("totalCount",totalCount);
-		map.put("com_list",com_list);
-		map.put("pro_list",pro_list);
+		map.put("board_list",board_list);
 		
 		return  map;
 		
