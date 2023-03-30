@@ -31,8 +31,19 @@ public class boardserviceImpl implements boardservice{
 	@Override
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
-		System.out.println("글"+companyvo.getTitle());
-		System.out.println("글"+companyvo.getContent());
+		String[] xss_char={"<",">","&","tab","new line","%","in!","<sciprt>","</sciprt>"};
+		String[] sub_char={"lt","dd","tt","tab","new line","%","in!"};
+		List<String> xss_List = new ArrayList<>(Arrays.asList(xss_char));
+		
+		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
+		{
+				String xss_title=companyvo.getTitle().replace("[<script>]","").replace("<","lt");
+				String xss_content =companyvo.getTitle().replace("</sciprt>","dt").replace("<","lt");
+		
+				
+				companyvo.setTitle(xss_title);
+				companyvo.setContent(xss_content);
+		}
 		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
 		System.out.println("uploadPath: "+uploadPath);
@@ -240,6 +251,11 @@ public class boardserviceImpl implements boardservice{
 		else{
 			boardmapper.boardrank(companyvo);
 		}
+		
+		for(CompanyVO vo : com_list) {
+			vo.setTitle(vo.getTitle().replace("<", "&lt;").replace(">", "&gt;"));
+		}
+		
 		
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCri(companyvo);

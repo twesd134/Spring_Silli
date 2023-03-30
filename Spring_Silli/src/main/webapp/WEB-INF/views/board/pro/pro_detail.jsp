@@ -140,11 +140,18 @@
 						
 					</div>
 					<input type="hidden" id="board_idx" name="board_idx" class="form-control" value="${get_com.board_idx}" />
-					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" />
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}procedure.do" class="btn btn-primary">목록보기</a>
-							<a href="javascript:pro_update()" class="btn btn-info">수정하기</a>
+					<c:choose>
+						<c:when test="${empty user_id}">
+					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" />
+							<a href="javascript:com_update()" class="btn btn-info">수정하기</a>
+						</c:when>
+						<c:otherwise>
+							<a href="javascript:com_user_update();" class="btn btn-info">수정하기(회원용)</a>
+						</c:otherwise>
+					</c:choose>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>
 						</div>
 						
