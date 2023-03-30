@@ -137,9 +137,9 @@ img{max-width:100%;}
 					<form  id="allForm"  name="allForm" method='post' accept=".gif, .jpg, .png .pdf .exe" accept-charset="UTF-8" enctype="multipart/form-data">
 					<div class="form-group">
 					<c:choose>
-						<c:when test="${!empty mvo }">
+						<c:when test="${!empty user_id }">
 							<label for="board_writer_name">작성자</label>
-							<input type="text" id="writer" name="writer" class="form-control" maxlength='30'  value="${mvo.user_name }" readonly="readonly"/>
+							<input type="text" id="writer" name="writer" class="form-control" maxlength='30'  value="${user_id }" readonly="readonly"/>
 					<div class="form-group" id="title_l">
 						<label for="title">제목</label>
 						<input type="text" id="title" name="title" class="form-control" maxlength='150' value="" />

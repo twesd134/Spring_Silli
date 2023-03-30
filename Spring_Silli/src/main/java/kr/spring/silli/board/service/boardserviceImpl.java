@@ -32,8 +32,7 @@ public class boardserviceImpl implements boardservice{
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
 		System.out.println("글"+companyvo.getTitle());
-		System.out.println("글"+companyvo.getTitle());
-		
+		System.out.println("글"+companyvo.getContent());
 		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
 		System.out.println("uploadPath: "+uploadPath);
@@ -160,7 +159,6 @@ public class boardserviceImpl implements boardservice{
 			
 		       CompanyVO selCompanyVO = boardmapper.get_list(companyvo);
 		       
-		       
 		       if(isAction)
 		       {
 		       //첨부파일 유지 하기 위한 로직
@@ -228,14 +226,13 @@ public class boardserviceImpl implements boardservice{
 		
 		String dd=companyvo.getTitle();
 		
-		
 		Map<String,Object> map = new HashMap<String, Object>();
-		
 		
 		int totalCount = boardmapper.totalCount(companyvo);
 		List<CompanyVO> com_list = boardmapper.board_list(companyvo);
 		List<CompanyVO> pro_list = boardmapper.board_list(companyvo);
 		List<CompanyVO> ranklist=boardmapper.ranklist(companyvo);
+		
 		if(companyvo.getKeyword()=="" || companyvo.getKeyword()==null )
 		{
 			System.out.println("공백입니다");
@@ -267,8 +264,4 @@ public class boardserviceImpl implements boardservice{
 		return  map;
 		
 	}
-	
-	
-	
-	
 }
