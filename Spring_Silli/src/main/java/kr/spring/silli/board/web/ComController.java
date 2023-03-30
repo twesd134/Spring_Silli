@@ -174,7 +174,7 @@ public class ComController {
 	public String com_write(CompanyVO companyvo, Model model) {
 
 		String returnJSP = "board/com/com_write";
-
+		
 		return returnJSP;
 	}
 

@@ -31,14 +31,17 @@ public class boardserviceImpl implements boardservice{
 	@Override
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
+		System.out.println("글"+companyvo.getTitle());
+		System.out.println("글"+companyvo.getTitle());
+		
+		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
 		System.out.println("uploadPath: "+uploadPath);
 		Map<String,Object> map = new HashMap<String, Object>();
 		int fileMaxSize=10*1024*1024;
 		 // 파일 전송
-		
+			
 		  try {
-			  
 		  	  	boolean isAction = true;
 		  	  	MultipartHttpServletRequest mtf = (MultipartHttpServletRequest)request;
 				Map<String, Object> mFile = new HashMap<String, Object>();
@@ -222,6 +225,9 @@ public class boardserviceImpl implements boardservice{
 	}
 	
 	public Map<String,Object> board_list(CompanyVO companyvo) throws Exception {
+		
+		String dd=companyvo.getTitle();
+		
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		

@@ -161,24 +161,11 @@
 	<![CDATA[
 		delete 
 			from quiz
-	]]>
-	<choose>
-		<when test="user_id != null">
-		<![CDATA[
-		where 
-			question=#{question} 
-			AND 
-			user_id=#{user_id}
+		where questoin IN
+			<foreach collection="list" item="item" index="i" open="(" separator="," close=")">
+		      #{item}
+		    </foreach>
 		]]>
-		</when>
-		<otherwise>
-		<![CDATA[
-		where 
-			question=#{question}
-			user_id="visitant"
-		]]>		
-		</otherwise>
-	</choose>
 	</delete>
 	
 	<delete id="ans_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
@@ -236,5 +223,23 @@
 		
 		</otherwise>
 		</choose>
+	</insert>
+	
+	<insert id="quiz_write" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
+		<![CDATA[
+			insert into
+				quiz
+					(
+					question
+					,answer
+					,user_id
+					)
+				values
+					(
+					#{question}
+					,#{answer}
+					,#{user_id}
+					)
+		]]>
 	</insert>
 </mapper>

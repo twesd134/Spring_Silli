@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.silli.quiz.service.QuizService;
 import kr.spring.silli.quiz.vo.QuestionVO;
@@ -75,4 +76,30 @@ public class QuizController {
 	public void ans_insert(QuestionVO questionvo,HttpSession seesion) {
 		QuizService.ans_ins(questionvo,seesion);
 	}
+	
+	@GetMapping("/quiz_write.do")
+	public String quiz_write(QuestionVO questionvo,HttpSession session) {
+		String returnJSP="quiz/quiz_write";
+		
+		return returnJSP;
+	}
+	
+	@PostMapping("/quiz_write.do")
+	@ResponseBody
+	public void quiz_writee(QuestionVO questionvo,HttpSession session) {
+		QuizService.quiz_write(questionvo,session);
+	}
+	
+	@GetMapping("/quiz_del.do")
+	public String quiz_del(Model model,QuestionVO questionvo,HttpSession session) {
+		String returnJSP="quiz/quiz_del";
+		return returnJSP;
+	}
+	
+	@PostMapping
+	@ResponseBody
+	public void quiz_dele(QuestionVO questionvo,HttpSession session) {
+		QuizService.quiz_del(questionvo, session);
+	}
+	
 }

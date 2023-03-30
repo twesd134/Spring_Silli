@@ -4,19 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var='root' value="${pageContext.request.contextPath }/"/>
 <%@ page import="java.util.*"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
- <title>전체목록</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-</head>
+
 <style>
 
 
@@ -113,7 +101,6 @@ var quiz_main=function (user_id) {
 }
 
 </script>
-<body>
 	<div class="menu">
 		  	<div>메뉴얼목록</div>
 		    <input type="checkbox" id="expand-menu" name="expand-menu">
@@ -138,5 +125,3 @@ var quiz_main=function (user_id) {
 			</c:otherwise>
 			</c:choose>
  		</div>
-	</body>
-</html>

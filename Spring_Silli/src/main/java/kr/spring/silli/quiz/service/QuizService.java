@@ -17,4 +17,5 @@ public interface QuizService {
 	public void faile_del(QuestionVO questionvo,HttpSession session);
 	public void quiz_del(QuestionVO questionvo,HttpSession session);
 	public void ans_ins(QuestionVO questionvo,HttpSession session);
+	public void quiz_write(QuestionVO questionvo,HttpSession session);
 }

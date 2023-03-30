@@ -114,16 +114,24 @@ function hideTr(_index) {
 			if (!confirm("다시 시작 하시겠습니까?")) {
 				alert("취소 하셨습니다");
 				location.href="${root}"
-				}
+			}
 			else {
 				location.href="${root}quiz_main.do";
-			} 
+			}
 		}
 	}
 	
+	var quiz_write = function() {
+		location.href="${root}quiz_write.do";
+	}
+	
+	var quiz_del=function() {
+		location.href="${root}quiz_del.do";
+	}
+	
 </script>
-<body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+<body>
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body" id="view">
@@ -172,6 +180,7 @@ function hideTr(_index) {
 		<form action="${root}quiz_faile.do">
 			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
+		<input type="button" onclick="quiz_write();" class="btn btn-dange" value="문제추가하기">
 		</form>
 		</c:otherwise>
 		</c:choose>

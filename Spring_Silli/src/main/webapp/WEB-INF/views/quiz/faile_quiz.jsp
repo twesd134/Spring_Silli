@@ -125,8 +125,8 @@ function hideTr(_index) {
 	}
 	
 </script>
-<body> 
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+<body> 
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body" id="view">

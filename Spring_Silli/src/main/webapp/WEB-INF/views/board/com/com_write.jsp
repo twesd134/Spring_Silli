@@ -26,7 +26,6 @@ img{max-width:100%;}
 #nav ul li{line-height: 50px; font-weight:bold; font-size: 20px; }
 .logoli{padding: 20px 0;}
 .content{flex-basis: 20vw; height : 100vh; flex-grow: 4; flex-shrink: 1; overflow:auto;}
-
 </style>
 </head>
       <script type="text/javascript">				
@@ -43,6 +42,7 @@ img{max-width:100%;}
    		const upload_4=$("#multi_4").val();
    		const upload_5=$("#multi_5").val();
    	 	
+   		
    		var con=[];
 		
 		 for(var ii=1;ii<=5;ii++) {
@@ -128,8 +128,8 @@ img{max-width:100%;}
           	location.href = '${root}company_list.do';
           	}
    </script>
-<body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+<body>
 <h2>회사 소개 글쓰기</h2>
 <div class="container" style="margin-top:100px">
 	<div class="row">
@@ -220,15 +220,14 @@ img{max-width:100%;}
 						</c:otherwise>
 						</c:choose>
 					</div>
-					</form>
-					
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}company_list.do" class="btn btn-primary">목록보기</a>
 							<input type="button" onclick="regit()" class="btn btn-info" value="등록완료"/>
-							<input type="button" class="btn btn-danger" onclick="reset()" value="초기화"/>
+							<input type="reset" class="btn btn-danger" value="초기화"/>
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>

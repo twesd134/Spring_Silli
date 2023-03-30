@@ -30,7 +30,6 @@ img{max-width:100%;}
 </style>
 </head>
       <script type="text/javascript">				
-      
       	function regit(){
           	var maxSize=1024*1024*10;
       		const title=$("#title").val();
@@ -126,8 +125,8 @@ img{max-width:100%;}
           	}
   
    </script>
-<body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+<body>
 <h2>생산 방안 글쓰기</h2>
 <div class="container" style="margin-top:100px">
 	<div class="row">
@@ -218,15 +217,15 @@ img{max-width:100%;}
 						</c:otherwise>
 						</c:choose>
 					</div>
-					</form>
 					
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}procedure_list.do" class="btn btn-primary">목록보기</a>
 							<a href="javascript:regit();" class="btn btn-info">등록완료</a>
-							<input type="button" class="btn btn-danger" onclick="reset()" value="초기화"/>
+							<input type="reset" class="btn btn-danger"  value="초기화"/>
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>

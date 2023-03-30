@@ -89,8 +89,8 @@
 	}
 	
 </script>
-<body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+<body>
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-sm-3"></div>

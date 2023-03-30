@@ -19,5 +19,5 @@ public interface QuizMapper {
 	public void quiz_del(QuestionVO questionvo);
 	public void ans_del(QuestionVO questionvo);
 	public void ans_ins(QuestionVO questionvo);
-	
+	public void quiz_write(QuestionVO questionvo);
 }
