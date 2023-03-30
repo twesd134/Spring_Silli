@@ -32,14 +32,12 @@ public class boardserviceImpl implements boardservice{
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
 		String[] xss_char={"<",">","&","tab","new line","%","in!","<sciprt>","</sciprt>"};
-		String[] sub_char={"lt","dd","tt","tab","new line","%","in!"};
 		List<String> xss_List = new ArrayList<>(Arrays.asList(xss_char));
 		
 		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
 		{
-				String xss_title=companyvo.getTitle().replace("[<script>]","dt").replace("<","lt");
-				String xss_content =companyvo.getTitle().replace("</sciprt>","dt").replace("<","lt");
-		
+				String xss_title=companyvo.getTitle().replace("<","dt").replace(">","lt");
+				String xss_content =companyvo.getTitle().replace("<","dt").replace(">","lt");
 				
 				companyvo.setTitle(xss_title);
 				companyvo.setContent(xss_content);
@@ -253,8 +251,6 @@ public class boardserviceImpl implements boardservice{
 			vo.setTitle(vo.getTitle().replace("<", "&lt;").replace(">", "&gt;"));
 			
 		}
-		
-		
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCri(companyvo);
 		if(totalCount==0)
