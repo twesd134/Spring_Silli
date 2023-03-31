@@ -36,9 +36,8 @@ public class boardserviceImpl implements boardservice{
 		
 		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
 		{
-				String xss_title=companyvo.getTitle().replace("<","dt").replace(">","lt");
-				String xss_content =companyvo.getTitle().replace("<","dt").replace(">","lt");
-				
+				String xss_title=companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
+				String xss_content =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
 				companyvo.setTitle(xss_title);
 				companyvo.setContent(xss_content);
 		}
@@ -48,8 +47,8 @@ public class boardserviceImpl implements boardservice{
 		Map<String,Object> map = new HashMap<String, Object>();
 		int fileMaxSize=10*1024*1024;
 		 // 파일 전송
-			
 		  try {
+			  
 		  	  	boolean isAction = true;
 		  	  	MultipartHttpServletRequest mtf = (MultipartHttpServletRequest)request;
 				Map<String, Object> mFile = new HashMap<String, Object>();
@@ -72,12 +71,11 @@ public class boardserviceImpl implements boardservice{
 							break;
 						}
 					}
+					
 					else if(fileM.getSize() > fileMaxSize){
-							
 							map.put("chk","ERROR");
 							map.put("message",ii+"번째 파일 용량은 10m 미만이여야 됩니다");
 							map.put("ii",ii);
-							
 					}
 					mFile.put("fileName" + ii, fileName);
 				}
