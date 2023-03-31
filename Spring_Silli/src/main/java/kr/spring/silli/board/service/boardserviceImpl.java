@@ -38,7 +38,6 @@ public class boardserviceImpl implements boardservice{
 		{
 				String xss_title=companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
 				String xss_content =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
-				
 				companyvo.setTitle(xss_title);
 				companyvo.setContent(xss_content);
 		}
