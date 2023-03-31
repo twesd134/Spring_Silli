@@ -30,7 +30,4 @@ public class UserVO {
 		this.user_pw = user_pw;
 	}
 	
-	
-	
-	
 }

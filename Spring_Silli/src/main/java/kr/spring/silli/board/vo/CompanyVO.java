@@ -24,17 +24,10 @@ public class CompanyVO {
 	private int pageNum;
 	private String start;
 	private String now_date;
-	private int gue_pw;
+	private String gue_pw;
 	
 	
 
-	public int getGue_pw() {
-		return gue_pw;
-	}
-
-	public void setGue_pw(int gue_pw) {
-		this.gue_pw = gue_pw;
-	}
 
 	public String getStart() {
 		return start;
