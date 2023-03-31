@@ -75,7 +75,6 @@ public class boardserviceImpl implements boardservice{
 							map.put("chk","ERROR");
 							map.put("message",ii+"번째 파일 용량은 10m 미만이여야 됩니다");
 							map.put("ii",ii);
-							
 					}
 					mFile.put("fileName" + ii, fileName);
 				}
