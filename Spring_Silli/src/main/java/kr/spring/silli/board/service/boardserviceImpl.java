@@ -48,7 +48,6 @@ public class boardserviceImpl implements boardservice{
 		int fileMaxSize=10*1024*1024;
 		 // 파일 전송
 		  try {
-			  
 		  	  	boolean isAction = true;
 		  	  	MultipartHttpServletRequest mtf = (MultipartHttpServletRequest)request;
 				Map<String, Object> mFile = new HashMap<String, Object>();
