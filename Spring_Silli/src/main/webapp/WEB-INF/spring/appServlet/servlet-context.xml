@@ -30,6 +30,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="kr.spring.*"/>
+	<context:component-scan base-package="kr.spring.**"/>
 		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
 </beans:beans>

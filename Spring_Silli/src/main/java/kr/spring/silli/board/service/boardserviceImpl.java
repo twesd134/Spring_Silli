@@ -36,28 +36,29 @@ public class boardserviceImpl implements boardservice{
 		
 		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
 		{
-				String xss_title=companyvo.getTitle().replace("<","dt").replace(">","lt");
-				String xss_content =companyvo.getTitle().replace("<","dt").replace(">","lt");
-				
+				String xss_title=companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
+				String xss_content =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;");
 				companyvo.setTitle(xss_title);
 				companyvo.setContent(xss_content);
 		}
-		
+		//절대경로
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
 		System.out.println("uploadPath: "+uploadPath);
+		//파일이 들어왔을 유무에 따라 출력해주기 위한 메시지
 		Map<String,Object> map = new HashMap<String, Object>();
-		int fileMaxSize=10*1024*1024;
+		//최대 파일용량 10m
+		int fileMaxSize=10*1024*1024; 
 		 // 파일 전송
-			
 		  try {
 		  	  	boolean isAction = true;
 		  	  	MultipartHttpServletRequest mtf = (MultipartHttpServletRequest)request;
 				Map<String, Object> mFile = new HashMap<String, Object>();
 				for(int ii = 1; ii <= 5; ii++) {
 					MultipartFile fileM = mtf.getFile("multi_" + ii);
+					//파일 이름 받아오기
 					String fileName = "";
 					int idx=fileM.getOriginalFilename().lastIndexOf(".");
-					//파일형식 짜르기 jpg,png 추출
+					//파일형식에 맞게끔 .을 기준으로 잘라서 해당 파일형식에 맞지 않으면 업로드 거부기능
 					String fieMs=fileM.getOriginalFilename().substring(idx+1);
 					String[] strArray = {"png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt","txt"};
 					List<String> strList = new ArrayList<>(Arrays.asList(strArray));
@@ -84,6 +85,7 @@ public class boardserviceImpl implements boardservice{
 				
 				if(isAction) {
 					
+					//셋팅된 파일 이름별로 셋팅해서 companyvo에 새로 담아두기
 					companyvo.setUpload_1(mFile.get("fileName1").toString());
 					companyvo.setUpload_2(mFile.get("fileName2").toString());
 					companyvo.setUpload_3(mFile.get("fileName3").toString());
@@ -127,6 +129,7 @@ public class boardserviceImpl implements boardservice{
 	public Map<String,Object> update(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
+
 		System.out.println("uploadPath: "+uploadPath);
 		Map<String,Object> map = new HashMap<String, Object>();
 		  // 파일 전송
@@ -144,8 +147,7 @@ public class boardserviceImpl implements boardservice{
 					String fieMs=fileM.getOriginalFilename().substring(idx+1);
 					String[] strArray = {"png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt"};
 					List<String> strList = new ArrayList<>(Arrays.asList(strArray));
-					System.out.println("fileM.getSize=="+fileM.getSize());
-					System.out.println("fileMaxSize=="+fileMaxSize);
+
 					if(fileM.getSize() > 0 && fileM.getSize() <= fileMaxSize) {
 						if(strList.contains(fieMs))
 						{
@@ -170,19 +172,25 @@ public class boardserviceImpl implements boardservice{
 		       
 		       if(isAction)
 		       {
-		       //첨부파일 유지 하기 위한 로직
+		    	   
+		       //첨부파일 유지 하기 위한 로직 삼항 연산자로 처리
+		    	   
 		       if(mFile.get("fileName1").toString().equals("")) {
 		    	   mFile.put("fileName1", (selCompanyVO.getUpload_1() != null ? selCompanyVO.getUpload_1() : ""));
 		       }
+		       
 		       if(mFile.get("fileName2").toString().equals("")) {
 		    	   mFile.put("fileName2", (selCompanyVO.getUpload_2() != null ? selCompanyVO.getUpload_2() : ""));
 		       }
+		       
 		       if(mFile.get("fileName3").toString().equals("")) {
 		    	   mFile.put("fileName3", (selCompanyVO.getUpload_3() != null ? selCompanyVO.getUpload_3() : ""));
 		       }
+		       
 		       if(mFile.get("fileName4").toString().equals("")) {
 		    	   mFile.put("fileName4", (selCompanyVO.getUpload_4() != null ? selCompanyVO.getUpload_4() : ""));
 		       }
+		       
 		       if(mFile.get("fileName5").toString().equals("")) {
 		    	   mFile.put("fileName5", (selCompanyVO.getUpload_5() != null ? selCompanyVO.getUpload_5() : ""));
 		       }
@@ -195,8 +203,9 @@ public class boardserviceImpl implements boardservice{
 		       
 		       map.put("code", "OK");
 			   map.put("boardIdx", companyvo.getBoard_idx());
-		    // TODO Auto-generated method stub
+			   
 				boardmapper.update(companyvo);
+		      
 		       }
 		       else {
 		    	   map.put("code", "ERROR_FILE");
@@ -247,10 +256,12 @@ public class boardserviceImpl implements boardservice{
 			boardmapper.boardrank(companyvo);
 		}
 		
+		//XSS공격에 대한 게시물 리스트 방어
 		for(CompanyVO vo : board_list) {
 			vo.setTitle(vo.getTitle().replace("<", "&lt;").replace(">", "&gt;"));
 			
 		}
+		
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCri(companyvo);
 		if(totalCount==0)
