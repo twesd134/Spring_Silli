@@ -9,6 +9,7 @@ public class UserVO {
 	private String user_pw;
 	private String user_name;
 	
+	
 	public String getUser_name() {
 		return user_name;
 	}
