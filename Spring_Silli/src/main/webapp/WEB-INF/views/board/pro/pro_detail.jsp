@@ -86,6 +86,26 @@
 	 	console.log(gue_pw);
 	}
 	
+	var pro_user_update=function () {
+		const board_idx=$("#board_idx").val();
+		const all={board_idx:board_idx};
+		$.ajax({
+	    		url : "pro_update.do",
+	    		type : "post",
+	    		data:all,
+    		success : function(data){
+				alert("수정페이지 진입");
+				location.href="${root}pro_update.do?board_idx="+board_idx
+				},
+			  error : function(data) 
+			   {
+				  alert("실패");
+				  console.log("data==",data);
+			   }
+		}); 		
+		
+	}
+	
 </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <body>
@@ -146,10 +166,10 @@
 					<c:choose>
 						<c:when test="${empty user_id}">
 					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" />
-							<a href="javascript:com_update()" class="btn btn-info">수정하기</a>
+							<a href="javascript:pro_update()" class="btn btn-info">수정하기</a>
 						</c:when>
 						<c:otherwise>
-							<a href="javascript:com_user_update();" class="btn btn-info">수정하기(회원용)</a>
+							<a href="javascript:pro_user_update();" class="btn btn-info">수정하기(회원용)</a>
 						</c:otherwise>
 					</c:choose>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>

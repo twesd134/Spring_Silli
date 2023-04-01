@@ -10,23 +10,29 @@
 			 <!-- Mybatis 연동 -->
    
    
- 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql://61.42.80.67:3306/twesd134_board?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC"/>
-		<property name="username" value="twesd134"/>
-		<property name="password" value="twesd134@!"/>
-	</bean> 
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/com?useUnicode=true&amp;characterEncoding=utf8"/>
+		<property name="username" value="com"/>
+		<property name="password" value="com01"/>
+	</bean>
+	
 <!-- 	?useUnicode=true&characterEncoding=utf8 -->
+	
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"  destroy-method="close">
       <constructor-arg ref="hikariConfig" />
     </bean> 
     
-    <mybatis-spring:scan base-package="kr.spring.silli.**.mapper"/>
+    <mybatis-spring:scan base-package="kr.spring.**.mapper"/>
     
      <bean class="org.mybatis.spring.SqlSessionFactoryBean">
        <property name="dataSource" ref="dataSource" />
     </bean> 
-  
+            		<!-- MultipartResolver 설정 -->
+        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+           <property name="maxUploadSize" value="100000000" />
+           <property name="maxInMemorySize" value="100000000" />
+        </bean>
 		
 </beans>
