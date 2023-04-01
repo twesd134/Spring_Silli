@@ -35,6 +35,7 @@
 		]]>
 	</insert>
 	
+	
 	<select id="board_list" resultType="kr.spring.silli.board.vo.CompanyVO" parameterType="kr.spring.silli.board.vo.CompanyVO">
 		<![CDATA[
 		select 
