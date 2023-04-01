@@ -16,6 +16,7 @@
 			,reg_date
 			,gubun 
 			,gue_pw
+			,bum_in
 			)
 		values(
 			#{upload_1}
@@ -29,6 +30,7 @@
 			,now()
 			,#{gubun}
 			,#{gue_pw}
+			,#{bum_in}
 			)
 		]]>
 	</insert>
@@ -108,7 +110,7 @@
 	]]>	
 	</select>
 	
-	<update id="update" parameterType="kr.spring.silli.board.vo.CompanyVO">
+	<update id="update" parameterType="kr.spring.silli.board.vo.CompanyVO" useGeneratedKeys="true" keyProperty="board_idx">
 	<![CDATA[
 		update 
 			com_board 

@@ -25,6 +25,7 @@ public class CompanyVO {
 	private String start;
 	private String now_date;
 	private int gue_pw;
+	private String bum_in;
 	
 	
 
