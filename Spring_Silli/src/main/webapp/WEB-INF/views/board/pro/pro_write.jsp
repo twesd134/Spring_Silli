@@ -26,115 +26,118 @@ img{max-width:100%;}
 #nav ul li{line-height: 50px; font-weight:bold; font-size: 20px; }
 .logoli{padding: 20px 0;}
 .content{flex-basis: 20vw; height : 100vh; flex-grow: 4; flex-shrink: 1; overflow:auto;}
-
 </style>
 </head>
       <script type="text/javascript">				
-      	function regit(){
-          	var maxSize=1024*1024*10;
-      		const title=$("#title").val();
-       		const writer=$("#writer").val();
-       		const content=$("#content").val();
-       		const upload_1=$("#multi_1").val();
-       		const upload_2=$("#multi_2").val();
-       		const upload_3=$("#multi_3").val();
-       		const upload_4=$("#multi_4").val();
-       		const upload_5=$("#multi_5").val();
-       		
-       		var con=[];
-    	 	for(var ii=1;ii<=5;ii++) {
-    			var mul = document.getElementById("multi_"+ii);
-       			if(mul.value != "") {
-       				const upload_size_ii = mul.files[0].size;
-	       				if(upload_size_ii<=maxSize)
-	       				{
-	       				con.push(upload_size_ii);
-	       				} 
-	       				else {
-       					alert(ii+"번 파일 10m 이하만 첨부가능 합니다");
-       					$("#multi_"+ii+"").val('');
-       					return false;
-       				}
-       			}
-    		}  
-       		
-       		const gong='';
-            if(writer==gong) {
-            	alert("작성자를 입력해주세요")
-        		}
-           		 else if(title==gong)
-            	{
-            	alert("제목을 입력해 주세요")
-            	}
-          		  else if(content==gong)
-            	{
-            	alert("내용을 입력해 주세요")
-            	}
-            	else {
-        			if (!confirm("글을 등록 하시겠습니까?")) {
-    	    			alert("취소 하셨습니다");
-    	    			}
-        		   else {
-        		const allData = new FormData(document.getElementById("allForm"));
-        		for(var i=1;i<=5;i++) {	
-    	    		var fileName = $("#multi_"+i+"").val();
-    	    			files = fileName.slice(fileName.lastIndexOf(".") + 1).toLowerCase();
-    	    			const FileExt=["png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt"];
-    	    			if(files!="" && FileExt.indexOf(files)<0)
-    	        		{
-    			           		alert("이미지 파일은  형식에 맞지 않습니다.");
-    			           		$("#multi_"+i+"").val("");
-    			    			return false;
-    	        		}
-        		}
-        		$.ajax ({
-        	    		url : "pro_writeSuccess.do",
-        	    		type : "post",
-        	    		data:allData,
-        	    		datatype: 'text',
-    		    		processData: false,
-    		    	    contentType: false,
-        	    	success : function(data){
-        	    		if(data.chk == "ERROR") {
-        	    			alert(data.message);
-        	    			$("#multi_"+data.ii+"").val("");
-        	    		} else {
-        	    			if(data.code == "OK") {
-    	   					alert("등록성공");
-    	   	    		    location.href="${root}pro_detail.do?board_idx="+data.boardIdx+"";
-        	    			}    	    		
-        	    			else if(data.code == "ERROR_FILE") {
-        	    			alert(data.message)
-        	    			}
-	        	    			else {
-	        	    			alert(data.message)
-        	    				}
-        	    	     }
-       	    		},
-       	    		error : function(data) 
-       	    		{
-       	    			  alert("용량초과");
-      	    		}
-    		  	   });
-        		}
-       		  } 
-          	}
       	
+      	function regit(){
+   		
+      	var maxSize=1024*1024*10;
+      	const title=$("#title").val();
+   		const writer=$("#writer").val();
+   		const content=$("#content").val();
+   		const upload_1=$("#multi_1").val();
+   		const upload_2=$("#multi_2").val();
+   		const upload_3=$("#multi_3").val();
+   		const upload_4=$("#multi_4").val();
+   		const upload_5=$("#multi_5").val();
+   	 	
+   		
+   		var con=[];
+		
+		 for(var ii=1;ii<=5;ii++) {
+			
+			var mul = document.getElementById("multi_"+ii);
+   			if(mul.value != "") {
+   				const upload_size_ii = mul.files[0].size;
+   				if(upload_size_ii<=maxSize)
+   				{
+   				con.push(upload_size_ii);
+   				}
+   					else {
+   					alert(ii+"번 파일 10m 이하만 첨부가능 합니다");
+   					$("#multi_"+ii+"").val('');
+   					return false;
+   				}
+   			}
+		 } 
+   		const gong='';
+        if(writer==gong) {
+        	alert("작성자를 입력해주세요")
+    		}
+       		else if(title==gong) {
+        	alert("제목을 입력해 주세요")
+        	}
+      		else if(content==gong) {
+        	alert("내용을 입력해 주세요")
+        	}
+        else {
+    		if (!confirm("글을 등록 하시겠습니까?")) {
+	    		alert("취소 하셨습니다");
+	    		 }
+    		else {
+    		const allData = new FormData(document.getElementById("allForm"));
+    		for(var i=1;i<=5;i++) {	
+	    		var fileName = $("#multi_"+i+"").val();
+	    			files = fileName.slice(fileName.lastIndexOf(".") + 1).toLowerCase();
+	    			const FileExt=["png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt"];
+	    			if(files!="" && FileExt.indexOf(files)<0)
+	        		{
+			           		alert("이미지 파일은  형식에 맞지 않습니다.");
+			           		$("#multi_"+i+"").val("");
+			    			return false;
+	        		}
+    		}
+    		$.ajax ({
+    	    		url : "pro_writeSuccess.do",
+    	    		type : "post",
+    	    		data:allData,
+    	    		datatype: 'text',
+		    		processData: false,
+		    	    contentType: false,
+    	    	success : function(data){
+    	    		if(data.chk == "ERROR") {
+    	    			alert(data.message);
+    	    			$("#multi_"+data.ii+"").val("");
+    	    		} 
+    	    		else {    	    			
+    	    			if(data.code == "OK") {
+	   					alert("등록성공");
+	   	    		    location.href="${root}pro_detail.do?board_idx="+data.boardIdx+"";
+    	    			}    	    		
+    	    			else if(data.code == "ERROR_FILE") {
+    	    			//alert('지원되지 않은 파일 형식입니다')
+    	    			alert(data.message)
+    	    			}
+	    	    		else {
+	    	    			//alert('오류가 발생되었습니다. 관리자에 문의하세요.')
+	    	    			alert(data.message)
+	    	    		}
+    	    		}
+   	    		},
+   	    		error : function(data) 
+   	    		    {
+   	    			
+   	    			  alert("총 파일용량 초과 에러 & 실패 ");
+  	    			}
+		  	    });
+    		  }
+   		   } 
+      	}
       	var back=function() {		
-          	location.href = '${root}procedure_list.do';
+          	location.href = '${root}pro_list.do';
           	}
-  
    </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <body>
-<h2>생산 방안 글쓰기</h2>
+<h2>회사 소개 글쓰기</h2>
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
-					<form  id="allForm"  name="allForm" method='post' accept=".gif, .jpg, .png .pdf .exe" accept-charset="UTF-8" enctype="multipart/form-data">
+					<form  id="allForm"  name="allForm" method='post'  accept-charset="UTF-8" enctype="multipart/form-data">
 					<div class="form-group">
 					<c:choose>
 						<c:when test="${!empty user_id }">
@@ -217,12 +220,11 @@ img{max-width:100%;}
 						</c:otherwise>
 						</c:choose>
 					</div>
-					
 					<div class="form-group">
 						<div class="text-right">
-							<a href="${root}procedure_list.do" class="btn btn-primary">목록보기</a>
-							<a href="javascript:regit();" class="btn btn-info">등록완료</a>
-							<input type="reset" class="btn btn-danger"  value="초기화"/>
+							<a href="${root}pro_list.do" class="btn btn-primary">목록보기</a>
+							<input type="button" onclick="regit()" class="btn btn-info" value="등록완료"/>
+							<input type="reset" class="btn btn-danger" value="초기화"/>
 						</div>
 					</div>
 					</form>

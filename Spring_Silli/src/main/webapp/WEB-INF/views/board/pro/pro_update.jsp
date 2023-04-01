@@ -20,12 +20,12 @@
 	const reset=function(){
 		
 		
-	const titleGird="";
+	var titleGird="";
 	titleGird+="<label for='board_subject'>제목</label>";
 	titleGird+="<input type='text' id='title' name='title' class='form-control' value='${get_com.title }' /";
 	titleGird+="</div>";
 	
-	const contentGrid="";
+	var contentGrid="";
 	contentGrid+="<label for='board_content'>내용</label>";
 	contentGrid+="<textarea id='content' name='content' class='form-control' rows='10' style='resize:none'>${get_com.content }</textarea>";
 	contentGrid+="</div>"
