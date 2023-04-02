@@ -117,66 +117,64 @@
 				<div class="card-body">
 					<div class="form-group">
 						<label for="board_writer_name">작성자</label>
-						<input type="text" id="writer" name="writer" class="form-control" value="${get_com.writer }" disabled="disabled"/>
+						<input type="text" id="writer" name="writer" class="form-control" value="${get_detail.writer }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_date">작성날짜</label>
-						<input type="text" id="reg_date" name="reg_date" class="form-control" value="${get_com.reg_date }" disabled="disabled"/>
+						<input type="text" id="reg_date" name="reg_date" class="form-control" value="${get_detail.reg_date }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_subject">제목</label>
-						<input type="text" id="title" name="title" class="form-control" value="${get_com.title }" disabled="disabled"/>
+						<input type="text" id="title" name="title" class="form-control" value="${get_detail.title }" disabled="disabled"/>
 					</div>
 					<div class="form-group">
 						<label for="board_content">내용</label>
-						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none" disabled="disabled">${get_com.content }</textarea>
+						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none" disabled="disabled">${get_detail.content }</textarea>
 					</div>
 					
 					<div class="form-group down_btn">
 						<label for="upload_1">1번파일 </label>
-						<a href="${root}download.do?upload=${get_com.upload_1}">${get_com.upload_1}</a>
+						<a href="${root}download.do?upload=${get_detail.upload_1}">${get_detail.upload_1}</a>
 					</div>
 					
 					<div class="form-group down_btn">
 						<label for="upload_2">2번파일 </label>
-						<a href="${root}download.do?upload=${get_com.upload_2}">${get_com.upload_2}</a>
+						<a href="${root}download.do?upload=${get_detail.upload_2}">${get_detail.upload_2}</a>
 					</div>
 					
 					<div class="form-group down_btn">
 						<label for="upload_3">3번파일 </label>
-						<a href="${root}download.do?upload=${get_com.upload_3}">${get_com.upload_3}</a>
+						<a href="${root}download.do?upload=${get_detail.upload_3}">${get_detail.upload_3}</a>
 					</div>
 					
 					<div class="form-group down_btn">
 						<label for="upload_4">4번파일 </label>
-						<a href="${root}download.do?upload=${get_com.upload_4}">${get_com.upload_4}</a>
+						<a href="${root}download.do?upload=${get_detail.upload_4}">${get_detail.upload_4}</a>
 					</div>
 					
 					<div class="form-group down_btn">
 						<label for="upload_5">5번파일 </label>
-						<a href="${root}download.do?upload=${get_com.upload_5}">${get_com.upload_5}</a>
+						<a href="${root}download.do?upload=${get_detail.upload_5}">${get_detail.upload_5}</a>
 					</div>
 					<div class="form-group" id="pw_grid">
 						
 					</div>
-					<input type="hidden" id="board_idx" name="board_idx" class="form-control" value="${get_com.board_idx}" />
+					<input type="hidden" id="board_idx" name="board_idx" class="form-control" value="${get_detail.board_idx}" />
 					<div class="form-group">
 						<div class="text-right">
-							<a href="${root}procedure.do" class="btn btn-primary">목록보기</a>
+							<a href="${root}company_list.do" class="btn btn-primary">목록보기</a>
 					<c:choose>
-						<c:when test="${empty user_id}">
-					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" />
-							<a href="javascript:pro_update()" class="btn btn-info">수정하기</a>
-						</c:when>
-						<c:otherwise>
+						<c:when test="${user_id eq get_detail.writer}">
 							<a href="javascript:pro_user_update();" class="btn btn-info">수정하기(회원용)</a>
-						</c:otherwise>
+						</c:when>
+						
+						<c:otherwise>
+							
+						</c:otherwise>					
 					</c:choose>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>
 						</div>
-						
 					</div>
-					
 				</div>
 			</div>
 		</div>

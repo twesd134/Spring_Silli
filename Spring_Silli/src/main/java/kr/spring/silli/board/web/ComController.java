@@ -37,12 +37,13 @@ public class ComController {
 	private boardservice boardservice;
 	
 	
+	
 	@RequestMapping("/download.do")
 	public String download(@RequestParam("upload") String all, HttpServletResponse response) throws Exception {
 		// 파일 정보를 가지고 온다 ( 여기서 FileInfo는 스프링에 있는 자료형이 아니고 제가 만든 DTO 입니다 )
 		String fileName = all;
 		// 파일 이름 가지고 오고
-		String Path = "C:\\eGovment_Devloper\\eGovFrameDev-3.7.0-64bit\\workspace\\Spring_sili\\src\\main\\webapp\\resources\\image\\";
+		String Path = "C:\\eGovFrame-4.0.0\\workspace.edu\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Spring_sili\\WEB-INF\\files";
 		String tempfileName = Path + all;
 		System.out.println("tempfileName == " + tempfileName);
 		System.out.println("is == " + (new File(tempfileName)).exists());
@@ -92,7 +93,90 @@ public class ComController {
 		}
 		return "aaaa";
 	}
+	
+	
+	@GetMapping("/visitor_list.do")
+	public String visitor(Model model,CompanyVO companyvo) throws Exception
+	{
+		String gubun="visitor";
+		companyvo.setGubun(gubun);
+		String returnJSP="board/visit/visitor";
+		model.addAttribute("board_list",boardservice.board_list(companyvo));
+		return returnJSP;
+	}
+	
+	@PostMapping("/visitor_list.do")
+	@ResponseBody
+	public Map<String, Object> visito(Model model,CompanyVO companyvo) throws Exception
+	{
+		String gubun="visitor";
+		companyvo.setGubun(gubun);
+		return boardservice.board_list(companyvo);
+	}
+	
+	@GetMapping("/visitor_detail.do")
+	public String v_detail(Model model, CompanyVO companyvo) {
+		String gubun = "visitor";
+		companyvo.setGubun(gubun);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
+		String returnJSP = "board/visit/visitor_detail";
+		return returnJSP;
+	}
+	
+	@RequestMapping("/visitor_update.do")
+	public String v_update(Model model, CompanyVO companyvo) {
+		String returnJSP = "board/visit/visitor_update";
+		String gubun = "visitor";
+		companyvo.setGubun(gubun);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
+		return returnJSP;
+	}
 
+	@PostMapping("/visitor_updatesucess.do")
+	@ResponseBody
+	public Map<String, Object> v_updatesucess(CompanyVO companyvo, HttpServletRequest request, BindingResult result,
+			HttpSession session) {
+
+		String gubun = "visitor";
+		companyvo.setGubun(gubun);
+		return boardservice.update(companyvo, request, session);
+
+	}
+	
+	@RequestMapping("/visitor_write.do")
+	public String visitor_write(CompanyVO companyvo, Model model) {
+
+		String returnJSP = "board/visit/visitor_write";
+		
+		return returnJSP;
+	}
+
+	@RequestMapping("/visitor_writeSuccess.do")
+	@ResponseBody
+	public Map<String, Object> visitor_write1(CompanyVO companyvo, MultipartHttpServletRequest mtf,
+			HttpSession session) {
+
+		String gubun = "visitor";
+		companyvo.setGubun(gubun);
+
+		return boardservice.write(companyvo, mtf, session);
+	}
+
+	
+	@RequestMapping("/visitor_delete.do")
+	@ResponseBody
+	public String v_delete(@RequestParam("board_idx") int board_idx) {
+		String resultJSP = "false";
+		try {
+			boardservice.delete(board_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return resultJSP;
+	}
+	
 	@GetMapping("/company_list.do")
 	public String company(Model model, CompanyVO companyvo) throws Exception {
 		String gubun = "company";
@@ -152,8 +236,8 @@ public class ComController {
 	public String detail(Model model, CompanyVO companyvo) {
 		String gubun = "company";
 		companyvo.setGubun(gubun);
-		CompanyVO get_com = boardservice.get_list(companyvo);
-		model.addAttribute("get_com", get_com);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
 		String returnJSP = "board/com/com_detail";
 		return returnJSP;
 	}
@@ -195,8 +279,8 @@ public class ComController {
 		String returnJSP = "board/com/com_update";
 		String gubun = "company";
 		companyvo.setGubun(gubun);
-		CompanyVO get_com = boardservice.get_list(companyvo);
-		model.addAttribute("get_com", get_com);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
 		return returnJSP;
 	}
 
@@ -216,8 +300,8 @@ public class ComController {
 
 		String gubun = "procedure";
 		companyvo.setGubun(gubun);
-		CompanyVO get_com = boardservice.get_list(companyvo);
-		model.addAttribute("get_com", get_com);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
 		String returnJSP = "board/pro/pro_detail";
 		return returnJSP;
 	}
@@ -254,8 +338,8 @@ public class ComController {
 	public String pro_update(Model model, CompanyVO companyvo) {
 		String gubun = "procedure";
 		companyvo.setGubun(gubun);
-		CompanyVO get_com = boardservice.get_list(companyvo);
-		model.addAttribute("get_com", get_com);
+		CompanyVO get_detail = boardservice.get_list(companyvo);
+		model.addAttribute("get_detail", get_detail);
 		String returnJSP = "board/pro/pro_update";
 		return returnJSP;
 	}
@@ -267,6 +351,5 @@ public class ComController {
 		String gubun = "procedure";
 		companyvo.setGubun(gubun);
 		return boardservice.update(companyvo, request, session);
-
 	}
 }

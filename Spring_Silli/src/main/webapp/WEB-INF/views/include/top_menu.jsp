@@ -108,6 +108,7 @@ var quiz_main=function (user_id) {
 		    	<li><a href="${root}" class="item">홈으로</a></li>
 		        <li><a href="${root}company_list.do" class="item">회사 소개관리</a></li>
 		        <li><a href="${root}procedure_list.do" class="item">생산방안 관리</a></li>
+		        <li><a href="${root}visitor_list.do" class="item">방문자&익명 관리</a></li>
 		        <li><a href="javascript:quiz_main('${user_id}');" class="item">퀴즈게임</a></li>
 		    </ul>
    	</div>

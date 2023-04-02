@@ -8,7 +8,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>회사관리</title>
+<title>방문자 &익명</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -72,7 +72,7 @@ $(document).ready(function(){
 		else {
 			console.log("allData===",allData);
 			$.ajax({
-	    		url : "company_list.do",
+	    		url : "visitor_list.do",
 	    		type : "post",
 	    		data:allData,
 	    		dataType : "json",
@@ -107,7 +107,7 @@ $(document).ready(function(){
     		data:allData,
     	success : function(data){
    			alert("선택영역 삭제 성공");
-   		    location.href="${root}company_list.do"; 		
+   		    location.href="${root}visitor_list.do"; 		
     		},
     		error : function(data) 
     		{
@@ -138,7 +138,7 @@ $(document).ready(function(){
 			listHTML+="<td class='text-center d-none d-md-table-cell'>";
 			listHTML+="<input type='checkbox' value="+obj.board_idx+" name='board_idx'></td>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.board_idx+"</td>";
-			listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a></td>";
+			listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}visitor_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a></td>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.writer+"</td>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.reg_date+"</td>";
 			listHTML+="</tr>";
@@ -183,7 +183,7 @@ $(document).ready(function(){
 			{
 				alert("게시물 선택을 해제해주세요");	
 			}else{
-				location.href="${root}com_write.do"
+				location.href="${root}visitor_write.do"
 			}	
 		} 
 		
@@ -202,7 +202,7 @@ $(document).ready(function(){
 
 <!-- 게시글 리스트 -->
 <div class="container" style="margin-top:100px">
-<h2>회사소개 게시판</h2>
+<h2>방문자 &익명 게시판</h2>
 <form  id="allForm"  name="allForm" method='post' accept=".gif, .jpg, .png .pdf" accept-charset="UTF-8" enctype="multipart/form-data">
 <label for="start">게시일:</label>
 <input type="date" id="start" name="start" value="">  ~ 
@@ -236,7 +236,7 @@ $(document).ready(function(){
 						<td class="text-center d-none d-md-table-cell">
 						<input type="checkbox" id="board_idx" name="board_idx" value="${obj.board_idx }"/></td>
 						<td class="text-center d-none d-md-table-cell">${obj.board_idx}</td>
-						<td class="text-center d-none d-md-table-cell"><a href="${root}com_detail.do?board_idx=${obj.board_idx}">${obj.title}</a></td>
+						<td class="text-center d-none d-md-table-cell"><a href="${root}visitor_detail.do?board_idx=${obj.board_idx}">${obj.title}</a></td>
 						<td class="text-center d-none d-md-table-cell">${obj.writer}</td>
 						<td class="text-center d-none d-md-table-cell">${obj.reg_date}</td>
 					</tr>
@@ -249,26 +249,26 @@ $(document).ready(function(){
      	 <!-- 이전처리 -->
     	<c:if test="${board_list.pageMaker.prev}">
         <li class="paginate_button previous">
-          <a href="${root}company_list.do?page=1">◀◀</a>
-          <a href="${root}company_list.do?page=${board_list.pageMaker.startPage-1}">◀</a>
+          <a href="${root}visitor_list.do?page=1">◀◀</a>
+          <a href="${root}visitor_list.do?page=${board_list.pageMaker.startPage-1}">◀</a>
         </li>
       </c:if>      
       <!-- 페이지번호 처리 -->
           <c:forEach var="pageNum" begin="${board_list.pageMaker.startPage}" end="${board_list.pageMaker.endPage}">
-	         <li class="paginate_button ${board_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}company_list.do?page=${pageNum}">${pageNum}　</a></li>
+	         <li class="paginate_button ${board_list.pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${root}visitor_list.do?page=${pageNum}">${pageNum}　</a></li>
 	      </c:forEach>
 	 <!-- 다음처리 -->
       <c:if test="${board_list.pageMaker.next}">
         <li class="paginate_button next">
-          <a href="${root}company_list.do?page=${board_list.pageMaker.endPage+1}">▶</a>
-          <a href="${root}company_list.do?page=${board_list.pageMaker.lastPage}">▶▶</a>
+          <a href="${root}visitor_list.do?page=${board_list.pageMaker.endPage+1}">▶</a>
+          <a href="${root}visitor_list.do?page=${board_list.pageMaker.lastPage}">▶▶</a>
         </li>
       </c:if> 
 		</ul>
       </div> 
       <!-- END -->
 	</div>
-     	 <form id="pageFrm" action="${root}company_list?page" method="post">
+     	 <form id="pageFrm" action="${root}visitor_list?page" method="post">
          <!-- 게시물 번호(idx)추가 -->         
          <input type="hidden" id="page" name="page" value="${pageMaker.cri.page}"/>
          <input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}"/>

@@ -22,17 +22,19 @@
 		
 	var titleGird="";
 	titleGird+="<label for='board_subject'>제목</label>";
-	titleGird+="<input type='text' id='title' name='title' class='form-control' value='${get_com.title }' /";
+	titleGird+="<input type='text' id='title' name='title' class='form-control' value='${get_detail.title }' /";
 	titleGird+="</div>";
 	
 	var contentGrid="";
 	contentGrid+="<label for='board_content'>내용</label>";
-	contentGrid+="<textarea id='content' name='content' class='form-control' rows='10' style='resize:none'>${get_com.content }</textarea>";
+	contentGrid+="<textarea id='content' name='content' class='form-control' rows='10' style='resize:none'>${get_detail.content }</textarea>";
 	contentGrid+="</div>"
 	$("#title_l").html(titleGird);
 	$("#content_l").html(contentGrid);	
 	}
+	
 	const edit=function(){
+		
 		var maxSize=1024*1024*10;
 		const title=$("#title").val();
 		const writer=$("#writer").val();
@@ -47,15 +49,14 @@
        				if(upload_size_ii<=maxSize)
        				{
        				con.push(upload_size_ii);
-       				} 
-       				else {
+       				} else {
    					alert(ii+"번 파일 10m 이하만 첨부가능 합니다");
    					$("#multi_"+ii+"").val('');
    					return false;
-   					}
    				}
-			} 
-		 
+   			}
+		}  
+		
 		const gong="";
 			
 		if (!confirm("수정하시겠습니까?")) {
@@ -63,13 +64,13 @@
 		}
 		else {
 				const allData = new FormData(document.getElementById("allForm"));
-				for(var i=1;i<=5;i++) {	
+				 for(var i=1;i<=5;i++)
+	    		{	
 		    		var fileName = $("#multi_"+i+"").val();
 		    			fileName = fileName.slice(fileName.indexOf(".") + 1).toLowerCase();
 		        		if(fileName!="")
 		        		{
-		        		
-		        			const FileExt=["png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt","exe"];
+		        	   		const FileExt=["png","jpg","gif","bmp","pdf","docx","xlsx","xls","pptx","ppt"];
 	 	        			if(fileName != "" && FileExt.indexOf(fileName)<0)
 				        		{
 				           		alert("이미지 파일은  형식에 맞지 않습니다.");
@@ -77,41 +78,43 @@
 				    			return false;
 				           		}
 		        		}
-	    	     }
+	    		}
 			 	$.ajax({
-		    		url : "pro_updatesucess.do",
+		    		url : "visitor_updatesucess.do",
 		    		type : "post",
 		    		processData: false,
 		    	    contentType: false,
 		    		data:allData,
-			    	success : function(data){
-			    			if(data.chk == "ERROR") {
-	    	    				alert(data.message);
-	    	    				$("#multi_"+data.ii+"").val("");
-	    	    			} else {
-			    				if(data.code == "OK") {
-			   					alert("수정성공");
-			   	    		    location.href="${root}pro_detail.do?board_idx="+data.boardIdx+"";
-		    	    			}
-			    				
-			    				else if(data.code == "ERROR_FILE") {
-		    	    				alert(data.message);
-			    				}
-			    					else {
-		    	    				alert(data.message);
-			    					}
-	    	    		    }
-			    		},
-		    		error : function(data) {
-		    			  alert("실패");
-		    		}
-	    	   	 });
-			  }
-		   }
-		
+		    		success : function(data){
+		    		if(data.chk == "ERROR") {
+	    	    			alert(data.message);
+	    	    			$("#multi_"+data.ii+"").val("");
+	    	    	}
+		    		else {
+	    				if(data.code == "OK") {
+	   					alert("수정성공");
+	   	    		    location.href="${root}visitor_detail.do?board_idx="+data.boardIdx+"";
+    	    			}
+	    				else if(data.code == "ERROR_FILE") {
+    	    			//alert('지원되지 않은 파일 형식입니다')
+    	    			alert(data.message)
+    	    			}
+	    	    			else {
+	    	    			//alert('오류가 발생되었습니다. 관리자에 문의하세요.')
+	    	    			alert(data.message)
+	    	    			}
+	    	      	 	}
+	    		  },
+	    		  error : function(data) 
+	    		  {
+	    			  alert("실패");
+	    		  }
+	    	   });
+			 }
+		  }
 		const list_back=function() {
 				alert("취소되었습니다");
-				location.href="${root}procedure_list.do";
+				location.href="${root}visitor_list.do";
 		  }
 </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>

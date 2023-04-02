@@ -186,7 +186,6 @@
 	
 	<select id="idx" parameterType="kr.spring.silli.board.vo.CompanyVO" resultType="java.lang.Integer">
 	<![CDATA[
-		
 		select max(board_idx+1) as idx
 			from com_board
 			where gubun=#{gubun}

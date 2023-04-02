@@ -22,12 +22,12 @@
 		
 	var titleGird="";
 	titleGird+="<label for='board_subject'>제목</label>";
-	titleGird+="<input type='text' id='title' name='title' class='form-control' value='${get_com.title }' /";
+	titleGird+="<input type='text' id='title' name='title' class='form-control' value='${get_detail.title }' /";
 	titleGird+="</div>";
 	
 	var contentGrid="";
 	contentGrid+="<label for='board_content'>내용</label>";
-	contentGrid+="<textarea id='content' name='content' class='form-control' rows='10' style='resize:none'>${get_com.content }</textarea>";
+	contentGrid+="<textarea id='content' name='content' class='form-control' rows='10' style='resize:none'>${get_detail.content }</textarea>";
 	contentGrid+="</div>"
 	$("#title_l").html(titleGird);
 	$("#content_l").html(contentGrid);	
@@ -128,48 +128,48 @@
 					<form  id="allForm"  name="allForm" method='post' accept=".gif, .jpg, .png .pdf .exe .html" accept-charset="UTF-8" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="board_writer_name">작성자</label>
-						<input type="text" id="writer" name="writer" class="form-control" value="${get_com.writer }(작성자는 수정 불가능)" disabled="disabled"/>
+						<input type="text" id="writer" name="writer" class="form-control" value="${get_detail.writer }(작성자는 수정 불가능)" disabled="disabled"/>
 					</div>
 					<div class="form-group" id="title_l">
 						<label for="title">제목</label>
-						<input type="text" id="title" name="title" class="form-control" value="${get_com.title }" />
+						<input type="text" id="title" name="title" class="form-control" value="${get_detail.title }" />
 					</div>
 					<div class="form-group" id="content_l">
 						<label for="content">내용</label>
-						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none">${get_com.content }</textarea>
+						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none">${get_detail.content }</textarea>
 					</div>
 					
 					<div class="form-group">
 						<label for="upload_1">첨부파일</label>
-						${get_com.upload_1 }
+						${get_detail.upload_1 }
 						<input type="file" id="multi_1" name="multi_1" class="form-control" />
 					</div>
 					
 					<div class="form-group">
 						<label for="upload_2">첨부파일2</label>
-						${get_com.upload_2 }
-						<input type="file" id="multi_2" name="multi_2" class="form-control" value="${get_com.upload_2 }" />
+						${get_detail.upload_2 }
+						<input type="file" id="multi_2" name="multi_2" class="form-control" value="${get_detail.upload_2 }" />
 					</div>
 					
 					<div class="form-group">
 						<label for="upload_3">첨부파일3</label>
-						${get_com.upload_3 }
-						<input type="file" id="multi_3" name="multi_3" class="form-control" value="${get_com.upload_3 }" />
+						${get_detail.upload_3 }
+						<input type="file" id="multi_3" name="multi_3" class="form-control" value="${get_detail.upload_3 }" />
 					</div>
 					
 					<div class="form-group">
 						<label for="upload_4">첨부파일4</label>
-						${get_com.upload_4 }
-						<input type="file" id="multi_4" name="multi_4" class="form-control" value="${get_com.upload_4 }" />
+						${get_detail.upload_4 }
+						<input type="file" id="multi_4" name="multi_4" class="form-control" value="${get_detail.upload_4 }" />
 					</div>
 					
 					<div class="form-group">
 						<label for="upload_5">첨부파일5</label>
-						${get_com.upload_5 }
-						<input type="file" id="multi_5" name="multi_5" class="form-control" value="${get_com.upload_5 }" />
+						${get_detail.upload_5 }
+						<input type="file" id="multi_5" name="multi_5" class="form-control" value="${get_detail.upload_5 }" />
 					</div>
 					
-					<input type="hidden" name="board_idx" class="form-control" value="${get_com.board_idx}" />
+					<input type="hidden" name="board_idx" class="form-control" value="${get_detail.board_idx}" />
 					
 					</form>
 					<div class="form-group">

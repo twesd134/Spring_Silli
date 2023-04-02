@@ -36,13 +36,13 @@
 			const board_idx=$("#board_idx").val();
 		 	const all= {"board_idx": board_idx };
 			$.ajax({
-	    		url : "com_delete.do",
+	    		url : "visitor_delete.do",
 	    		type : "get",
 	    		data:all,
 	    		success : function(data){
 				console.log('data==', data);
 				alert("삭제되었습니다.");
-    		    location.href="${root}company_list.do";						
+    		    location.href="${root}visitor_list.do";						
 	    		},
     		  	error : function(data) {
 	    			  alert("실패");
@@ -55,7 +55,7 @@
 			}
 	}
 
-	var com_update=function() {
+	var visitor_update=function() {
 		var listHTML="";
 		listHTML+="<label for='content'>등록비밀번호 입력(방문자전용)</label>";	
 		listHTML+="<input type='password' id='gue_chk' name='gue_chk' class='form-control' maxlength='150'/>";
@@ -67,12 +67,12 @@
 		if(gue_pw==gue_chk)
 			{
 		 $.ajax({
-    		url : "com_update.do",
+    		url : "visitor_update.do",
     		type : "post",
     		data:all,
     		success : function(data){
 			alert("수정페이지 진입");
-			location.href="${root}com_update.do?board_idx="+board_idx
+			location.href="${root}visitor_update.do?board_idx="+board_idx
 			},
 		  error : function(data) 
 		   {
@@ -89,16 +89,16 @@
 	}
 	
 	
-	var com_user_update=function () {
+	var visitor_user_update=function () {
 		const board_idx=$("#board_idx").val();
 		const all={board_idx:board_idx};
 		$.ajax({
-	    		url : "com_update.do",
+	    		url : "visitor_update.do",
 	    		type : "post",
 	    		data:all,
     		success : function(data){
 				alert("수정페이지 진입");
-				location.href="${root}com_update.do?board_idx="+board_idx
+				location.href="${root}visitor_update.do?board_idx="+board_idx
 				},
 			  error : function(data) 
 			   {
@@ -162,18 +162,11 @@
 						
 					</div>
 					<input type="hidden" id="board_idx" name="board_idx" class="form-control" value="${get_detail.board_idx}" />
+					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_detail.gue_pw}" />
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}company_list.do" class="btn btn-primary">목록보기</a>
-					<c:choose>
-						<c:when test="${user_id eq get_detail.writer}">
-							<a href="javascript:com_user_update();" class="btn btn-info">수정하기(회원용)</a>
-						</c:when>
-						
-						<c:otherwise>
-							
-						</c:otherwise>					
-					</c:choose>
+							<a href="javascript:visitor_update();" class="btn btn-info">수정하기(회원용)</a>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>
 						</div>
 					</div>
