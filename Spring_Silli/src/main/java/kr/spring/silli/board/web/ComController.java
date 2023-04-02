@@ -43,7 +43,7 @@ public class ComController {
 		// 파일 정보를 가지고 온다 ( 여기서 FileInfo는 스프링에 있는 자료형이 아니고 제가 만든 DTO 입니다 )
 		String fileName = all;
 		// 파일 이름 가지고 오고
-		String Path = "C:\\eGovFrame-4.0.0\\workspace.edu\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Spring_sili\\WEB-INF\\files";
+		String Path = "C:\\eGovFrame-4.0.0\\workspace.edu\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Spring_sili\\WEB-INF\\files\\";
 		String tempfileName = Path + all;
 		System.out.println("tempfileName == " + tempfileName);
 		System.out.println("is == " + (new File(tempfileName)).exists());
@@ -55,7 +55,7 @@ public class ComController {
 		long fileLength = file.length();
 		// 데이터베이스에 없는 정보는 파일로 만들어서 가져온다. 이 경우엔 Content-Length 가져온 것
 		try {
-			// 특수문자에 대한 보안 추가
+			// 업로드 파일에 대한 방어처리
 			String[] strArray = { "..", "/", "\\" };
 			System.out.println("strArray" + strArray);
 			for (int i = 0; i <= strArray.length; i++) {
