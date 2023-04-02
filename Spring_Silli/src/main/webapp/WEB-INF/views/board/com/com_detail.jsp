@@ -166,13 +166,14 @@
 						<div class="text-right">
 							<a href="${root}company_list.do" class="btn btn-primary">목록보기</a>
 					<c:choose>
-						<c:when test="${empty user_id}">
-					<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" />
-							<a href="javascript:com_update()" class="btn btn-info">수정하기</a>
-						</c:when>
-						<c:otherwise>
+						<c:when test="${user_id eq get_com.writer}">
 							<a href="javascript:com_user_update();" class="btn btn-info">수정하기(회원용)</a>
-						</c:otherwise>
+						</c:when>
+						
+						<c:otherwise>
+<%-- 							<input type="hidden" id="gue_pw" name="gue_pw" class="form-control" value="${get_com.gue_pw}" /> --%>
+<!-- 							<a href="javascript:com_update()" class="btn btn-info">수정하기</a>						 -->
+						</c:otherwise>					
 					</c:choose>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>
 						</div>

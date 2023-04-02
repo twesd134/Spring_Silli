@@ -31,22 +31,24 @@ public class boardserviceImpl implements boardservice{
 	@Override
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
-		String[] xss_char={"<",">","&","tab","new line","%","in!","<sciprt>","</sciprt>"};
-		List<String> xss_List = new ArrayList<>(Arrays.asList(xss_char));
 		
-		if(companyvo.getTitle().contains("<") || companyvo.getTitle().contains(">") || companyvo.getContent().contains(">") ||companyvo.getContent().contains("<") )
+		if(companyvo.getTitle().contains("<") || companyvo.getTitle().contains(">") || companyvo.getTitle().contains("<script>"))
 		{
-			String bum_in=companyvo.getWriter();
-			companyvo.setBum_in(bum_in);
-			String xss_title=companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			String xss_content =companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			String xss_writer =companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			
+			String xss_title=companyvo.getTitle().replace("<","&lt;").replace(">","&gt;").replace("<script>","&lt;script&gt;");
 			companyvo.setTitle(xss_title);
+		}
+		
+		if(companyvo.getContent().contains("<") ||companyvo.getContent().contains(">") || companyvo.getTitle().contains("<script>"))
+		{
+			String xss_content =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;").replace("<script>","&lt;script&gt;");
 			companyvo.setContent(xss_content);
+		}
+		
+		if(companyvo.getWriter().contains("<") ||companyvo.getWriter().contains(">") || companyvo.getTitle().contains("<script>"))
+		{
+			String xss_writer =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;").replace("<script>","&lt;script&gt;");
 			companyvo.setWriter(xss_writer);
 		}
-
 		
 		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
@@ -132,19 +134,19 @@ public class boardserviceImpl implements boardservice{
 	@Override
 	public Map<String,Object> update(CompanyVO companyvo,HttpServletRequest request,HttpSession session) {
 		
-		String[] xss_char={"<",">","&","tab","new line","%","in!","<sciprt>","</sciprt>"};
-		List<String> xss_List = new ArrayList<>(Arrays.asList(xss_char));
-		
-		if(xss_List.contains(companyvo.getTitle()) || xss_List.contains(companyvo.getWriter()) || xss_List.contains(companyvo.getContent()))
+		if(companyvo.getTitle().contains("<") || companyvo.getTitle().contains(">") || companyvo.getTitle().contains("<script>"))
 		{
-			String xss_title=companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			String xss_content =companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			String xss_writer =companyvo.getTitle().replace("<","&lt").replace(">","&gt");
-			
+			String xss_title=companyvo.getTitle().replace("<","&lt;").replace(">","&gt;").replace("<script>","&lt;script&gt;");
 			companyvo.setTitle(xss_title);
-			companyvo.setContent(xss_content);
-			companyvo.setWriter(xss_writer);
 		}
+		
+		if(companyvo.getContent().contains("<") ||companyvo.getContent().contains(">") || companyvo.getTitle().contains("<script>"))
+		{
+			String xss_content =companyvo.getTitle().replace("<","&lt;").replace(">","&gt;").replace("<script>","&lt;script&gt;");
+			companyvo.setContent(xss_content);
+		}
+		
+		
 		String uploadPath = session.getServletContext().getRealPath("/")+"WEB-INF/files/";
 		System.out.println("uploadPath: "+uploadPath);
 		Map<String,Object> map = new HashMap<String, Object>();
