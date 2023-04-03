@@ -21,6 +21,19 @@ public class QuizController {
 	@Resource
 	private QuizService QuizService;
 	
+	@GetMapping("/quiz_list.do")
+	public String quiz_list3(Model model,QuestionVO questionvo,HttpSession seesion)
+	{
+		String returnJSP = "quiz/quiz_list";
+		model.addAttribute("chk", QuizService.chk(questionvo,seesion));
+		return returnJSP;
+	}
+	
+	@PostMapping("/quiz_list.do")
+	@ResponseBody
+	public Map<String, Object> quiz_list2(QuestionVO questionvo,HttpSession seesion) throws Exception {
+		return QuizService.chk(questionvo,seesion);
+	}
 	
 	@PostMapping("/faile_insert.do")
 	@ResponseBody
@@ -51,9 +64,7 @@ public class QuizController {
 	@PostMapping("/quiz_main.do")
 	@ResponseBody
 	public Map<String, Object> quiz_list(QuestionVO questionvo,HttpSession seesion) throws Exception {
-		
 		return QuizService.chk(questionvo,seesion);
-		
 	}
 	
 	@GetMapping("/quiz_faile.do")

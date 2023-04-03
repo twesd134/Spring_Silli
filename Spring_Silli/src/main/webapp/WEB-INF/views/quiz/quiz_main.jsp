@@ -125,11 +125,16 @@ function hideTr(_index) {
 		location.href="${root}quiz_write.do";
 	}
 	
-	var quiz_del=function() {
+	var quiz_del = function() {
 		location.href="${root}quiz_del.do";
 	}
 	
+	var quiz_list = function() {
+		location.href="${root}quiz_list.do";
+	}
+	
 </script>
+
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <body>
 <div class="container" style="margin-top:100px">
@@ -180,8 +185,10 @@ function hideTr(_index) {
 		<form action="${root}quiz_faile.do">
 			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
-		<input type="button" onclick="quiz_write();" class="btn btn-dange" value="문제추가하기">
+		<input type="button" onclick="quiz_delete();" class="btn btn-dange" value="문제삭제">
 		</form>
+			<input type="button" onclick="quiz_write();" class="btn btn-dange" value="문제추가하기">
+			<input type="button" onclick="quiz_list();" class="btn btn-dange" value="문제목록">
 		</c:otherwise>
 		</c:choose>
 	</div>

@@ -3,45 +3,20 @@
 <mapper namespace="kr.spring.silli.quiz.mapper.QuizMapper">
 
 <insert id="faile_insert" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
-		
-		<choose>
-			<when test="user_id != null">
 			<![CDATA[
-			INSERT INTO 
-				fail_list
-					(question
-					,answer
-					,user_id) 
-				values (#{question}
-						,#{answer}
-						,#{user_id})
-				ON DUPLICATE KEY
-				UPDATE 
-					question = #{question}
-					,answer = #{answer}
-					,user_id=#{user_id}
+			insert ignore 
+				into 
+					fail_list(
+							question
+							,answer
+							,user_id
+							)
+					values(
+							#{question}
+							,#{answer}
+							,#{user_id}
+							)
 			]]>
-			</when>
-			<otherwise>
-			<![CDATA[
-			INSERT INTO 
-				fail_list
-					(question
-					,answer
-					,user_id
-					) 
-				values (#{question}
-						,#{answer}
-						,"visitant"
-						)
-				ON DUPLICATE KEY
-				UPDATE 
-					question = #{question}
-					,answer = #{answer}
-					,user_id = "visitant"
-			]]>
-			</otherwise>
-		</choose>
 	</insert>
 	
 	
@@ -59,14 +34,6 @@
 			user_id=#{user_id}
 		]]>
 		</when>
-		<otherwise>
-		<![CDATA[
-		where 
-			question=#{question} 
-			AND
-			user_id="visitant"
-		]]>		
-		</otherwise>
 	</choose>
 	</delete>
 	
@@ -86,13 +53,6 @@
 				order by rand()
 		]]>
 		</when>
-		<otherwise>
-		<![CDATA[
-		where 
-			user_id="visitant"
-				order by rand()
-		]]>		
-		</otherwise>
 	</choose>
 	</select>
 	
@@ -111,7 +71,7 @@
 				select question
 						,answer
 						,user_id 
-				from ans ) AND user_id="visitant" order by rand()
+				from ans ) AND user_id=#{user_id} order by rand()
 		]]>	
 		
 	</select>
@@ -136,24 +96,6 @@
 				from ans ) AND user_id=#{user_id} order by rand()
 		]]>
 		</when>
-		<otherwise>
-			<![CDATA[
-		select question
-			   ,answer
-			   ,user_id 
-		from quiz 
-		where(
-			question
-			,answer
-			,user_id
-			) 
-			not in(
-				select question
-						,answer
-						,user_id 
-				from ans ) AND user_id="visitant" order by rand()
-		]]>
-		</otherwise>
 		</choose>
 	</select>
 	
@@ -179,15 +121,6 @@
 				user_id=#{user_id}	
 		]]>
 		</when>
-		<otherwise>
-		<![CDATA[
-		delete 
-			from
-				ans
-			where 
-				user_id="visitant"
-		]]>
-		</otherwise>
 		</choose>
 	</delete>
 	
@@ -207,21 +140,6 @@
 					)
 		]]>
 		</when>
-		<otherwise>
-		<![CDATA[
-			insert into 
-				ans(
-					question
-					,answer
-					,user_id)
-				values(
-					#{question}
-					,#{answer}
-					,"visitant"
-					)
-		]]>				
-		
-		</otherwise>
 		</choose>
 	</insert>
 	
