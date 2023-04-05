@@ -39,10 +39,10 @@ $(document).ready(function(){
 });
 
 function hideTr(_index) {
-			$('table#tbl1 tr').eq((_index)).hide();
-			$('table#tbl1 tr').eq((_index + 1)).show();
+			$("#content_div").eq((_index)).hide();
+			$("#content_div").eq((_index + 1)).show();
 			
-			if(_index==$('table#tbl1 tr').length-1)
+		/* 	if($("#content_div").eq((_index + 1))==-1)
 			{
 				alert("게임이 모두 끝났습니다");
 				if (!confirm("다시 시작 하시겠습니까?")) {
@@ -52,7 +52,7 @@ function hideTr(_index) {
 				else {
 					location.href="${root}quiz_main.do";
 				} 
-			}
+			} */
 }
 </script>
 </head>
@@ -60,16 +60,16 @@ function hideTr(_index) {
 	
 	var chk = function (_index) {
 	
-		const question=$('table#tbl1 tr').eq((_index)).find('#question').val();
-		const answer=$('table#tbl1 tr').eq((_index)).find('#answer').val();
-		const ans=$('table#tbl1 tr').eq((_index)).find('#ans').val();
+		const question=$("#content_div").eq((_index)).find('#question').val();
+		const answer=$("#answer_div").eq((_index)).find('#answer').val();
+		const ans=$("#ans_div").eq((_index)).find('#ans').val();
 		const user_id=$("#user_id").val();
 		const allData={question:question,answer:answer,ans:ans};
 		const faileData={user_id:user_id,question:question,answer:ans};
 		if(answer!=ans)
 		 {
 			alert("정답이 아닙니다");
-			$('table#tbl1 tr').eq((_index)).find('#answer').focus();
+			$("#answer_div").eq((_index)).find('#answer').focus();
 			console.log("faileData===",faileData);
 			$.ajax({
 	    		url : "faile_insert.do",
@@ -88,10 +88,11 @@ function hideTr(_index) {
 		
 		else if(answer==ans) {
 			alert("정답입니다");
-			$('table#tbl1 tr').eq((_index)).hide();
-			$('table#tbl1 tr').eq((_index + 1)).show();
-			$('table#tbl1 tr').eq((_index + 1)).find('#answer').focus();
+			$("#content_div").eq((_index)).hide();
+			$("#content_div").eq((_index + 1)).show();
+			$("#answer_div").eq((_index + 1)).find('#answer').focus();
 			const all={question:question,answer:ans};
+			console.log(all);
 			$.ajax({
 	    		url : "ans_insert.do",
 	    		type : "post",
@@ -108,7 +109,10 @@ function hideTr(_index) {
 			location.reload();
 		}
 		
-		if(_index==$('table#tbl1 tr').length-1)
+		var status=$("#status").val();
+		console.log("status",status);
+		
+		if($("#status").val()==1)
 		{
 			alert("게임이 모두 끝났습니다");
 			if (!confirm("다시 시작 하시겠습니까?")) {
@@ -142,55 +146,36 @@ function hideTr(_index) {
 		<div class="card-body" id="view">
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
-		<c:choose>
-		<c:when test="${empty user_id}">
-		<li>${fn:length(chk.chk)} 문제 남았습니다</li>
-		<li> 방문자님 문제</li> 
-		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
-		<tr id="dis${status.index+1}" >
-			<td>${status.index+1}</td>
-			<td><input type="text" name="question" id="question" value="${obj.question}" readonly="readonly"/></td>
-			<td><input type="text" name="answer" id="answer" /></td>
-				<td>
-				<input type="button" class='btn btn-primary' value="답제출"  id="chk"  onclick="chk(${status.index})" />
-				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
-				</td>
-		</tr>
-		</c:forEach>
-		</table>
-		<br>
-		</div>
-		<form action="${root}quiz_faile.do">
-			<input type="hidden" name="user_id" id="user_id" value="visitant"/>
-			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
-		</form>
-		</c:when>
-		<c:otherwise>
 		<li>${fn:length(chk.re_chk)} 문제 남았습니다</li>
 		<li>${user_id }님 문제 입니다 </li>
 		<c:forEach var="obj" items="${chk.re_chk}" varStatus="status" >
-		<tr id="dis${status.index+1}" >
-			<td>${status.index+1}</td>
-			<td><input type="text" name="question" id="question" value="${obj.question}" readonly="readonly"/></td>
-			<td><input type="text" name="answer" id="answer" /></td>
-				<td>
+		<div id="dis${status.index+1}" >
+			
+			<div class="form-group" id="content_div">
+				<label for="question">문제</label>
+				<textarea id="question" name="question" class="form-control" rows="30" maxlength='5000' style="resize:none" readonly="readonly">${obj.question }</textarea>
+			</div>
+			<div class="form-group" id="answer_div">
+					<label for="answer">답</label>
+					<input type="text" id="answer" name="answer" class="form-control" maxlength='150' />
+			</div>
+				<div class="form-group" id="ans_div">
 				<input type="button" class='btn btn-primary' value="답제출"  id="chk"  onclick="chk(${status.index})" />
 				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
-				</td>
-		</tr>
+				</div>
+		</div>
 		</c:forEach>
 		</table>
 		<br>
 		</div>
 		<form action="${root}quiz_faile.do">
+			<input type="hidden" name="status" id="status" value="${fn:length(chk.re_chk)}"/>
 			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
 		<input type="button" onclick="quiz_delete();" class="btn btn-dange" value="문제삭제">
 		</form>
 			<input type="button" onclick="quiz_write();" class="btn btn-dange" value="문제추가하기">
 			<input type="button" onclick="quiz_list();" class="btn btn-dange" value="문제목록">
-		</c:otherwise>
-		</c:choose>
 	</div>
 </div>
 </body>
