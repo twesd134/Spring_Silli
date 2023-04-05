@@ -39,20 +39,10 @@ $(document).ready(function(){
 });
 
 function hideTr(_index) {
+			
 			$("#content_div").eq((_index)).hide();
 			$("#content_div").eq((_index + 1)).show();
 			
-		/* 	if($("#content_div").eq((_index + 1))==-1)
-			{
-				alert("게임이 모두 끝났습니다");
-				if (!confirm("다시 시작 하시겠습니까?")) {
-					alert("취소 하셨습니다");
-					location.href="${root}"
-					}
-				else {
-					location.href="${root}quiz_main.do";
-				} 
-			} */
 }
 </script>
 </head>
@@ -172,7 +162,6 @@ function hideTr(_index) {
 			<input type="hidden" name="status" id="status" value="${fn:length(chk.re_chk)}"/>
 			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
-		<input type="button" onclick="quiz_delete();" class="btn btn-dange" value="문제삭제">
 		</form>
 			<input type="button" onclick="quiz_write();" class="btn btn-dange" value="문제추가하기">
 			<input type="button" onclick="quiz_list();" class="btn btn-dange" value="문제목록">
