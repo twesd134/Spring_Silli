@@ -27,32 +27,45 @@
 </style>
 </head>
  <script type="text/javascript">	
- function regit() {
-	 var question=$("#question").val();
-	 var answer=$("#answer").val();
-	 var user_id=$("#user_id").val();
-	 const all={question:question,answer:answer,user_id:user_id};
-	 
-	 if (!confirm("등록 하시겠습니까?")) {
-			alert("취소 하셨습니다");
-			location.href="${root}quiz_main.do"
-		} else {
-	$.ajax({
-		url : "quiz_write.do",
-		type : "post",
-		data:all,
-		dataType : "text",
-	success : function(data){
-			alert("등록완료");
-			location.href="${root}quiz_main.do";
-		},
-		error : function(data) 
-		{
-			console.log("data==",data);
-		},
-	 });
+	function regit() {
+		 var question=$("#question").val();
+		 var answer=$("#answer").val();
+		 var user_id=$("#user_id").val();
+		 const all={question:question,answer:answer,user_id:user_id};
+		 
+		 if (!confirm("등록 하시겠습니까?")) {
+				alert("취소 하셨습니다");
+				location.href="${root}quiz_main.do"
+			} else {
+		$.ajax({
+			url : "quiz_write.do",
+			type : "post",
+			data:all,
+			dataType : "text",
+		success : function(data){
+				alert("등록완료");
+				location.href="${root}quiz_main.do";
+			},
+			error : function(data) 
+			{
+				console.log("data==",data);
+			},
+		 });
+		}
 	}
- }
+	
+	var add=function() {
+		var listHTML="";
+		listHTML+="<div class='form-group' id='content_l'>";
+		listHTML+="<label for='question'>문제</label>";
+		listHTML+="<textarea id='question' name='question' class='form-control' rows='10' maxlength='2000' style='resize:none'></textarea>";
+		listHTML+="<div class='form-group' id='title_l'>";
+		listHTML+="<label for='answer'>답</label>";
+		listHTML+="<input type='text' id='answer' name='answer' class='form-control' maxlength='150'/>";
+		listHTML+="</div>";
+		$("#question_cnt").html(listHTML);
+		
+	}
 </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <body>
@@ -71,11 +84,14 @@
 						<label for="answer">답</label>
 						<input type="text" id="answer" name="answer" class="form-control" maxlength='150' value="" />
 					</div>
+					<div id="question_cnt">
+					</div>
 					<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}quiz_main.do" class="btn btn-primary">목록보기</a>
 							<input type="button" onclick="regit(); return false;" class="btn btn-info" value="등록완료" />
+							<input type="button" onclick="add(); return false;" class="btn btn-info" value="질문추가" />
 							<input type="reset" class="btn btn-danger"  value="초기화"/>
 						</div>
 					 </div>

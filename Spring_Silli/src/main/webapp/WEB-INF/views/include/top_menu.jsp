@@ -102,9 +102,8 @@ var quiz_main=function (user_id) {
 
 </script>
 	<div class="menu">
-		  	<div>메뉴얼목록</div>
-		    <input type="checkbox" id="expand-menu" name="expand-menu">
 		    <ul>
+		  		<li>메뉴얼목록</li>
 		    	<li><a href="${root}" class="item">홈으로</a></li>
 		        <li><a href="${root}company_list.do" class="item">회사 소개관리</a></li>
 		        <li><a href="${root}procedure_list.do" class="item">생산방안 관리</a></li>

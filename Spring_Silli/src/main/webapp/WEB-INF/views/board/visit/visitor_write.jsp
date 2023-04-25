@@ -130,7 +130,7 @@ img{max-width:100%;}
    </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 <body>
-<h2>회사 소개 글쓰기</h2>
+<h2>글쓰기</h2>
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-sm-3"></div>

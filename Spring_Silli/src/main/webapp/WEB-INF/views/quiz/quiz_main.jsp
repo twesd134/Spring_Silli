@@ -49,7 +49,7 @@ function hideTr(_index) {
 <script>
 	
 	var chk = function (_index) {
-	
+			
 		const question=$("#content_div").eq((_index)).find('#question').val();
 		const answer=$("#answer_div").eq((_index)).find('#answer').val();
 		const ans=$("#ans_div").eq((_index)).find('#ans').val();
@@ -115,6 +115,11 @@ function hideTr(_index) {
 		}
 	}
 	
+	var enterkey=function () {
+		if (window.event.keyCode == 13) {
+			
+		}
+	}
 	var quiz_write = function() {
 		location.href="${root}quiz_write.do";
 	}
@@ -150,7 +155,7 @@ function hideTr(_index) {
 					<input type="text" id="answer" name="answer" class="form-control" maxlength='150' />
 			</div>
 				<div class="form-group" id="ans_div">
-				<input type="button" class='btn btn-primary' value="답제출"  id="chk"  onclick="chk(${status.index})" />
+				<input type="button" class='btn btn-primary' value="답제출"  id="chk" onkeyup="enterkey()"  onclick="chk(${status.index})" />
 				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
 				</div>
 		</div>
