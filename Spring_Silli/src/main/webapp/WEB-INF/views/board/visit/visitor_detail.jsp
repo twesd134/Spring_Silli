@@ -166,7 +166,7 @@
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}company_list.do" class="btn btn-primary">목록보기</a>
-							<a href="javascript:visitor_update();" class="btn btn-info">수정하기</a>
+							<a href="javascript:visitor_update();" class="btn btn-info">수정하기(방문자용)</a>
 							<a href="javascript:del();" class="btn btn-danger">삭제하기</a>
 						</div>
 					</div>
