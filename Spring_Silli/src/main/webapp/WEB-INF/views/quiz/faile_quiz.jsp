@@ -36,7 +36,6 @@ $(document).ready(function(){
 	<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
 	$("#dis${status.index+2}").hide();
 	</c:forEach>
-
 });
 
 </script>
