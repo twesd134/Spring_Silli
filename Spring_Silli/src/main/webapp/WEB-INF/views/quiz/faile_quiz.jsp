@@ -32,10 +32,10 @@ $(document).ready(function(){
 	
 	$("#answer").focus();
 	$("#dis1").show();
-	$("#dis2").hide();
-	$("#dis3").hide();
-	$("#dis4").hide();
-	$("#dis5").hide();
+	
+	<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
+	$("#dis${status.index+2}").hide();
+	</c:forEach>
 });
 
 function hideTr(_index) {
