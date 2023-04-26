@@ -55,15 +55,22 @@
 	}
 	
 	var add=function() {
+		
+		oTbl = document.getElementById("add");
+		var oRow = oTbl.insertRow();
+		oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+		var oCell = oRow.insertCell();
+		
 		var listHTML="";
 		listHTML+="<div class='form-group' id='content_l'>";
 		listHTML+="<label for='question'>문제</label>";
 		listHTML+="<textarea id='question' name='question' class='form-control' rows='10' maxlength='2000' style='resize:none'></textarea>";
+		listHTML+="</div>";
 		listHTML+="<div class='form-group' id='title_l'>";
 		listHTML+="<label for='answer'>답</label>";
 		listHTML+="<input type='text' id='answer' name='answer' class='form-control' maxlength='150'/>";
 		listHTML+="</div>";
-		$("#question_cnt").html(listHTML);
+		oCell.innerHTML=listHTML;
 		
 	}
 </script>
@@ -75,6 +82,7 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
+					<table id="add" width="555">
 					<form  id="allForm"  name="allForm" method='post' accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return false;">
 					<div class="form-group" id="content_l">
 						<label for="question">문제</label>
@@ -87,7 +95,8 @@
 					<div id="question_cnt">
 					</div>
 					<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
-					<div class="form-group">
+					</table>
+					<div class="form-group" >
 						<div class="text-right">
 							<a href="${root}quiz_main.do" class="btn btn-primary">목록보기</a>
 							<input type="button" onclick="regit(); return false;" class="btn btn-info" value="등록완료" />
