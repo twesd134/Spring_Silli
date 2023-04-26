@@ -36,14 +36,9 @@ $(document).ready(function(){
 	<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
 	$("#dis${status.index+2}").hide();
 	</c:forEach>
+
 });
 
-function hideTr(_index) {
-			console.log(_index);
-			$("#content_div").eq((_index)).hide();
-			$("#content_div").eq((_index + 1)).show();
-			
-}
 </script>
 </head>
 <script>

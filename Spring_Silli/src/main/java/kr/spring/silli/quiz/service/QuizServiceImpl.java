@@ -29,7 +29,6 @@ public class QuizServiceImpl implements QuizService {
 		
 		if(re_chk.size()==0)
 		{	
-			QuizMapper.ans_del(questionvo);
 			re_chk=QuizMapper.requiz(questionvo);
 			
 		}
