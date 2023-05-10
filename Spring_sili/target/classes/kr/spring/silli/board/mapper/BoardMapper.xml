@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.spring.silli.board.mapper.BoardMapper">
+	<insert id="write" parameterType="kr.spring.silli.board.vo.CompanyVO"  useGeneratedKeys="true" keyProperty="board_idx">
+		<![CDATA[
+		insert into 
+			com_board(
+			upload_1
+			,upload_2
+			,upload_3
+			,upload_4
+			,upload_5
+			,title
+			,writer
+			,content
+			,reg_date
+			,gubun 
+			,gue_pw
+			,bum_in
+			)
+		values(
+			#{upload_1}
+			,#{upload_2}
+			,#{upload_3}
+			,#{upload_4}
+			,#{upload_5}
+			,#{title}
+			,#{writer}
+			,#{content}
+			,now()
+			,#{gubun}
+			,#{gue_pw}
+			,#{bum_in}
+			)
+		]]>
+	</insert>
+	
+	
+	<select id="board_list" resultType="kr.spring.silli.board.vo.CompanyVO" parameterType="kr.spring.silli.board.vo.CompanyVO">
+		<![CDATA[
+		select 
+			board_idx
+			,title
+			,writer
+			,content
+			,reg_date
+		from com_board
+		where gubun=#{gubun}
+		]]>
+		<choose>
+		<when test='keyword != null and !keyword.equals("")'>
+		<![CDATA[
+		AND title LIKE CONCAT('%', #{keyword}, '%') AND 	
+					reg_date between 
+					#{start} 
+					AND 
+					#{now_date} 
+					order by reg_date desc
+			limit #{pageStart}
+				 ,#{perPageNum}
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		order by reg_date desc, board_idx desc
+		limit  	 #{pageStart}
+				 ,#{perPageNum}
+		]]>
+		</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="boardrank" parameterType="kr.spring.silli.board.vo.CompanyVO">
+		<![CDATA[
+			insert into 
+				boardrank(keyword)
+			 values(#{keyword})
+		]]>
+	</insert>
+	
+	<select id="ranklist" resultType="kr.spring.silli.board.vo.CompanyVO">
+		<![CDATA[
+		
+			select keyword,Count(keyword) keyCount
+			from boardrank
+			group by keyword 
+			order by count(keyword) desc
+		]]>
+	</select>
+	
+	<select id="get_list" resultType="kr.spring.silli.board.vo.CompanyVO" parameterType="kr.spring.silli.board.vo.CompanyVO">
+	<![CDATA[
+		select 
+			upload_1
+			,upload_2
+			,upload_3
+			,upload_4
+			,upload_5
+			,board_idx
+			,title
+			,writer
+			,content
+			,reg_date
+			,gue_pw
+		from 
+			com_board
+		where 
+			board_idx=#{board_idx}
+				AND
+			 gubun=#{gubun}
+	]]>	
+	</select>
+	
+	<update id="update" parameterType="kr.spring.silli.board.vo.CompanyVO" useGeneratedKeys="true" keyProperty="board_idx">
+	<![CDATA[
+		update 
+			com_board 
+		set 
+			title=#{title}
+			,content=#{content}
+			,upload_1=IFNULL(#{upload_1},#{upload_1})
+			,upload_2=IFNULL(#{upload_2},#{upload_2})
+			,upload_3=IFNULL(#{upload_3},#{upload_3})
+			,upload_4=IFNULL(#{upload_4},#{upload_4})
+			,upload_5=IFNULL(#{upload_5},#{upload_5})
+			,reg_date=now()
+		where 
+			board_idx=#{board_idx} 
+	]]>
+	</update>
+	
+	<select id="totalCount" parameterType="kr.spring.silli.board.vo.CompanyVO" resultType="java.lang.Integer">
+	<![CDATA[
+		select  count(*) as totalCount 
+				from(select 
+					board_idx
+					,title
+					,writer
+					,content
+					,reg_date
+					from com_board
+					where gubun=#{gubun}
+	]]>
+			<choose>
+			<when test='keyword != null and !keyword.equals("")'>
+				<![CDATA[
+				AND
+				title like CONCAT('%', #{keyword}, '%') 
+				AND 
+				reg_date between
+				#{start} 
+				AND 
+				#{now_date})
+				 com_board
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+				 )
+				 com_board
+				 ]]>		
+			</otherwise>
+			</choose>
+	</select>
+	
+	
+	<delete id="delete_select_com" parameterType="list">
+		<![CDATA[
+		delete from com_board
+		where board_idx IN
+		]]>
+	 <foreach collection="list" item="item" index="i" open="(" separator="," close=")">
+	      #{item}
+	    </foreach>
+	 
+	</delete>
+	
+	<delete id="delete"  parameterType="java.lang.Integer">
+		<![CDATA[
+		delete 
+			from com_board
+		where 
+			board_idx=#{board_idx}
+	]]>
+	</delete>
+	
+	<select id="idx" parameterType="kr.spring.silli.board.vo.CompanyVO" resultType="java.lang.Integer">
+	<![CDATA[
+		select max(board_idx+1) as idx
+			from com_board
+			where gubun=#{gubun}
+	]]>
+	</select>
+	
+</mapper>
