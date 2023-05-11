@@ -29,13 +29,48 @@
 </style>
 
 <script>
-	var edit=function (_index) {
-	console.log(_index);
-	var question=$("#question").val();
-	var answer=$("#answer").val();
-	var dd=$('table#tbl1 tr').eq((_index)).text();
-	console.log("aa==",dd);
+	var edit=function () {
 	
+    	//값들의 갯수 -> 배열 길이를 지정
+		var grpl = $("input[name=answer]").length;
+		//배열 생성
+		
+		var answer = new Array(grpl);
+		var question = new Array(grpl);
+		var quiz_idx = new Array(grpl);
+		
+		//배열에 값 주입
+		for(var i=0; i<grpl; i++){                          
+			
+			question[i] = $("textarea[name=question]").eq(i).val();
+			answer[i] = $("input[name=answer]").eq(i).val();
+			quiz_idx[i] = $("input[name=quiz_idx]").eq(i).val();
+			
+	    }
+		
+		 const all={question:question,answer:answer,quiz_idx:quiz_idx};
+		console.log(all);
+		if (!confirm("수정 하시겠습니까?")) {
+				alert("취소 하셨습니다");
+				location.href="${root}quiz_main.do"
+			} 
+		else {
+			$.ajax({
+				url : "quiz_update.do",
+				type : "post",
+				data:all,
+				dataType : "text",
+				success : function(data) {
+					alert("수정완료");
+					location.href="${root}quiz_list.do";
+			},
+		error : function(data) {
+			
+				console.log("data==",data);
+				
+			},
+		 });
+		}
 	}
 </script>
 
@@ -47,11 +82,16 @@
 		<div class="card-body" id="view">
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
-			<input type="button" onclick="edit(${status.index})" class="btn btn-dange" value="수정하기"/>
+			<input type="button" onclick="edit()" class="btn btn-dange" value="수정하기"/>
 		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
 			<div class="form-group" id="content_div">
 				<label for="question">${status.index+1}문제</label>
-				<textarea id="question" name="question" class="form-control" rows="30" maxlength='5000' style="resize:none" readonly="readonly">${obj.question }</textarea>
+				<textarea id="question" name="question" class="form-control" rows="30" maxlength='5000' style="resize:none">${obj.question }</textarea>
+			</div>
+			<div class="form-group" id="title_l">
+				<label for="answer">답</label>
+				<input type="text" id="answer" name="answer" class="form-control" maxlength='150' value="${obj.answer}" />
+				<input type="hidden" name="quiz_idx" id="quiz_idx" value="${obj.quiz_idx}"/>
 			</div>
 		</c:forEach>
 		</table>

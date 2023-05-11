@@ -44,7 +44,7 @@
 			question[i] = $("textarea[name=question]").eq(i).val();
 			user_id[i] = $("input[name=user_id]").eq(i).val();
 	        
-	    }		
+	    }
 		
 		 const all={question:question,answer:answer,user_id:user_id};
 		 console.log("dd==",all);

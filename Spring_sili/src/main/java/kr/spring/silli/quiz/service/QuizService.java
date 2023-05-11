@@ -25,5 +25,9 @@ public interface QuizService {
 	public void ans_ins(QuestionVO questionvo,HttpSession session);
 	public void quiz_write(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="user_id[]") List<String> user_id);	
+			,@RequestParam(value="user_id[]") List<String> user_id);
+	public void quiz_update(@RequestParam(value="question[]") List<String> question
+			,@RequestParam(value="answer[]") List<String>  answer
+			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx);
+	
 }

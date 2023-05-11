@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,15 @@ public class QuizController {
 	@ResponseBody
 	public Map<String, Object> quiz_list2(QuestionVO questionvo,HttpSession seesion) throws Exception {
 		return QuizService.chk(questionvo,seesion);
+	}
+	@PostMapping("/quiz_update.do")
+	@ResponseBody
+	@Transactional
+	public void quiz_update(@RequestParam(value="question[]") List<String> question
+			,@RequestParam(value="answer[]") List<String>  answer
+			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx) {
+		
+		QuizService.quiz_update(question,answer,quiz_idx);
 	}
 	
 	@PostMapping("/faile_insert.do")
@@ -105,14 +115,7 @@ public class QuizController {
 	public void quiz_writee(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id) {
-//		System.out.println("컨트롤러"+question);
-//		System.out.println("컨트롤러"+answer);
-//		System.out.println("컨트롤러"+user_id);
-//		List<QuestionVO> as=new ArrayList<QuestionVO>();
-//		QuestionVO list=new QuestionVO();
-//		list.setQuestion(question);
-//		list.setAnswer(answer);
-//		list.setUser_id(user_id);
+
 		QuizService.quiz_write(question,answer,user_id);
 	}
 	

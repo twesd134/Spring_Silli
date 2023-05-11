@@ -89,6 +89,7 @@ public class QuizServiceImpl implements QuizService {
 		QuizMapper.quiz_del(questionvo);
 	}
 	
+	
 	@Override
 	public void quiz_write(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
@@ -96,7 +97,7 @@ public class QuizServiceImpl implements QuizService {
 	{
 		
 		List<QuestionVO> list=new ArrayList<QuestionVO>();
-	
+		
 		for(int i=0;i<question.size();i++)
 		{
 			QuestionVO vo=new QuestionVO();
@@ -107,9 +108,24 @@ public class QuizServiceImpl implements QuizService {
 		} 
 		System.out.println("list=="+list);
 		QuizMapper.quiz_write(list);
-		System.out.println(list);
-		QuizMapper.quiz_do(list);
-//
+	}
+	
+	@Override
+	public void quiz_update(@RequestParam(value="question[]") List<String> question
+			,@RequestParam(value="answer[]") List<String>  answer
+			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx) {
+		List<QuestionVO> list=new ArrayList<QuestionVO>();
 		
+		for(int i=0;i<question.size();i++)
+		{
+			QuestionVO vo=new QuestionVO();
+			vo.setQuestion(question.get(i));
+			vo.setAnswer(answer.get(i));
+			vo.setQuiz_idx(quiz_idx.get(i));
+			list.add(vo);
+		} 
+		
+		System.out.println("list=="+list);
+		QuizMapper.quiz_update(list);
 	}
 }

@@ -29,4 +29,5 @@ public interface QuizMapper {
 		System.out.println("결과==="+list);
 //		System.out.println("mapper=="+question+"answer"+answer+"user_id=="+user_id);
 	}
+	public void quiz_update(List<QuestionVO> list);
 }

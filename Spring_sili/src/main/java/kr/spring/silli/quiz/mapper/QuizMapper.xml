@@ -60,7 +60,8 @@
 	<![CDATA[
 		select question
 			   ,answer
-			   ,user_id 
+			   ,user_id
+			   ,quiz_idx
 		from quiz 
 		where(
 			question
@@ -144,20 +145,33 @@
 	</insert>
 	
 	<insert id="quiz_write" parameterType="java.util.List">
-			insert into
-				quiz
-					(
-					question
-					,answer
-					,user_id
-					)
-			values
-			<foreach collection="list" item="item" separator=",">
-			(
-		      #{item.question},
-		      #{item.answer},
-		      #{item.user_id}
-		    )
-		    </foreach>
+		insert into
+			quiz
+				(
+				question
+				,answer
+				,user_id
+				)
+		values
+		<foreach collection="list" item="item" separator=",">
+		(
+	      #{item.question},
+	      #{item.answer},
+	      #{item.user_id}
+	    )
+	    </foreach>
 	</insert>
+	
+	<update id="quiz_update" parameterType="java.util.List">
+     <foreach collection="list" item="offer"  index="index"  separator=";" >
+			update
+				quiz
+			set
+				question=#{offer.question},
+				answer=#{offer.answer},
+				user_id='twesd11'
+			where quiz_idx=#{offer.quiz_idx}
+	</foreach>
+				
+	</update>
 </mapper>

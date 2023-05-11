@@ -1,11 +1,14 @@
 package kr.spring.silli.quiz.vo;
 
-import java.util.ArrayList;
+import lombok.Data;
 
+@Data
 public class QuestionVO {
-	public String question;
-	public String answer;
-	public String user_id;
+	private String question;
+	private String answer;
+	private String user_id;
+	private Integer quiz_idx;
+		
 	
 	
 	public String getUser_id() {

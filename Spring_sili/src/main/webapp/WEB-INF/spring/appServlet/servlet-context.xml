@@ -23,7 +23,7 @@
     	<beans:property name="maxInMemorySize" value="1048576"/> <!-- 1MB 필수x-->
     </beans:bean>
 		
-
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
