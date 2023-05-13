@@ -40,6 +40,7 @@ public class QuizController {
 	public Map<String, Object> quiz_list2(QuestionVO questionvo,HttpSession seesion) throws Exception {
 		return QuizService.chk(questionvo,seesion);
 	}
+	
 	@PostMapping("/quiz_update.do")
 	@ResponseBody
 	@Transactional
@@ -129,6 +130,19 @@ public class QuizController {
 	@ResponseBody
 	public void quiz_dele(QuestionVO questionvo,HttpSession session) {
 		QuizService.quiz_del(questionvo, session);
+	}
+	
+	@GetMapping("/quiz_one_check.do")
+	public String quiz_one_check(Model model,QuestionVO questionvo,HttpSession seesion) {
+		String returnJSP="quiz/quiz_one_check";
+		model.addAttribute("chk", QuizService.chk(questionvo,seesion));
+		return returnJSP;
+	}
+	
+	@PostMapping("/quiz_one_check.do")
+	@ResponseBody
+	public Map<String, Object> quiz_one_check2(QuestionVO questionvo,HttpSession seesion) throws Exception {
+		return QuizService.chk(questionvo,seesion);
 	}
 	
 }

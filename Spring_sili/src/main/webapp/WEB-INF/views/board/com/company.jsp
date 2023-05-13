@@ -272,6 +272,7 @@ $(document).ready(function(){
          <!-- 게시물 번호(idx)추가 -->         
          <input type="hidden" id="page" name="page" value="${pageMaker.cri.page}"/>
          <input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}"/>
+      
       	</form>   
       		<div class="text-left">
 				<a href="javascript:delete_select_com()" class="btn btn-primary">선택된글 삭제</a>

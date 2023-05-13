@@ -33,11 +33,30 @@
 
 <script>
 
-	var one_check = function() {
-		location.href="${root}quiz_one_check.do";
-	}
+$(document).ready(function() {
+	$('input[type="checkbox"][name="ddd"]').click(function(){
+		 
+		  if($(this).prop('checked')){
+		 
+		     $('input[type="checkbox"][name="ddd"]').prop('checked',false);
+		 
+		     $(this).prop('checked',true);
+		 
+		    }
+		   });
+	});
+	$('#ddd').click(function(){
 	
-
+		var ddd=$("input[name=ddd]:checked").val();
+		console.log("dd=",ddd);
+		if(checked)
+			$('input:checkbox').prop('checked',true);
+	});
+	
+	
+	var quiz_list=function() {
+		location.href="${root}quiz_list.do";
+	}
 	var edit=function () {
 	
     	//값들의 갯수 -> 배열 길이를 지정
@@ -55,6 +74,8 @@
 			quiz_idx[i] = $("input[name=quiz_idx]").eq(i).val();
 			
 	    }
+		
+		
 		
 		const all={question:question,answer:answer,quiz_idx:quiz_idx};
 		console.log(all);
@@ -91,7 +112,7 @@
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
 			<input type="button" onclick="edit()" class="btn btn-dange" value="수정하기"/>
-			<input type="button" onclick="one_check()" class="btn btn-dange" value="하나씩 체크하기 모드"/>
+			<input type="button" onclick="quiz_list()" class="btn btn-dange" value="다중체크 모드"/>
 		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
 			<div class="btn btn2">
 			</div>
