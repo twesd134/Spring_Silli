@@ -72,6 +72,19 @@
 	  }
 	}
 	
+	var adds=function() {
+		
+		var listHTML="";
+		listHTML+="<div class='form-group' id='content_div'>";
+		listHTML+="<label for='question'>${status.index+1}문제</label>";
+		listHTML+="<textarea id='question' name='question' class='form-control' cols='50' rows='20' maxlength='5000' style='resize:none'></textarea>";
+		listHTML+="</div>";
+		listHTML+="<div class='form-group' id='title_l'>";
+		listHTML+="<label for='answer'>답</label>";
+		listHTML+="<input type='text' id='answer' name='answer' class='form-control' maxlength='150' />";
+		listHTML+="</div>";
+		$("#addcon").html(listHTML);
+	}
 
 	var edit=function () {
 	
@@ -130,9 +143,9 @@
 			<input type="button" onclick="del()" class="btn btn-dange" value="선택삭제"/>
 			&nbsp;&nbsp;
 			<input type="button" onclick="one_check()" class="btn btn-dange" value="하나씩 체크하기 모드"/>
+			&nbsp;&nbsp;
+			<input type="button" onclick="adds()" class="btn btn-dange" value="문제 추가하기"/>
 		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
-			<div class="btn btn2">
-			</div>
 			<div class="form-group" id="content_div">
 				<label for="question">${status.index+1}문제</label>
 				<input type="checkbox" class="btn btn-primary" id="idx" name="idx" value="${obj.quiz_idx }"/>
@@ -143,6 +156,8 @@
 				<input type="text" id="answer" name="answer" class="form-control" maxlength='150' value="${obj.answer}" />
 				<input type="hidden" name="quiz_idx" id="quiz_idx" value="${obj.quiz_idx}"/>
 			</div>
+		<div id="addcon">
+		</div>
 		</c:forEach>
 		</table>
 		<br>

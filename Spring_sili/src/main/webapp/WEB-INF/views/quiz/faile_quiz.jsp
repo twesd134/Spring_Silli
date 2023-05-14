@@ -42,6 +42,10 @@ $(document).ready(function(){
 </head>
 <script>
 // 'table#tbl1 tr'
+	var back=function() {
+	location.href="${root}quiz_main.do";
+	}
+	
 	var chk = function (_index) {
 		const question=$("#content_div").eq((_index)).find('#question').val();
 		const answer=$("#answer_div").eq((_index)).find('#answer').val();
@@ -152,7 +156,8 @@ $(document).ready(function(){
 		<c:otherwise>
 			<form action="${root}quiz_faile.do">
 				<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
-				<input type="submit" value="틀린문제 다시 풀기"/>
+				<input type="submit" class="btn btn-dange" value="틀린문제 다시 풀기"/>
+				<input type="button" class="btn btn-dange" onclick="back();" value="문제로 돌아가기"/>
 			</form>
 		</c:otherwise>
 		</c:choose>
