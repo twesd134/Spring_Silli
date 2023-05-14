@@ -110,10 +110,10 @@ public class QuizController {
 	public void quiz_writee(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id) {
-
+			
 		QuizService.quiz_write(question,answer,user_id);
-	}
-
+	}	
+	
 	@PostMapping("/quiz_del.do")
 	@ResponseBody
 	public void quiz_dele(@RequestParam(value = "quiz_idx[]") ArrayList<String> quiz_idx) {

@@ -32,26 +32,6 @@
 </style>
 
 <script>
-
-$(document).ready(function() {
-	$('input[type="checkbox"][name="ddd"]').click(function(){
-		 
-		  if($(this).prop('checked')){
-		 
-		     $('input[type="checkbox"][name="ddd"]').prop('checked',false);
-		 
-		     $(this).prop('checked',true);
-		 
-		    }
-		   });
-	});
-	$('#ddd').click(function(){
-	
-		var ddd=$("input[name=ddd]:checked").val();
-		console.log("dd=",ddd);
-		if(checked)
-			$('input:checkbox').prop('checked',true);
-	});
 	
 	var del=function () {
 		var quiz_idx = [];
@@ -61,10 +41,19 @@ $(document).ready(function() {
 		
 		const all={quiz_idx:quiz_idx};
 		
+		if(quiz_idx==0)
+		{
+			alert("글을 선택해 주세요");
+		}else {
+			
 		console.log("del=",all);
-		
+		if (!confirm("삭제 하시겠습니까?")) {
+			alert("취소 하셨습니다");
+			location.href="${root}quiz_one_check.do"
+		} 
+		else {
 		$.ajax({
-			url : "quiz_delete.do",
+			url : "quiz_del.do",
 			type : "post",
 			data:all,
 			dataType : "text",
@@ -76,12 +65,12 @@ $(document).ready(function() {
 		
 			console.log("data==",data);
 			
-		},
-	 });
+			},
+	 	 });
+		}
+		}
 	}
 		
-	}
-	
 	var quiz_list=function() {
 		location.href="${root}quiz_list.do";
 	}

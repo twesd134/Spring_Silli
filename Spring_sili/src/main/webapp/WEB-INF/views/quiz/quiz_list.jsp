@@ -44,7 +44,14 @@
 		
 		const all={quiz_idx:quiz_idx};
 		
-		console.log("del=",all);
+		if(quiz_idx==0)
+		{
+			alert("글을 선택해 주세요");
+		} else {
+		if (!confirm("삭제 하시겠습니까?")) {
+			alert("취소 하셨습니다");
+			location.href="${root}quiz_list.do"
+		} else {
 		
 		$.ajax({
 			url : "quiz_del.do",
@@ -60,7 +67,9 @@
 			console.log("data==",data);
 			
 		},
-	 });
+	 	});
+		}
+	  }
 	}
 	
 
@@ -96,7 +105,7 @@
 				dataType : "text",
 				success : function(data) {
 					alert("수정완료");
-					location.href="${root}quiz_list.do";
+					location.href="${root}quiz_main.do";
 			},
 		error : function(data) {
 			
