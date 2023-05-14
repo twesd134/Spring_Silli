@@ -100,15 +100,13 @@
 		</choose>
 	</select>
 	
-	<delete id="quiz_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
-	<![CDATA[
+	<delete id="quiz_del" parameterType="java.util.List">
 		delete 
 			from quiz
-		where questoin IN
+		where quiz_idx IN
 			<foreach collection="list" item="item" index="i" open="(" separator="," close=")">
 		      #{item}
 		    </foreach>
-		]]>
 	</delete>
 	
 	<delete id="ans_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">

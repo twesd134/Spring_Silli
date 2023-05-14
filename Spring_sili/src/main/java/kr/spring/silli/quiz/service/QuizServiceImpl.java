@@ -83,10 +83,8 @@ public class QuizServiceImpl implements QuizService {
 	}
 	
 	@Override
-	public void quiz_del(QuestionVO questionvo,HttpSession session) {
-		String user_id = (String)session.getAttribute("user_id");
-		questionvo.setUser_id(user_id);
-		QuizMapper.quiz_del(questionvo);
+	public int quiz_del(ArrayList<String> quiz_idx) {
+		return QuizMapper.quiz_del(quiz_idx);
 	}
 	
 	

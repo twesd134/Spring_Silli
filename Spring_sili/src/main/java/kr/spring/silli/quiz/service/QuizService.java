@@ -21,7 +21,7 @@ public interface QuizService {
 	public void faile_insert(QuestionVO questionvo,HttpSession sessio);
 	public Map<String, Object> faile_chk(QuestionVO questionvo,HttpSession session);
 	public void faile_del(QuestionVO questionvo,HttpSession session);
-	public void quiz_del(QuestionVO questionvo,HttpSession session);
+	public int quiz_del(ArrayList<String> quiz_idx);
 	public void ans_ins(QuestionVO questionvo,HttpSession session);
 	public void quiz_write(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer

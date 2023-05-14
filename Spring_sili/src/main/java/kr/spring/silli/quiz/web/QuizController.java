@@ -56,13 +56,7 @@ public class QuizController {
 	public void faile_insert(QuestionVO questionvo,HttpSession seesion) {
 		QuizService.faile_insert(questionvo,seesion);
 	}
-	
-	@GetMapping("/quiz_delete.do")
-	@ResponseBody
-	public void quiz_delete(QuestionVO questionvo,HttpSession session)
-	{
-		QuizService.quiz_del(questionvo,session);
-	}
+
 	
 	@GetMapping("/faile_delete.do")
 	@ResponseBody
@@ -119,17 +113,11 @@ public class QuizController {
 
 		QuizService.quiz_write(question,answer,user_id);
 	}
-	
-	@GetMapping("/quiz_del.do")
-	public String quiz_del(Model model,QuestionVO questionvo,HttpSession session) {
-		String returnJSP="quiz/quiz_del";
-		return returnJSP;
-	}
-	
-	@PostMapping
+
+	@PostMapping("/quiz_del.do")
 	@ResponseBody
-	public void quiz_dele(QuestionVO questionvo,HttpSession session) {
-		QuizService.quiz_del(questionvo, session);
+	public void quiz_dele(@RequestParam(value = "quiz_idx[]") ArrayList<String> quiz_idx) {
+		QuizService.quiz_del(quiz_idx);
 	}
 	
 	@GetMapping("/quiz_one_check.do")

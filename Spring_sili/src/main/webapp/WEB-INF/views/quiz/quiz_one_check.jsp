@@ -53,6 +53,34 @@ $(document).ready(function() {
 			$('input:checkbox').prop('checked',true);
 	});
 	
+	var del=function () {
+		var quiz_idx = [];
+		$("input[name='idx']:checked").each(function(i) {
+			quiz_idx.push($(this).val());
+ 	    });
+		
+		const all={quiz_idx:quiz_idx};
+		
+		console.log("del=",all);
+		
+		$.ajax({
+			url : "quiz_delete.do",
+			type : "post",
+			data:all,
+			dataType : "text",
+			success : function(data) {
+				alert("삭제완료");
+				location.href="${root}quiz_list.do";
+		},
+		error : function(data) {
+		
+			console.log("data==",data);
+			
+		},
+	 });
+	}
+		
+	}
 	
 	var quiz_list=function() {
 		location.href="${root}quiz_list.do";
@@ -74,8 +102,6 @@ $(document).ready(function() {
 			quiz_idx[i] = $("input[name=quiz_idx]").eq(i).val();
 			
 	    }
-		
-		
 		
 		const all={question:question,answer:answer,quiz_idx:quiz_idx};
 		console.log(all);
@@ -112,13 +138,16 @@ $(document).ready(function() {
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
 			<input type="button" onclick="edit()" class="btn btn-dange" value="수정하기"/>
-			<input type="button" onclick="quiz_list()" class="btn btn-dange" value="다중체크 모드"/>
+			&nbsp;&nbsp;
+			<input type="button" onclick="del()" class="btn btn-dange" value="선택삭제"/>
+			&nbsp;&nbsp;
+			<input type="button" onclick="quiz_list()" class="btn btn-dange" value="다중 체크하기 모드"/>
 		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
 			<div class="btn btn2">
 			</div>
 			<div class="form-group" id="content_div">
 				<label for="question">${status.index+1}문제</label>
-				<input type="checkbox" class="btn btn-primary" id="ddd" name="ddd"/>
+				<input type="checkbox" class="btn btn-primary" id="idx" name="idx" value="${obj.quiz_idx }"/>
 				<textarea id="question" name="question" class="form-control" cols="50" rows="20" maxlength='5000' style="resize:none">${obj.question }</textarea>
 			</div>
 			<div class="form-group" id="title_l">
