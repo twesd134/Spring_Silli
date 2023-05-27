@@ -4,6 +4,7 @@
 
 <insert id="faile_insert" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
 			<![CDATA[
+			
 			insert ignore 
 				into 
 					fail_list(
@@ -15,7 +16,8 @@
 							#{question}
 							,#{answer}
 							,#{user_id}
-							)
+						  )
+						  
 			]]>
 	</insert>
 	
@@ -143,7 +145,7 @@
 	</insert>
 	
 	<insert id="quiz_write" parameterType="java.util.List">
-		insert into
+		insert ignore into
 			quiz
 				(
 				question
@@ -160,16 +162,21 @@
 	    </foreach>
 	</insert>
 	
-	<update id="quiz_update" parameterType="java.util.List">
-     <foreach collection="list" item="offer"  index="index"  separator=";" >
-			update
-				quiz
-			set
-				question=#{offer.question},
-				answer=#{offer.answer},
-				user_id='twesd11'
-			where quiz_idx=#{offer.quiz_idx}
-	</foreach>
-				
-	</update>
+	<insert id="quiz_update" parameterType="java.util.List">
+     	insert ignore into
+			quiz
+				(
+				question
+				,answer
+				,user_id
+				)
+		values
+		<foreach collection="list" item="item" separator=",">
+		(
+	      #{item.question},
+	      #{item.answer},
+	      #{item.user_id}
+	    )
+	    </foreach>
+	</insert>
 </mapper>

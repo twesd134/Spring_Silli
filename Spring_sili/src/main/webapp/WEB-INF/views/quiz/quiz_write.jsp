@@ -86,8 +86,9 @@
 		listHTML+="<input type='text' id='answer' name='answer' class='form-control' maxlength='150'/>";
 		listHTML+="</div>";
 		listHTML+="<input type='hidden' name='user_id' id='user_id' value='${user_id }'/>";
-		oCell.innerHTML=listHTML;
 		
+		oCell.innerHTML=listHTML;
+	
 	}
 </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>

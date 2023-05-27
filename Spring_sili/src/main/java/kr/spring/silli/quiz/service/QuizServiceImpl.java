@@ -27,6 +27,7 @@ public class QuizServiceImpl implements QuizService {
 		questionvo.setUser_id(user_id);
 		Map<String,Object> map = new HashMap<String, Object>();
 		List<QuestionVO> re_chk= QuizMapper.requiz(questionvo);
+		
 		//문제갯수
 		List<QuestionVO> chk=QuizMapper.chk(questionvo);
 		
@@ -40,7 +41,7 @@ public class QuizServiceImpl implements QuizService {
 			re_chk=QuizMapper.requiz(questionvo);
 			
 		}
-		
+		map.put("user_id",user_id);
 		map.put("chk",chk);
 		map.put("re_chk", re_chk);
 		session.setAttribute("re_chk",re_chk);
@@ -104,14 +105,15 @@ public class QuizServiceImpl implements QuizService {
 			vo.setUser_id(user_id.get(i));
 			list.add(vo);
 		} 
-		System.out.println("list=="+list);
 		QuizMapper.quiz_write(list);
 	}
+	
 	
 	@Override
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx) {
+			,@RequestParam(value="user_id[]") List<String> user_id)
+	{
 		List<QuestionVO> list=new ArrayList<QuestionVO>();
 		
 		for(int i=0;i<question.size();i++)
@@ -119,11 +121,9 @@ public class QuizServiceImpl implements QuizService {
 			QuestionVO vo=new QuestionVO();
 			vo.setQuestion(question.get(i));
 			vo.setAnswer(answer.get(i));
-			vo.setQuiz_idx(quiz_idx.get(i));
+			vo.setUser_id(user_id.get(i));
 			list.add(vo);
 		} 
-		
-		System.out.println("list=="+list);
-		QuizMapper.quiz_update(list);
+		QuizMapper.quiz_write(list);
 	}
 }

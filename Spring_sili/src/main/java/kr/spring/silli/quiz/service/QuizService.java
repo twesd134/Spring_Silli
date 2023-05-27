@@ -28,6 +28,6 @@ public interface QuizService {
 			,@RequestParam(value="user_id[]") List<String> user_id);
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx);
+			,@RequestParam(value="user_id[]") List<String> user_id);
 	
 }

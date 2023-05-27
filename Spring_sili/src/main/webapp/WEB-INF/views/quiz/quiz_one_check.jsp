@@ -32,6 +32,14 @@
 </style>
 
 <script>
+
+	var oneCheck=function (self) {
+		const checkboxes = document.getElementsByName("idx");
+		checkboxes.forEach((checkbox) =>{
+			checkbox.checked =false;
+		})
+		self.checked = true;
+	}
 	
 	var del=function () {
 		var quiz_idx = [];
@@ -136,7 +144,7 @@
 			</div>
 			<div class="form-group" id="content_div">
 				<label for="question">${status.index+1}문제</label>
-				<input type="checkbox" class="btn btn-primary" id="idx" name="idx" value="${obj.quiz_idx }"/>
+				<input type="checkbox" class="btn btn-primary" id="idx" name="idx" onclick="oneCheck(this)" value="${obj.quiz_idx }"/>
 				<textarea id="question" name="question" class="form-control" cols="50" rows="20" maxlength='5000' style="resize:none">${obj.question }</textarea>
 			</div>
 			<div class="form-group" id="title_l">

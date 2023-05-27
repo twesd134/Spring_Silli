@@ -43,12 +43,11 @@ public class QuizController {
 	
 	@PostMapping("/quiz_update.do")
 	@ResponseBody
-	@Transactional
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="quiz_idx[]") List<Integer> quiz_idx) {
+			,@RequestParam(value="user_id[]") List<String> user_id) {
 		
-		QuizService.quiz_update(question,answer,quiz_idx);
+		QuizService.quiz_update(question,answer,user_id);
 	}
 	
 	@PostMapping("/faile_insert.do")

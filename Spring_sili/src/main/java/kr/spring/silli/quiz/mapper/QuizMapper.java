@@ -30,4 +30,14 @@ public interface QuizMapper {
 //		System.out.println("mapper=="+question+"answer"+answer+"user_id=="+user_id);
 	}
 	public void quiz_update(List<QuestionVO> list);
+	// 기존 문제 수정
+    void updateQuestion(@Param("quiz_idx") int quizIdx, @Param("question") String question);
+
+    void updateAnswer(@Param("quiz_idx") int quizIdx, @Param("answer") String answer);
+
+    void updateUserId(@Param("quiz_idx") int quizIdx, @Param("user_id") String userId);
+
+    // 새로운 문제 추가
+    void insertQuestion(@Param("question") String question, @Param("answer") String answer, @Param("user_id") String userId);
+
 }
