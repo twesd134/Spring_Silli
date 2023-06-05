@@ -26,6 +26,11 @@ public class CompanyVO {
 	private String now_date;
 	private int gue_pw;
 	private String bum_in;
+	private int re_idx;
+	private int re_level;
+	private String re_user_id;
+	private String re_con;
+	
 	
 	
 

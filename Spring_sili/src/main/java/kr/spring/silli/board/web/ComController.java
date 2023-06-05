@@ -352,4 +352,13 @@ public class ComController {
 		companyvo.setGubun(gubun);
 		return boardservice.update(companyvo, request, session);
 	}
+	
+	@PostMapping("/re_write.do")
+	@ResponseBody
+	public Map<String, Object> re_write(CompanyVO companyvo,HttpSession session) {
+		int re_level =1;
+		companyvo.setRe_level(re_level);
+		System.out.println("rr=="+re_level);
+		return boardservice.re_write(companyvo,session);
+	}
 }

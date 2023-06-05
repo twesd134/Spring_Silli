@@ -39,6 +39,9 @@
 	    		url : "com_delete.do",
 	    		type : "get",
 	    		data:all,
+	    		datatype: 'text',
+	    		processData: false,
+	    	    contentType: false,
 	    		success : function(data){
 				console.log('data==', data);
 				alert("삭제되었습니다.");
@@ -106,6 +109,29 @@
 				  console.log("data==",data);
 			   }
 		}); 		
+		
+	}
+	
+	var re_regit=function() {
+		const board_idx=$("#board_idx").val();
+		const re_user_id=$("#user_id").val();
+		const re_con=$("#re_con").val();
+		const all={re_user_id:re_user_id,re_con:re_con};
+		console.log("dd==",all);
+		$.ajax({
+    		url : "re_write.do",
+    		type : "post",
+    		data:all,
+		success : function(data){
+			alert("답글 등록 완료 ");
+			location.href="${root}com_detail.do?board_idx="+board_idx
+			},
+		  error : function(data) 
+		   {
+			  alert("실패");
+			  console.log("data==",data);
+		   }
+		}); 
 		
 	}
 </script>
@@ -179,7 +205,31 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			<div class="form-group">
+			<div>댓글쓰기</div>
+			<div class="text-right"><a href="javascript:re_regit();" class="btn btn-primary">댓글등록</a></div>
+			<form id="allForm"  name="allForm" method='post' accept-charset="UTF-8" enctype="multipart/form-data">
+			<c:choose>
+				<c:when test="${empty user_id}">
+					<textarea id="re_con" name="re_con" class="form-control" placeholder="로그인후에 이용 가능 합니다" rows="5" style="resize:none" disabled="disabled"></textarea>
+				</c:when>
+				<c:otherwise>
+					<textarea id="re_con" name="re_con" class="form-control" rows="5" style="resize:none"></textarea>
+				</c:otherwise>
+			</c:choose>
+			<input type="hidden" id="user_id" name="user_id" value="${user_id}"/>
+			</form>
+			<div class="card shadow">
+				<div class="card-body">
+					<div class="form-group">
+						<label class="form-control">아이디 : </label>
+					</div>
+					<div class="form-group">
+						<label class="form-control">내용 <br><br> DDD</label>
+					</div>
+				</div>
+			 </div>
+		   </div>
 		<div class="col-sm-3"></div>
 	</div>
 </div>

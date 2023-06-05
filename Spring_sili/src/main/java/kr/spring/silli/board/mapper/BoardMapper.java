@@ -2,6 +2,7 @@ package kr.spring.silli.board.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kr.spring.silli.board.vo.CompanyVO;
 
@@ -19,4 +20,6 @@ public interface BoardMapper {
 	public int idx(CompanyVO companyvo);
 	public void boardrank(CompanyVO companyvo);
 	public List<CompanyVO> ranklist(CompanyVO companyvo);
+	public void re_write(CompanyVO companyvo);
+	
 }

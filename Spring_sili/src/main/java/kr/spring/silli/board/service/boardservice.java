@@ -21,5 +21,5 @@ public interface boardservice {
 	public int delete_select_com(ArrayList<String> board_idx);
 	public int idx(CompanyVO companyvo);
 	public Map<String,Object> board_list(CompanyVO companyvo) throws Exception;
-	
+	public Map<String,Object> re_write(CompanyVO companyvo,HttpSession session);
 }

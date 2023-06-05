@@ -184,6 +184,23 @@
 	]]>
 	</delete>
 	
+	<insert id="re_write" parameterType="kr.spring.silli.board.vo.CompanyVO" >
+		insert into
+			re_board
+				(
+				re_level,
+				re_user_id,
+				re_con
+				)
+			values
+				(
+				 #{re_level},
+				 #{re_user_id},
+				 #{re_con}
+				)
+		
+	</insert>
+	
 	<select id="idx" parameterType="kr.spring.silli.board.vo.CompanyVO" resultType="java.lang.Integer">
 	<![CDATA[
 		select max(board_idx+1) as idx

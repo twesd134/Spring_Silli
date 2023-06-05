@@ -52,6 +52,7 @@ $(document).ready(function(){
  });
 
 </script>
+
 <script>
 		const search=function(pageNo) {
 		const start=$("#start").val();
@@ -90,6 +91,7 @@ $(document).ready(function(){
 		}
 		
 	function delete_select_com(){
+		
 		var board_idx = [];
 		$("input[name='board_idx']:checked").each(function(i) {
 			board_idx.push($(this).val());
@@ -282,5 +284,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

@@ -294,4 +294,11 @@ public class boardserviceImpl implements boardservice{
 		return  map;
 		
 	}
+	
+	@Override
+	public Map<String, Object> re_write(CompanyVO companyvo,HttpSession session) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		boardmapper.re_write(companyvo);
+		return map;
+	}
 }
