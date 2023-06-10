@@ -33,7 +33,7 @@ public class CompanyVO {
 	
 	
 	
-
+ 
 	public int getGue_pw() {
 		return gue_pw;
 	}

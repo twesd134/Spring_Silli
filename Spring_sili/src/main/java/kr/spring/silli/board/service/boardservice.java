@@ -1,6 +1,7 @@
 package kr.spring.silli.board.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ public interface boardservice {
 	
 	public Map<String,Object> write(CompanyVO companyvo,HttpServletRequest request,HttpSession session);
 	public CompanyVO get_list (CompanyVO companyvo);
+	public List<CompanyVO> re_list (CompanyVO companyvo);
 	public Map<String,Object> update(CompanyVO companyvo,HttpServletRequest request,HttpSession session);
 	public void delete(int board_idx);
 	public int totalCount(CompanyVO companyvo);

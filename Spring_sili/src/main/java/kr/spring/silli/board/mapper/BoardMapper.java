@@ -21,5 +21,7 @@ public interface BoardMapper {
 	public void boardrank(CompanyVO companyvo);
 	public List<CompanyVO> ranklist(CompanyVO companyvo);
 	public void re_write(CompanyVO companyvo);
+	public List<CompanyVO> re_list(CompanyVO companyvo);
+	public int re_count(CompanyVO companyvo);
 	
 }

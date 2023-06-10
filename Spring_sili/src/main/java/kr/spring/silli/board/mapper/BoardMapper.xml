@@ -111,6 +111,20 @@
 	]]>	
 	</select>
 	
+	<select id="re_list" resultType="kr.spring.silli.board.vo.CompanyVO" parameterType="kr.spring.silli.board.vo.CompanyVO">
+		select re_user_id,
+			   re_con
+		  from 
+		 	re_board
+		 where 
+		 	board_idx=#{board_idx}
+	</select>
+	
+	<select id="re_count" resultType="java.lang.Integer" parameterType="kr.spring.silli.board.vo.CompanyVO">
+	select count(*) from com_board join re_board on com_board.board_idx=re_board.board_idx
+		where re_board.board_idx=#{board_idx}
+	</select>
+	
 	<update id="update" parameterType="kr.spring.silli.board.vo.CompanyVO" useGeneratedKeys="true" keyProperty="board_idx">
 	<![CDATA[
 		update 
@@ -190,13 +204,15 @@
 				(
 				re_level,
 				re_user_id,
-				re_con
+				re_con,
+				board_idx
 				)
 			values
 				(
 				 #{re_level},
 				 #{re_user_id},
-				 #{re_con}
+				 #{re_con},
+				 #{board_idx}
 				)
 		
 	</insert>

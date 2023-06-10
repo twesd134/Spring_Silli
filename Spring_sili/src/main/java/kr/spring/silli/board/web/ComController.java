@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -237,7 +238,9 @@ public class ComController {
 		String gubun = "company";
 		companyvo.setGubun(gubun);
 		CompanyVO get_detail = boardservice.get_list(companyvo);
+		List<CompanyVO> re_list = boardservice.re_list(companyvo);
 		model.addAttribute("get_detail", get_detail);
+		model.addAttribute("re_list",re_list);
 		String returnJSP = "board/com/com_detail";
 		return returnJSP;
 	}

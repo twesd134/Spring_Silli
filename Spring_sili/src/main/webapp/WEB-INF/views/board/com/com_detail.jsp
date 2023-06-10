@@ -93,6 +93,7 @@
 	
 	
 	var com_user_update=function () {
+		
 		const board_idx=$("#board_idx").val();
 		const all={board_idx:board_idx};
 		$.ajax({
@@ -113,26 +114,41 @@
 	}
 	
 	var re_regit=function() {
+		
 		const board_idx=$("#board_idx").val();
 		const re_user_id=$("#user_id").val();
 		const re_con=$("#re_con").val();
-		const all={re_user_id:re_user_id,re_con:re_con};
+		const all={re_user_id:re_user_id,re_con:re_con,board_idx:board_idx};
 		console.log("dd==",all);
-		$.ajax({
-    		url : "re_write.do",
-    		type : "post",
-    		data:all,
-		success : function(data){
-			alert("답글 등록 완료 ");
-			location.href="${root}com_detail.do?board_idx="+board_idx
-			},
-		  error : function(data) 
-		   {
-			  alert("실패");
-			  console.log("data==",data);
-		   }
-		}); 
-		
+		if(re_user_id=="" || user_id==null)
+		{
+			alert("로그인해주세요");	
+		}
+		else if(re_con=="" || re_con==null)
+		{
+			alert("내용을 입력해주세요");
+		}
+		else { 
+			if (!confirm("글을 등록 하시겠습니까?")) {
+	    		alert("취소 하셨습니다");
+	    		 }
+			else{
+				$.ajax({
+		    		url : "re_write.do",
+		    		type : "post",
+		    		data:all,
+				success : function(data){
+					alert("답글 등록 완료 ");
+					location.href="${root}com_detail.do?board_idx="+board_idx
+					},
+				  error : function(data) 
+				   {
+					  alert("실패");
+					  console.log("data==",data);
+				   }
+				});
+			 }
+		}
 	}
 </script>
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
@@ -221,12 +237,12 @@
 			</form>
 			<div class="card shadow">
 				<div class="card-body">
+			<c:forEach var='obj' items="${re_list}"> 
 					<div class="form-group">
-						<label class="form-control">아이디 : </label>
+						<label class="form-control" readonly >댓글 작성자 : ${obj.re_user_id}</label>
+						<label> ${obj.re_con}</label>
 					</div>
-					<div class="form-group">
-						<label class="form-control">내용 <br><br> DDD</label>
-					</div>
+			 </c:forEach>
 				</div>
 			 </div>
 		   </div>
