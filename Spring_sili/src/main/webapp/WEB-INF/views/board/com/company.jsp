@@ -140,7 +140,14 @@ $(document).ready(function(){
 			listHTML+="<td class='text-center d-none d-md-table-cell'>";
 			listHTML+="<input type='checkbox' value="+obj.board_idx+" name='board_idx'></td>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.board_idx+"</td>";
-			listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"("+obj.re_count+")</a></td>";
+			if(obj.re_count==0)
+			{
+				
+			listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a></td>";
+			}else {
+			listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a>";
+			listHTML+="<span style='color: green'>["+obj.re_count+"]</span></td>";			
+			}
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.writer+"</td>";
 			listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.reg_date+"</td>";
 			listHTML+="</tr>";
@@ -246,7 +253,8 @@ $(document).ready(function(){
 						</c:when>
 						<c:otherwise>
 							<td class="text-center d-none d-md-table-cell">
-								<a href="${root}com_detail.do?board_idx=${obj.board_idx}">${obj.title} (${obj.re_count})</a>
+								<a href="${root}com_detail.do?board_idx=${obj.board_idx}">${obj.title}</a>
+								<span style="color: green">[${obj.re_count}]</span>
 							</td>
 						</c:otherwise>
 						</c:choose>

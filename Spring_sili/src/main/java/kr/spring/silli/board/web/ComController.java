@@ -302,9 +302,11 @@ public class ComController {
 	public String pro_detail(Model model, CompanyVO companyvo) {
 
 		String gubun = "procedure";
+		List<CompanyVO> re_list = boardservice.re_list(companyvo);
 		companyvo.setGubun(gubun);
 		CompanyVO get_detail = boardservice.get_list(companyvo);
 		model.addAttribute("get_detail", get_detail);
+		model.addAttribute("re_list",re_list);
 		String returnJSP = "board/pro/pro_detail";
 		return returnJSP;
 	}

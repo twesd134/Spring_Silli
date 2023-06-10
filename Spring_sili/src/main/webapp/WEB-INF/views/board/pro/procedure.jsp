@@ -139,7 +139,14 @@ $(document).ready(function(){
 		listHTML+="<td class='text-center d-none d-md-table-cell'>";
 		listHTML+="<input type='checkbox' value="+obj.board_idx+" name='board_idx'></td>";
 		listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.board_idx+"</td>";
+		if(obj.re_count==0)
+		{
+			
 		listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a></td>";
+		}else {
+		listHTML+="<td class='text-center d-none d-md-table-cell'><a href='${root}com_detail.do?board_idx="+obj.board_idx+"'>"+obj.title+"</a>";
+		listHTML+="<span style='color: green'>["+obj.re_count+"]</span></td>";			
+		}		
 		listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.writer+"</td>";
 		listHTML+="<td class='text-center d-none d-md-table-cell'>"+obj.reg_date+"</td>";
 		listHTML+="</tr>";
@@ -236,8 +243,19 @@ $(document).ready(function(){
 						<td class="text-center d-none d-md-table-cell">
 						<input type="checkbox" id="board_idx" name="board_idx" value="${obj.board_idx }"/></td>
 						<td class="text-center d-none d-md-table-cell">${obj.board_idx}</td>
-						<td class="text-center d-none d-md-table-cell"><a href="${root}pro_detail.do?board_idx=${obj.board_idx}">${obj.title}</a></td>
-						<td class="text-center d-none d-md-table-cell">${obj.writer}</td>
+						<c:choose>
+						<c:when test="${obj.re_count == 0}">
+							<td class="text-center d-none d-md-table-cell">
+								<a href="${root}pro_detail.do?board_idx=${obj.board_idx}">${obj.title}</a>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td class="text-center d-none d-md-table-cell">
+								<a href="${root}pro_detail.do?board_idx=${obj.board_idx}">${obj.title}</a>
+								<span style="color: green">[${obj.re_count}]</span>
+							</td>
+						</c:otherwise>
+						</c:choose>						<td class="text-center d-none d-md-table-cell">${obj.writer}</td>
 						<td class="text-center d-none d-md-table-cell">${obj.reg_date}</td>
 					</tr>
 					</c:forEach>
