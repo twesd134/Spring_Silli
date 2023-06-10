@@ -30,7 +30,7 @@ public class CompanyVO {
 	private int re_level;
 	private String re_user_id;
 	private String re_con;
-	
+	private int re_count;
 	
 	
  
