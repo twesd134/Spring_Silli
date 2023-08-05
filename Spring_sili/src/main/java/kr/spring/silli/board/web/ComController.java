@@ -363,7 +363,6 @@ public class ComController {
 	public Map<String, Object> re_write(CompanyVO companyvo,HttpSession session) {
 		int re_level =1;
 		companyvo.setRe_level(re_level);
-		System.out.println("rr=="+re_level);
 		return boardservice.re_write(companyvo,session);
 	}
 }

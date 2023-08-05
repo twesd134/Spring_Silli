@@ -24,6 +24,7 @@ public interface QuizMapper {
 	public void ans_del(QuestionVO questionvo);
 	public void ans_ins(QuestionVO questionvo);
 	public void quiz_write(List<QuestionVO> list);
+	public List<QuestionVO> cate(QuestionVO questionvo);
 	public default void quiz_do(List<QuestionVO> list)
 	{
 		System.out.println("결과==="+list);
@@ -39,5 +40,7 @@ public interface QuizMapper {
 
     // 새로운 문제 추가
     void insertQuestion(@Param("question") String question, @Param("answer") String answer, @Param("user_id") String userId);
+	public void category_del(String category);
+	public List<QuestionVO> cate_detail(QuestionVO questionvo);
 
 }

@@ -8,7 +8,8 @@ public class QuestionVO {
 	private String answer;
 	private String user_id;
 	private Integer quiz_idx;
-		
+	private String category;
+	
 	
 	
 	public String getUser_id() {

@@ -22,12 +22,17 @@ public interface QuizService {
 	public Map<String, Object> faile_chk(QuestionVO questionvo,HttpSession session);
 	public void faile_del(QuestionVO questionvo,HttpSession session);
 	public int quiz_del(ArrayList<String> quiz_idx);
+	public void ans_del(QuestionVO questionvo);
+	public void category_del(String category);
 	public void ans_ins(QuestionVO questionvo,HttpSession session);
-	public void quiz_write(@RequestParam(value="question[]") List<String> question
+	public void quiz_write(@RequestParam("category") String category,
+			@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id);
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id);
+	public Map<String,Object> cate(QuestionVO questionvo,HttpSession session);
+	public Map<String, Object> cate_detail(QuestionVO questionvo, HttpSession session);
 	
 }

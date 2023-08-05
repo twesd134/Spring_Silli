@@ -27,6 +27,14 @@ public class QuizController {
 	@Resource
 	private QuizService QuizService;
 	
+	@PostMapping("/category_del.do")
+	@ResponseBody
+	public void category_del(@RequestParam(value="category") String category)
+	{
+		System.out.println("ㅋㅌㄹ=="+category);
+		QuizService.category_del(category);
+	}
+	
 	@GetMapping("/quiz_list.do")
 	public String quiz_list3(Model model,QuestionVO questionvo,HttpSession seesion)
 	{
@@ -35,6 +43,22 @@ public class QuizController {
 		return returnJSP;
 	}
 	
+	@GetMapping("/quiz_cate.do")
+	public String quiz_cate(Model model,QuestionVO questionvo,HttpSession seesion)
+	{
+		String returnJSP = "quiz/quiz_cate";
+		model.addAttribute("cate",questionvo.getCategory());
+		model.addAttribute("chk", QuizService.cate(questionvo,seesion));
+		return returnJSP;
+	}
+	
+	@GetMapping("/cate_detail.do")
+	public String cate_detail(Model model,QuestionVO questionvo,HttpSession seesion)
+	{
+		String resultJSP="quiz/cate_detail";
+		model.addAttribute("cate_detail",QuizService.cate_detail(questionvo, seesion));
+		return resultJSP;
+	}
 	@PostMapping("/quiz_list.do")
 	@ResponseBody
 	public Map<String, Object> quiz_list2(QuestionVO questionvo,HttpSession seesion) throws Exception {
@@ -106,11 +130,12 @@ public class QuizController {
 	
 	@PostMapping("/quiz_write.do")
 	@ResponseBody
-	public void quiz_writee(@RequestParam(value="question[]") List<String> question
+	public void quiz_writee(@RequestParam("category") String category,
+			@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id) {
 			
-		QuizService.quiz_write(question,answer,user_id);
+		QuizService.quiz_write(category,question,answer,user_id);
 	}	
 	
 	@PostMapping("/quiz_del.do")

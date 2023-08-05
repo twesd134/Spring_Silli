@@ -11,11 +11,13 @@
 							question
 							,answer
 							,user_id
+							,category
 							)
 					values(
 							#{question}
 							,#{answer}
 							,#{user_id}
+							,#{category}
 						  )
 						  
 			]]>
@@ -34,6 +36,8 @@
 			question=#{question}
 			AND
 			user_id=#{user_id}
+			AND 
+			category=#{category}
 		]]>
 		</when>
 	</choose>
@@ -44,6 +48,7 @@
 			select
 				question,
 				answer
+				,category
 			from
 				fail_list
 		]]>
@@ -51,7 +56,8 @@
 		<when test="user_id !=null">
 		<![CDATA[
 		where 
-			user_id=#{user_id} 
+			user_id=#{user_id} AND
+			category=#{category}
 				order by rand()
 		]]>
 		</when>
@@ -60,23 +66,59 @@
 	
 	<select id="chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 	<![CDATA[
+		select distinct(category)
+		from quiz
+		
+		]]>
+		
+	</select>
+	
+	<select id="cate" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
+	<![CDATA[
 		select question
 			   ,answer
 			   ,user_id
 			   ,quiz_idx
+			   ,category
 		from quiz 
 		where(
 			question
 			,answer
 			,user_id
+			,category
 			) 
 			not in(
 				select question
 						,answer
 						,user_id 
-				from ans ) AND user_id=#{user_id} order by rand()
+						,category
+				from ans ) AND user_id=#{user_id} AND category=#{category} order by rand()
 		]]>	
 		
+	</select>
+	
+	<select id="cate_detail" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
+		<![CDATA[
+		select question
+			   ,answer
+			   ,user_id
+			   ,quiz_idx
+			   ,category
+		from quiz 
+		where(
+			question
+			,answer
+			,user_id
+			,category
+			) 
+			not in(
+				select question
+						,answer
+						,user_id 
+						,category
+				from ans ) AND user_id=#{user_id} AND category=#{category} order by rand()
+		
+		]]>	
 	</select>
 	
 	<select id="requiz" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
@@ -85,18 +127,22 @@
 		<![CDATA[
 		select question
 			   ,answer
-			   ,user_id 
+			   ,user_id
+			   ,quiz_idx
+			   ,category
 		from quiz 
 		where(
 			question
 			,answer
 			,user_id
+			,category
 			) 
 			not in(
 				select question
 						,answer
 						,user_id 
-				from ans ) AND user_id=#{user_id} order by rand()
+						,category
+				from ans ) AND user_id=#{user_id} AND category=#{category} order by rand()
 		]]>
 		</when>
 		</choose>
@@ -119,10 +165,21 @@
 			from
 				ans
 			where 
-				user_id=#{user_id}	
+				user_id=#{user_id}
+				AND category=#{category}
 		]]>
 		</when>
 		</choose>
+	</delete>
+	
+	<delete id="category_del" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
+		<![CDATA[
+		delete
+			from
+				ans
+			where
+				category=#{category}
+		]]>
 	</delete>
 	
 	<insert id="ans_ins" parameterType="kr.spring.silli.quiz.vo.QuestionVO">
@@ -133,11 +190,13 @@
 				ans(
 					question
 					,answer
-					,user_id)
+					,user_id
+					,category)
 				values(
 					#{question}
 					,#{answer}
 					,#{user_id}
+					,#{category}
 					)
 		]]>
 		</when>
@@ -145,21 +204,21 @@
 	</insert>
 	
 	<insert id="quiz_write" parameterType="java.util.List">
-		insert ignore into
-			quiz
-				(
-				question
-				,answer
-				,user_id
-				)
-		values
-		<foreach collection="list" item="item" separator=",">
-		(
-	      #{item.question},
-	      #{item.answer},
-	      #{item.user_id}
-	    )
-	    </foreach>
+    insert ignore into quiz (
+        category,   <!-- 새로운 열인 "category" 추가 -->
+        question,
+        answer,
+        user_id
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+        (
+          #{item.category},  <!-- 새로운 "category" 값 추가 -->
+          #{item.question},
+          #{item.answer},
+          #{item.user_id}
+        )
+    </foreach>
 	</insert>
 	
 	<insert id="quiz_update" parameterType="java.util.List">
@@ -169,13 +228,15 @@
 				question
 				,answer
 				,user_id
+				,category
 				)
 		values
 		<foreach collection="list" item="item" separator=",">
 		(
 	      #{item.question},
 	      #{item.answer},
-	      #{item.user_id}
+	      #{item.user_id},
+	      #{item.category}
 	    )
 	    </foreach>
 	</insert>

@@ -149,7 +149,7 @@
                     <input type="button" onclick="one_check()" class="btn btn-dange" value="하나씩 체크하기 모드" />
                     &nbsp;&nbsp;
                     <input type="button" onclick="adds()" class="btn btn-dange" value="문제 추가하기" />
-                    <c:forEach var="obj" items="${chk.chk}" varStatus="status">
+                    <c:forEach var="obj" items="${chk.re_chk}" varStatus="status">
                         <div class="form-group" id="content_div">
                             <label for="question">${status.index + 1}문제</label>
                             <input type="checkbox" class="btn btn-primary" id="idx" name="idx" value="${obj.quiz_idx}" />

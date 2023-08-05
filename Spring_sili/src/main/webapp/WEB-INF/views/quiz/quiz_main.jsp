@@ -50,8 +50,9 @@ $(document).ready(function(){
 		const answer=$("#answer_div").eq((_index)).find('#answer').val();
 		const ans=$("#ans_div").eq((_index)).find('#ans').val();
 		const user_id=$("#user_id").val();
-		const allData={question:question,answer:answer,ans:ans};
-		const faileData={user_id:user_id,question:question,answer:ans};
+		const category=$("#category").val();
+		const allData={question:question,answer:answer,ans:ans,category:category};
+		const faileData={user_id:user_id,question:question,answer:ans,category:category};
 		if(answer!=ans)
 		 {
 			alert("정답이 아닙니다");
@@ -77,7 +78,7 @@ $(document).ready(function(){
 			$("#content_div").eq((_index)).hide();
 			$("#content_div").eq((_index + 1)).show();
 			$("#answer_div").eq((_index + 1)).find('#answer').focus();
-			const all={question:question,answer:ans};
+			const all={question:question,answer:ans,category};
 			console.log(all);
 			$.ajax({
 	    		url : "ans_insert.do",
@@ -128,6 +129,24 @@ $(document).ready(function(){
 		location.href="${root}quiz_list.do";
 	}
 	
+	
+	var cate=function() {
+		const category=$("#category").val();
+		const all={category:category}
+		$.ajax({
+    		url : "quiz_cate.do",
+    		type : "get",
+    		data:category,
+    		dataType : "text",
+    	success : function(data){
+				console.log("rrdata",data);
+    		},
+    		error : function(data) 
+    		{	
+    			console.log("data==",data);
+    		},
+		 });
+	}
 </script>
 
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
@@ -137,30 +156,16 @@ $(document).ready(function(){
 		<div class="card-body" id="view">
 		<h4 class="card-title"></h4>
 		<table id="tbl1">
-		<li>${fn:length(chk.re_chk)} 문제 남았습니다</li>
-		<li>${user_id }님 문제 입니다 </li>
-		<c:forEach var="obj" items="${chk.re_chk}" varStatus="status" >
-		<div id="dis${status.index+1}" >
-			
 			<div class="form-group" id="content_div">
-				<label for="question">문제</label>
-				<textarea id="question" name="question" class="form-control" rows="30" maxlength='5000' style="resize:none" readonly="readonly">${obj.question }</textarea>
-			</div>
-			<div class="form-group" id="answer_div">
-					<label for="answer">답</label>
-					<input type="text" id="answer" name="answer" class="form-control" maxlength='150' />
-			</div>
-				<div class="form-group" id="ans_div">
-				<input type="button" class='btn btn-primary' value="답제출"  id="chk" onkeyup="enterkey()"  onclick="chk(${status.index})" />
-				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
-				</div>
-		</div>
+				<label for="category">카테고리</label><br><br>
+		<c:forEach var="obj" items="${chk.chk}" varStatus="status" >
+				<a href="${root}quiz_cate.do?category=${obj.category}">${obj.category}</a>
 		</c:forEach>
 		</table>
 		<br>
 		</div>
 		<form action="${root}quiz_faile.do">
-			<input type="hidden" name="status" id="status" value="${fn:length(chk.re_chk)}"/>
+			<input type="hidden" name="status" id="status" value="${fn:length(chk.chk)}"/>
 			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
 			<input type="submit"class='btn btn-dange' value="틀린문제 다시 풀기"/>
 		</form>
