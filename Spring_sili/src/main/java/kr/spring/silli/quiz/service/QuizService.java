@@ -31,7 +31,8 @@ public interface QuizService {
 			,@RequestParam(value="user_id[]") List<String> user_id);
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="user_id[]") List<String> user_id);
+			,@RequestParam(value="user_id[]") List<String> user_id
+			,@RequestParam(value="category[]") List<String> category);
 	public Map<String,Object> cate(QuestionVO questionvo,HttpSession session);
 	public Map<String, Object> cate_detail(QuestionVO questionvo, HttpSession session);
 	

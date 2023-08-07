@@ -136,7 +136,8 @@ public class QuizServiceImpl implements QuizService {
 	@Override
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
-			,@RequestParam(value="user_id[]") List<String> user_id)
+			,@RequestParam(value="user_id[]") List<String> user_id
+			,@RequestParam(value="category[]") List<String> category)
 	{
 		List<QuestionVO> list=new ArrayList<QuestionVO>();
 		
@@ -146,9 +147,10 @@ public class QuizServiceImpl implements QuizService {
 			vo.setQuestion(question.get(i));
 			vo.setAnswer(answer.get(i));
 			vo.setUser_id(user_id.get(i));
+			vo.setCategory(category.get(i));
 			list.add(vo);
 		} 
-		QuizMapper.quiz_write(list);
+		QuizMapper.quiz_update(list);
 	}
 	
 	@Override
