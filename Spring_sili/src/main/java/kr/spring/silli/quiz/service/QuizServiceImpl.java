@@ -183,5 +183,31 @@ public class QuizServiceImpl implements QuizService {
 		
 	}
 
-
+	@Override
+	public Map<String, Object> faile_cate(QuestionVO questionvo, HttpSession session) {
+		
+		String user_id = (String)session.getAttribute("user_id");
+		questionvo.setUser_id(user_id);
+		Map<String,Object> map = new HashMap<String, Object>();
+		List<QuestionVO> re_faile= QuizMapper.re_faile(questionvo);
+		
+	
+		
+		if(re_faile.size()==0)
+		{	
+			re_faile=QuizMapper.re_faile(questionvo);
+			
+		}
+		
+		else {
+			
+			re_faile=QuizMapper.re_faile(questionvo);
+			
+		}
+		
+		map.put("user_id",user_id);
+		map.put("re_faile", re_faile);
+		session.setAttribute("re_faile",re_faile);
+		return map;
+	}
 }

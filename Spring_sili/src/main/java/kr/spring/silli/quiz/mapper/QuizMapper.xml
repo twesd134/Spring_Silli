@@ -46,28 +46,19 @@
 	<select id="faile_chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 		<![CDATA[
 			select
-				question,
-				answer
-				,category
+				distinct(category)
 			from
 				fail_list
 		]]>
-		<choose>
-		<when test="user_id !=null">
-		<![CDATA[
-		where 
-			user_id=#{user_id} AND
-			category=#{category}
-				order by rand()
-		]]>
-		</when>
-	</choose>
+
 	</select>
 	
 	<select id="chk" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
 	<![CDATA[
-		select distinct(category)
-		from quiz
+		select 
+			distinct(category)
+		from 
+			quiz
 		
 		]]>
 		
@@ -119,6 +110,34 @@
 				from ans ) AND user_id=#{user_id} AND category=#{category} order by rand()
 		
 		]]>	
+	</select>
+	
+	
+	
+	<select id="re_faile" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">
+	<choose>
+		<when test="user_id != null">
+		<![CDATA[
+		select question
+			   ,answer
+			   ,user_id
+			   ,category
+		from fail_list 
+		where(
+			question
+			,answer
+			,user_id
+			,category
+			) 
+			not in(
+				select question
+						,answer
+						,user_id 
+						,category
+				from f_ans ) AND user_id=#{user_id} AND category=#{category} order by rand()
+		]]>
+		</when>
+		</choose>
 	</select>
 	
 	<select id="requiz" parameterType="kr.spring.silli.quiz.vo.QuestionVO" resultType="kr.spring.silli.quiz.vo.QuestionVO">

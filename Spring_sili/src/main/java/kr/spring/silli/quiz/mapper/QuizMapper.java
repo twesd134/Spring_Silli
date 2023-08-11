@@ -20,6 +20,7 @@ public interface QuizMapper {
 	public List<QuestionVO> faile_chk(QuestionVO questionvo);
 	public void faile_del(QuestionVO questionvo);
 	public List<QuestionVO> requiz(QuestionVO questionvo);
+	public List<QuestionVO> re_faile(QuestionVO questionvo);
 	public int quiz_del(ArrayList<String> quiz_idx);
 	public void ans_del(QuestionVO questionvo);
 	public void ans_ins(QuestionVO questionvo);
@@ -37,10 +38,12 @@ public interface QuizMapper {
     void updateAnswer(@Param("quiz_idx") int quizIdx, @Param("answer") String answer);
 
     void updateUserId(@Param("quiz_idx") int quizIdx, @Param("user_id") String userId);
-
+    
     // 새로운 문제 추가
     void insertQuestion(@Param("question") String question, @Param("answer") String answer, @Param("user_id") String userId);
 	public void category_del(String category);
 	public List<QuestionVO> cate_detail(QuestionVO questionvo);
-
+	
+	
+	
 }

@@ -44,73 +44,6 @@ $(document).ready(function(){
 </head>
 <script>
 	
-	var chk = function (_index) {
-			
-		const question=$("#content_div").eq((_index)).find('#question').val();
-		const answer=$("#answer_div").eq((_index)).find('#answer').val();
-		const ans=$("#ans_div").eq((_index)).find('#ans').val();
-		const user_id=$("#user_id").val();
-		const category=$("#category").val();
-		const allData={question:question,answer:answer,ans:ans,category:category};
-		const faileData={user_id:user_id,question:question,answer:ans,category:category};
-		if(answer!=ans)
-		 {
-			alert("정답이 아닙니다");
-			$("#answer_div").eq((_index)).find('#answer').focus();
-			console.log("faileData===",faileData);
-			$.ajax({
-	    		url : "faile_insert.do",
-	    		type : "post",
-	    		data:faileData,
-	    		dataType : "text",
-	    	success : function(data){
-					console.log("rrdata",data);
-	    		},
-	    		error : function(data) 
-	    		{
-	    			console.log("data==",data);
-	    		},
-    		 });
-		 }
-		
-		else if(answer==ans) {
-			alert("정답입니다");
-			$("#content_div").eq((_index)).hide();
-			$("#content_div").eq((_index + 1)).show();
-			$("#answer_div").eq((_index + 1)).find('#answer').focus();
-			const all={question:question,answer:ans,category};
-			console.log(all);
-			$.ajax({
-	    		url : "ans_insert.do",
-	    		type : "post",
-	    		data:all,
-	    		dataType : "text",
-	    	success : function(data){
-					console.log("rrdata",data);
-	    		},
-	    		error : function(data) 
-	    		{	
-	    			console.log("data==",data);
-	    		},
-    		 });
-			location.reload();
-		}
-		
-		var status=$("#status").val();
-		console.log("status",status);
-		
-		if($("#status").val()==1)
-		{
-			alert("게임이 모두 끝났습니다");
-			if (!confirm("다시 시작 하시겠습니까?")) {
-				alert("취소 하셨습니다");
-				location.href="${root}"
-			}
-			else {
-				location.href="${root}quiz_main.do";
-			}
-		}
-	}
 	
 	var enterkey=function () {
 		if (window.event.keyCode == 13) {
@@ -155,6 +88,9 @@ $(document).ready(function(){
 	<div class="card shadow">
 		<div class="card-body" id="view">
 		<h4 class="card-title"></h4>
+			<c:if test = "${fn:length(chk.chk) eq 0}">
+					<td colspan="6">틀린 문제가 없습니다.</td> 
+			</c:if>
 		<table id="tbl1">
 			<div class="form-group" id="content_div">
 				<label for="category">카테고리</label><br><br>

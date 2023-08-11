@@ -35,5 +35,6 @@ public interface QuizService {
 			,@RequestParam(value="category[]") List<String> category);
 	public Map<String,Object> cate(QuestionVO questionvo,HttpSession session);
 	public Map<String, Object> cate_detail(QuestionVO questionvo, HttpSession session);
+	public Map<String, Object> faile_cate(QuestionVO questionvo, HttpSession session);
 	
 }

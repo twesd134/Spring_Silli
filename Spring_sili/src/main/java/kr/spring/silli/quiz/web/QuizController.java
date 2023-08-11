@@ -108,6 +108,13 @@ public class QuizController {
 		return returnJSP;
 	}
 	
+	@GetMapping("/faile_cate.do")
+	public String quiz_faile_list(Model model,QuestionVO questionvo,HttpSession seesion){
+		String returnJSP="quiz/faile_cate";
+		model.addAttribute("faile",QuizService.faile_cate(questionvo,seesion));
+		return returnJSP;
+	}
+	
 	@PostMapping("/quiz_faile.do")
 	@ResponseBody
 	public Map<String, Object> quiz_faile(QuestionVO questionvo,HttpSession seesion){

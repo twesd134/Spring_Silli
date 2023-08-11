@@ -33,134 +33,71 @@ $(document).ready(function(){
 	$("#answer").focus();
 	$("#dis1").show();
 	
-	<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
+	<c:forEach var="obj" items="${chk.re_chk}" varStatus="status" >
 	$("#dis${status.index+2}").hide();
 	</c:forEach>
+	
 });
+
 
 </script>
 </head>
 <script>
-// 'table#tbl1 tr'
-	var back=function() {
-	location.href="${root}quiz_main.do";
-	}
 	
-	var chk = function (_index) {
-		const question=$("#content_div").eq((_index)).find('#question').val();
-		const answer=$("#answer_div").eq((_index)).find('#answer').val();
-		const ans=$("#ans_div").eq((_index)).find('#ans').val();
-		const user_id=$("#user_id").val();
-		const allData={question:question,answer:answer,ans:ans};
-		console.log(allData);
-		const faileData={user_id:user_id,question:question,answer:ans};
-		if(answer!=ans)
-		 {
-			alert("정답이 아닙니다");
-			console.log("faileData==",faileData);
-			$("#answer_div").eq((_index)).find('#answer').focus();
-			console.log("faileData===",faileData);
-			$.ajax({
-	    		url : "faile_insert.do",
-	    		type : "post",
-	    		data:faileData,
-	    		dataType : "text",
-	    	success : function(data){
-					console.log("rrdata",data);
-	    		},
-	    		error : function(data) 
-	    		{
-	    			console.log("data==",data);
-	    		},
-    		 });
-		 }
-		
-		else if(answer==ans) {
-			alert("정답입니다");
-			$("#content_div").eq((_index)).hide();
-			$("#content_div").eq((_index + 1)).show();
-			$("#answer_div").eq((_index + 1)).find('#answer').focus();
-			console.log("question==",question);
-			const all={question:question};
-			$.ajax({
-	    		url : "faile_delete.do",
-	    		type : "get",
-	    		data:all,
-	    		dataType : "text",
-	    	success : function(data){
-					console.log("rrdata",data);
-	    		},
-	    		error : function(data) 
-	    		{
-	    			alert("실패");
-	    			console.log("data==",data);
-	    		},
-    		 });
-			location.reload();
-		}
-		
-		var status=$("#status").val();
-		console.log("status",status);
-		
-		if($("#status").val()==1)
-		{
-			alert("게임이 모두 끝났습니다");
-			if (!confirm("다시 시작 하시겠습니까?")) {
-				alert("취소 하셨습니다");
-				location.href="${root}"
-				}
-			else {
-				location.href="${root}quiz_main.do";
-			} 
+	
+	var enterkey=function () {
+		if (window.event.keyCode == 13) {
+			
 		}
 	}
 	
+	var quiz_list = function() {
+		location.href="${root}quiz_main.do";
+	}
+	
+	
+	var cate=function() {
+		const category=$("#category").val();
+		const all={category:category}
+		$.ajax({
+    		url : "faile_cate.do",
+    		type : "get",
+    		data:category,
+    		dataType : "text",
+    	success : function(data){
+				console.log("rrdata",data);
+    		},
+    		error : function(data) 
+    		{	
+    			console.log("data==",data);
+    		},
+		 });
+	}
 </script>
+
 <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
-<body> 
+<body>
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body" id="view">
-			<h4 class="card-title"></h4>
+		<h4 class="card-title"></h4>
 		<table id="tbl1">
-		<li>${fn:length(chk.fail_chk)} 문제 남았습니다</li>
-		<li>${user_id }님 문제 입니다 </li>
-		<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
-		<div id="dis${status.index+1}" >
-			
 			<div class="form-group" id="content_div">
-				<label for="question">문제</label>
-				<textarea id="question" name="question" class="form-control" rows="30" maxlength='5000' style="resize:none" readonly="readonly">${obj.question }</textarea>
-			</div>
-			<div class="form-group" id="answer_div">
-					<label for="answer">답</label>
-					<input type="text" id="answer" name="answer" class="form-control" maxlength='150' />
-			</div>
-				<div class="form-group" id="ans_div">
-				<input type="button" class='btn btn-primary' value="답제출"  id="chk"  onclick="chk(${status.index})" />
-				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
-				</div>
-		</div>
+				<label for="category">카테고리</label><br>
+			<c:if test = "${fn:length(chk.fail_chk) eq 0}">
+					<td colspan="6">틀린 문제가 없습니다.</td> 
+			</c:if>
+		<c:forEach var="obj" items="${chk.fail_chk}" varStatus="status" >
+				<a href="${root}faile_cate.do?category=${obj.category}">${obj.category}</a>
 		</c:forEach>
 		</table>
 		<br>
 		</div>
-		<c:choose>
-			<c:when test = "${fn:length(chk.fail_chk) eq 0}">
-			<li>문제를 다 푸셨습니다</li> 
-				<form action="${root}quiz_main.do">
-				<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
-				<input type="submit" value="처음 문제로 돌아가기"/>
-				</form>
-			</c:when>
-		<c:otherwise>
-			<form action="${root}quiz_faile.do">
-				<input type="hidden" name="user_id" id="user_id" value="${user_id }"/>
-				<input type="submit" class="btn btn-dange" value="틀린문제 다시 풀기"/>
-				<input type="button" class="btn btn-dange" onclick="back();" value="문제로 돌아가기"/>
-			</form>
-		</c:otherwise>
-		</c:choose>
+		<form action="${root}quiz_faile.do">
+			<input type="hidden" name="status" id="status" value="${fn:length(chk.fail_chk)}"/>
+			<input type="hidden" name="user_id" id="user_id" value="${user_id}"/>
+		</form>
+			<input type="button" onclick="quiz_list();" class="btn btn-dange" value="문제목록">
 	</div>
 </div>
 </body>
