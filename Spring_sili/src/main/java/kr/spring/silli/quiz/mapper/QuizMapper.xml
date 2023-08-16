@@ -246,6 +246,7 @@
 	</insert>
 	
 	<insert id="quiz_ignore_insert" parameterType="java.util.List">
+     	<![CDATA[
      	insert ignore into
 			quiz
 				(
@@ -263,6 +264,7 @@
 	      #{item.category}
 	    )
 	    </foreach>
+	    ]]>
 	</insert>
 	
 	
