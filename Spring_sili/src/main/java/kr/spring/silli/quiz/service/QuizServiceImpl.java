@@ -134,6 +134,26 @@ public class QuizServiceImpl implements QuizService {
     }
 	
 	@Override
+	public void quiz_ignore_insert(@RequestParam(value="question[]") List<String> question
+			,@RequestParam(value="answer[]") List<String>  answer
+			,@RequestParam(value="user_id[]") List<String> user_id
+			,@RequestParam(value="category[]") List<String> category)
+	{
+		List<QuestionVO> list=new ArrayList<QuestionVO>();
+		
+		for(int i=0;i<question.size();i++)
+		{
+			QuestionVO vo=new QuestionVO();
+			vo.setQuestion(question.get(i));
+			vo.setAnswer(answer.get(i));
+			vo.setUser_id(user_id.get(i));
+			vo.setCategory(category.get(i));
+			list.add(vo);
+		} 
+		QuizMapper.quiz_ignore_insert(list);
+	}
+	
+	@Override
 	public void quiz_update(@RequestParam(value="question[]") List<String> question
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id
@@ -152,6 +172,7 @@ public class QuizServiceImpl implements QuizService {
 		} 
 		QuizMapper.quiz_update(list);
 	}
+	
 	
 	@Override
 	public void ans_del(QuestionVO questionvo) {

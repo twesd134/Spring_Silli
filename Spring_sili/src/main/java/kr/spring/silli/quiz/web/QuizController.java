@@ -71,8 +71,17 @@ public class QuizController {
 			,@RequestParam(value="answer[]") List<String>  answer
 			,@RequestParam(value="user_id[]") List<String> user_id
 			,@RequestParam(value="category[]") List<String> category) {
-		
 		QuizService.quiz_update(question,answer,user_id,category);
+	}
+	
+	@PostMapping("/quiz_ignore_insert.do")
+	@ResponseBody
+	public void quiz_ignore(@RequestParam(value="question[]") List<String> question
+			,@RequestParam(value="answer[]") List<String>  answer
+			,@RequestParam(value="user_id[]") List<String> user_id
+			,@RequestParam(value="category[]") List<String> category) {
+		
+		QuizService.quiz_ignore_insert(question,answer,user_id,category);
 	}
 	
 	@PostMapping("/faile_insert.do")

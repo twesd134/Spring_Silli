@@ -40,50 +40,83 @@ $(document).ready(function(){
     $("input[name^='answer']").keydown(function (event) {
         if (event.keyCode === 13) { // 엔터 키의 keyCode는 13
             event.preventDefault(); // 기본 동작 막기
-            submitAnswer($(this)); // 답 제출 함수 호출
+             chk($(this).val()); // 답 제출 함수 호출
         }
     });
 });
 
 
-function submitAnswer(inputElement) {
-    var answer = inputElement.val();
-    var quiz_idx = inputElement.closest(".form-group").find("input[name='quiz_idx']").val(); // 해당 문제의 quiz_idx 가져오기
-    
-    // 서버로 데이터를 전송하여 답을 제출하는 Ajax 로직 추가
-    $.ajax({
-        url: "${root}submit_answer.do", // 답을 제출하는 서버 API 주소
-        type: "post",
-        data: { quiz_idx: quiz_idx, answer: answer },
-        dataType: "text",
-        success: function (data) {
-            alert("답이 제출되었습니다.");
-        },
-        error: function (data) {
-            console.log("Error:", data);
-            alert("답 제출에 실패했습니다.");
-        },
-    });
-}
-
 </script>
 </head>
 <script>
-	
-	var chk = function (_index) {
-			
-		const question=$("#content_div").eq((_index)).find('#question').val();
-		const answer=$("#answer_div").eq((_index)).find('#answer').val();
-		const ans=$("#ans_div").eq((_index)).find('#ans').val();
-		const user_id=$("#user_id").val();
-		const category=$("#category").val();
-		const allData={question:question,answer:answer,ans:ans,category:category};
-		const faileData={user_id:user_id,question:question,answer:ans,category:category};
+	var dak =function (_index) {
+		var answer=$("#answer").val();
+		var question=$("#question").val();
+		var ans=$("#ans").val();
+		var user_id=$("#user_id").val();
+		var category=$("#category").val();
+		var faileData={user_id:user_id,question:question,answer:answer,category:category};
+		console.log(answer);
+		console.log(ans);
 		if(answer!=ans)
 		 {
 			alert("정답이 아닙니다");
 			$("#answer_div").eq((_index)).find('#answer').focus();
-			console.log("faileData===",faileData);
+			console.log("ans==",ans)
+			console.log("_index===",_index);
+			$.ajax({
+	    		url : "faile_insert.do",
+	    		type : "post",
+	    		data:faileData,
+	    		dataType : "text",
+	    	success : function(data){
+					console.log("rrdata",data);
+	    		},
+	    		error : function(data) 
+	    		{
+	    			console.log("data==",data);
+	    		},
+   		 });
+		 }
+		
+		else if(answer==ans) {
+			alert("정답입니다");
+			$("#content_div").eq((_index)).hide();
+			$("#content_div").eq((_index + 1)).show();
+			$("#answer_div").eq((_index + 1)).find('#answer').focus();
+			const all={question:question,answer:answer,category};
+			console.log(all);
+			$.ajax({
+	    		url : "ans_insert.do",
+	    		type : "post",
+	    		data:all,
+	    		dataType : "text",
+	    	success : function(data){
+					console.log("rrdata",data);
+	    		},
+	    		error : function(data) 
+	    		{	
+	    			console.log("data==",data);
+	    		},
+   		 });
+			location.reload();
+		}
+	}
+	var chk = function (_index) {
+		console.log(_index);
+		var question=$("#question").val();
+		var answer=$("#answer").val();
+		var ans=$("#ans").val();
+		var user_id=$("#user_id").val();
+		var category=$("#category").val();
+		var faileData={user_id:user_id,question:question,answer:answer,category:category};
+		console.log("sdfsdf=",ans);
+		if(answer!=_index)
+		 {
+			alert("정답이 아닙니다");
+			$("#answer_div").eq((_index)).find('#answer').focus();
+			console.log("ans==",ans)
+			console.log("_index===",_index);
 			$.ajax({
 	    		url : "faile_insert.do",
 	    		type : "post",
@@ -99,12 +132,12 @@ function submitAnswer(inputElement) {
     		 });
 		 }
 		
-		else if(answer==ans) {
+		else if(answer==_index) {
 			alert("정답입니다");
 			$("#content_div").eq((_index)).hide();
 			$("#content_div").eq((_index + 1)).show();
 			$("#answer_div").eq((_index + 1)).find('#answer').focus();
-			const all={question:question,answer:ans,category};
+			const all={question:question,answer:answer,category};
 			console.log(all);
 			$.ajax({
 	    		url : "ans_insert.do",
@@ -215,8 +248,8 @@ function submitAnswer(inputElement) {
 					<input type="hidden" id="category" name="category" class="form-control" maxlength='150' value="${obj.category }">
 			</div>
 				<div class="form-group" id="ans_div">
-				<input type="button" class='btn btn-primary' value="답제출"  id="chk" onkeyup="enterkey()"  onclick="chk(${status.index})" />
-				<input type="hidden" name="ans" id="ans" value="${obj.answer}"/>
+				<input type="button" class='btn btn-primary' value="답제출"   onclick="dak(${status.index});" />
+				<input type="text" name="ans" id="ans" value="${obj.answer}"/>
 				</div>
 		</div>
 		</c:forEach>

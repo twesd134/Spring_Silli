@@ -223,8 +223,8 @@
 	</insert>
 	
 	<insert id="quiz_write" parameterType="java.util.List">
-    insert ignore into quiz (
-        category,   <!-- 새로운 열인 "category" 추가 -->
+    insert into quiz (
+        category,
         question,
         answer,
         user_id
@@ -232,15 +232,20 @@
     values
     <foreach collection="list" item="item" separator=",">
         (
-          #{item.category},  <!-- 새로운 "category" 값 추가 -->
+          #{item.category},
           #{item.question},
           #{item.answer},
           #{item.user_id}
         )
     </foreach>
+    on duplicate key update
+    category = values(category),
+    question = values(question),
+    answer = values(answer),
+    user_id = values(user_id);
 	</insert>
 	
-	<insert id="quiz_update" parameterType="java.util.List">
+	<insert id="quiz_ignore_insert" parameterType="java.util.List">
      	insert ignore into
 			quiz
 				(
@@ -259,4 +264,21 @@
 	    )
 	    </foreach>
 	</insert>
+	
+	
+	<update id="quiz_update" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";">
+        <![CDATA[
+        UPDATE quiz
+        SET
+            question = #{item.question},
+            answer = #{item.answer},
+            user_id = #{item.user_id},
+            category = #{item.category}
+        WHERE 
+            quiz_idx = #{item.quiz_idx}
+        ]]>
+    </foreach>
+</update>
+	
 </mapper>

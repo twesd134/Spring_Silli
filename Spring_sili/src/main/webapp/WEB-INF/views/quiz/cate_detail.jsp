@@ -82,7 +82,8 @@
         listHTML += "<label for='answer'>답</label>";
         listHTML += "<input type='text' id='answer" + questionCount + "' name='answer" + questionCount + "' class='form-control' maxlength='150'/>";
         listHTML += "<input type='text' name='user_id' id='user_id' value='${user_id}' />";
-        listHTML += "<input type='text' name='category' id='category' value='${category}' />";        
+        listHTML += "<input type='text' name='category' id='category' value='${category}' />";   
+        listHTML += "<input type='text' name='gubun' id='gubun' value='1' />";   
         listHTML += "</div>";
 
         $("#tbl1").append(listHTML);
@@ -94,7 +95,9 @@
         var quizIndices = [];
         var user_id = [];
         var category = [];
-
+		var gubun=$("#gubun").val();
+		
+		console.log("dd==",gubun);
         $("textarea[name^='question']").each(function () {
             questions.push($(this).val());
         });
@@ -119,12 +122,32 @@
             alert("수정할 문제가 없습니다");
             return;
         }
+    	
 
         if (!confirm("수정 하시겠습니까?")) {
             alert("취소 하셨습니다");
             return;
         }
-		
+        
+        if(gubun!=null || gubun=="")
+		{
+        	$.ajax({
+	            url: "${root}quiz_ignore_insert.do",
+	            type: "post",
+	            data: { question: questions, answer: answers, quiz_idx: quizIndices, user_id: user_id,category:category },
+	            dataType: "text",
+	            success: function (data) {
+	                alert("수정완료");
+	                console.log("dd==d=", data)
+	                location.href = "${root}quiz_main.do";
+	            },
+	            error: function (data) {
+	                console.log("data==", data);
+	            },
+	        });
+        	
+		}
+        
         $.ajax({
             url: "${root}quiz_update.do",
             type: "post",
